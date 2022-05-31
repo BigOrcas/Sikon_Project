@@ -9,49 +9,56 @@ import org.springframework.stereotype.Repository;
 
 import com.sikon.common.Search;
 import com.sikon.service.domain.Product;
-import com.sikon.service.product.ProductDAO;
+import com.sikon.service.product.ProductDao;
 
 
+//==> 회원관리 DAO CRUD 구현
 @Repository("productDaoImpl")
-public class ProductDaoImpl implements ProductDAO {
-
+public class ProductDaoImpl implements ProductDao{
+	
 	///Field
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
-
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-
-	/// Constructor
+	
+	///Constructor
 	public ProductDaoImpl() {
 		System.out.println(this.getClass());
 	}
 
-	/// Method
-	/// insertProduct Method
-	public void insertProduct(Product product) throws Exception {
+	///Method
+	public void addProduct(Product product) throws Exception {
+		System.out.println("ProductDaoimpl: "+product);
 		sqlSession.insert("ProductMapper.addProduct", product);
 	}
 
-	/// findProduct Method
-	public Product findProduct(int prodNo) throws Exception {
-		return sqlSession.selectOne("ProductMapper.findProduct", prodNo);
+	
+	public Product getProduct(int prodNo) throws Exception {
+		return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 	}
-
-	/// getProductList Method
-	public List<Product> getProductList(Search search) throws Exception {
-		return sqlSession.selectList("ProductMapper.getProductList", search);
-	}
-
-	/// updateProduct Method
+	
+	
 	public void updateProduct(Product product) throws Exception {
 		sqlSession.update("ProductMapper.updateProduct", product);
 	}
 
-	// 게시판 Page 처리를 위한 전체 Row(totalCount) return
+	
+	public List<Product> getProductList(Search search) throws Exception {
+		return sqlSession.selectList("ProductMapper.getProductList", search);
+	}
+	
+
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
 	}
+	
+	
+	public List<Product> getProdNames(Search search) throws Exception {
+		return sqlSession.selectList("ProductMapper.getProductNames", search);
+	}
+	
+	
 }

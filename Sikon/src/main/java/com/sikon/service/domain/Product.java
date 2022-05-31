@@ -5,71 +5,213 @@ import java.sql.Date;
 
 public class Product {
 	
-	private String fileName;
-	private String manuDate;
-	private int price;
-	private String prodDetail;
-	private String prodName;
 	private int prodNo;
-	private Date regDate;
-	private String proTranCode;
+	private String prodName;
+	private String prodThumbnail;
+	private String prodContent;
+	private String prodDetail;	
+	private int prodStock;
+	private String prodTheme;
+	private int prodPrice;
+	private double prodDisRate;
+	private int prodDisPrice;
+	private Date prodRegDate;
+	private String prodStatus;
+	private String couponApply;
 	
+
+
 	public Product(){
 	}
 	
-	public String getProTranCode() {
-		return proTranCode;
-	}
-	public void setProTranCode(String proTranCode) {
-		this.proTranCode = proTranCode;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public String getManuDate() {
-		return manuDate;
-	}
-	public void setManuDate(String manuDate) {
-		this.manuDate = manuDate;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	public String getProdDetail() {
-		return prodDetail;
-	}
-	public void setProdDetail(String prodDetail) {
-		this.prodDetail = prodDetail;
-	}
-	public String getProdName() {
-		return prodName;
-	}
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
-	}
+	
+	
+
 	public int getProdNo() {
 		return prodNo;
 	}
+
+
+
+
 	public void setProdNo(int prodNo) {
 		this.prodNo = prodNo;
 	}
-	public Date getRegDate() {
-		return regDate;
-	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+
+
+
+
+	public String getProdName() {
+		return prodName;
 	}
 
-	// Override
+
+
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+
+
+
+
+	public String getProdThumbnail() {
+		return prodThumbnail;
+	}
+
+
+
+
+	public void setProdThumbnail(String prodThumbnail) {
+		this.prodThumbnail = prodThumbnail;
+	}
+
+
+
+
+	public String getProdContent() {
+		return prodContent;
+	}
+
+
+
+
+	public void setProdContent(String prodContent) {
+		this.prodContent = prodContent;
+	}
+
+
+
+
+	public String getProdDetail() {
+		return prodDetail;
+	}
+
+
+
+
+	public void setProdDetail(String prodDetail) {
+		this.prodDetail = prodDetail;
+	}
+
+
+
+
+	public int getProdStock() {
+		return prodStock;
+	}
+
+
+
+
+	public void setProdStock(int prodStock) {
+		this.prodStock = prodStock;
+	}
+
+
+
+
+	public String getProdTheme() {
+		return prodTheme;
+	}
+
+
+
+
+	public void setProdTheme(String prodTheme) {
+		this.prodTheme = prodTheme;
+	}
+
+
+
+
+	public int getProdPrice() {
+		return prodPrice;
+	}
+
+
+
+
+	public void setProdPrice(int prodPrice) {
+		this.prodPrice = prodPrice;
+	}
+
+
+
+
+	public double getProdDisRate() {
+		return prodDisRate;
+	}
+
+
+
+
+	public void setProdDisRate(double prodDisRate) {
+		this.prodDisRate = prodDisRate;
+	}
+
+
+
+
+	public int getProdDisPrice() {
+		return prodDisPrice;
+	}
+
+
+
+
+	public void setProdDisPrice(int prodDisPrice) {
+		this.prodDisPrice = prodDisPrice;
+	}
+
+
+
+
+	public Date getProdRegDate() {
+		return prodRegDate;
+	}
+
+
+
+
+	public void setProdRegDate(Date prodRegDate) {
+		this.prodRegDate = prodRegDate;
+	}
+
+
+
+
+	public String getProdStatus() {
+		return prodStatus;
+	}
+
+
+
+
+	public void setProdStatus(String prodStatus) {
+		this.prodStatus = prodStatus;
+	}
+
+
+
+
+	public String getCouponApply() {
+		return couponApply;
+	}
+
+
+
+
+	public void setCouponApply(String couponApply) {
+		this.couponApply = couponApply;
+	}
+
+
+
+
 	public String toString() {
-		return "Product : [fileName]" + fileName
-				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
-				+ "[prodName]" + prodName + "[prodNo]" + prodNo + "[proTranCode]" + proTranCode;
+		return "Product :"+"[prodNo: "+prodNo+", prodName: "+prodName+", prodThumbnail: "+prodThumbnail+", prodDetail: "+prodDetail
+				+", prodStock: "+prodStock+", prodTheme: "+prodTheme+", prodPrice: "+prodPrice+", prodDisRate: "+prodDisRate+", prodDisPrice: "+prodDisPrice
+				+", prodRegDate: "+prodRegDate+", prodStatus: "+prodStatus+", couponApply: "+couponApply+"]";
 	}	
 }

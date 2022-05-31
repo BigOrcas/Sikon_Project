@@ -1,165 +1,206 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
-
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=euc-kr"%>
 
 <html lang="ko">
-	
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-	<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-	<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
-   <!-- jQuery UI toolTip 사용 CSS-->
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <!-- jQuery UI toolTip 사용 JS-->
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
-    </style>
-    
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
-	
-	$(function(){
-        $("#manuDate").datepicker({ dateFormat: 'yy-mm-dd' });
-	});
+<meta charset="EUC-KR">
 
-	
+<link rel="stylesheet" href="/css/admin.css" type="text/css">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
+
+<!-- jQuery UI toolTip 사용 CSS-->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI toolTip 사용 JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
+<style>
+body{
+	font-family: 'Nanum Myeongjo', serif;
+}
+body>div.container {
+	border: 3px solid #D6CDB7;
+	margin-top: 150px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+h1.text-center {
+	font-family: 'Nanum Myeongjo', serif;
+}
+#prodDetail {
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.form-group{
+	font-family: 'Nanum Myeongjo', serif;
+}
+</style>
+
+<script type="text/javascript">
+
+
+
+	function fncAddProduct() {
+		//Form 유효성 검증
+		
+
+		$("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "/product/addProduct").submit();
+		//document.detailForm.action='/product/addProduct';
+		//document.detailForm.submit();
+	}
+
+
 	$(function() {
-		
-		$("#register").on("click" , function() {
+		$("button.btn.btn-primary").on("click", function() {
 			
-			var name = $("input[name='prodName']").val();
-			var detail = $("input[name='prodDetail']").val();
-			var manuDate = $("input[name='manuDate']").val();
-			var price = $("input[name='price']").val();
+			console.log($('input[name=prodDisRate]').val());
+			alert($("button.btn.btn-primary").text());
+			fncAddProduct();
+		})
+	})
 
-			if(name == null || name.length<1){
-				alert("상품명은 반드시 입력하여야 합니다.");
-				return;
-			}
-			if(detail == null || detail.length<1){
-				alert("상품상세정보는 반드시 입력하여야 합니다.");
-				return;
-			}
-			if(manuDate == null || manuDate.length<1){
-				alert("제조일자는 반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(price == null || price.length<1){
-				alert("가격은 반드시 입력하셔야 합니다.");
-				return;
-			}
-			
-			alert('등록완료');
-
-			$("form").attr("method", "POST").attr("action", "/product/addProduct").submit();
-			
-		
-		});
-		
-	});
-		
 	$(function() {
-		$( "#previous" ).on("click" , function() {
-			history.go(-1);
-		});
-	});
+		$("a[href='#' ]").on("click", function() {
+			// resetData();
+			$("form")[0].reset();
+		})
+	})
 
-	</script>		
-    
+	//function resetData(){
+	//	document.detailForm.reset();
+	//}
+</script>
 </head>
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Lego Land</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
+
 	<div class="container">
-	
-		<h1 class="bg-primary text-center">상 품 등 록</h1>
+
+		<h1 class="text-center"  style="color:#bc8f8f">상품등록</h1>
+
+		<form class="form-horizontal" enctype="multipart/form-data">
 		
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" name="detailForm"  enctype="multipart/form-data" >
-		
-		  <div class="form-group">
-		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상 품 명</label>
+
+			<div class="form-group">
+		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명">
 		    </div>
 		  </div>
-		  
-		  <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="manuDate"  name="manuDate" placeholder="제조일자">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가 격</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="가격">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="uploadFile" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
-		    <div class="col-sm-4">
-		      <input multiple="multiple" type="file" class="form-control" id="uploadFile" name="uploadFile" placeholder="상품이미지">
-		    </div>
-		  </div>
-		 
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" id="register">등 &nbsp;록</button>
-			  <a class="btn btn-primary btn" role="button" id="previous">취&nbsp;소</a>
-		    </div>
-		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-		
- 	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-	
-</body>
 
+			<div class="form-group">
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품간략정보</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품간략정보 입력">
+		    </div>
+		  </div>
+
+			<div class="form-group">
+			    <label for="prodStock" class="col-sm-offset-1 col-sm-3 control-label">상품재고량</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="prodStock" name="prodStock" placeholder="개수입력">
+			    </div>
+			  </div>
+
+			<div class="form-group">
+		    <label for="prodPrice" class="col-sm-offset-1 col-sm-3 control-label">정상가</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodPrice" name="prodPrice" placeholder="정상가">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDisRate" class="col-sm-offset-1 col-sm-3 control-label">할인율</label>
+		    <div class="col-sm-4">
+		      <input type="number" step="0.1" class="form-control" id="prodDisRate" name="prodDisRate" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodDisPrice" class="col-sm-offset-1 col-sm-3 control-label">할인가</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodDisPrice" name="prodDisPrice" placeholder="할인가">
+		    </div>
+		  </div>
+
+			<div class="form-group">
+		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">상품썸네일</label>
+		    <div class="col-sm-4">
+		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple" >
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodContent" class="col-sm-offset-1 col-sm-3 control-label">상품상세내용</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodContent" name="prodContent" placeholder="썸머노트 예정">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodTheme" class="col-sm-offset-1 col-sm-3 control-label">상품테마</label>
+		    <div class="col-sm-4">
+		      <select class="form-control" name="prodTheme" id="prodTheme">
+				  <option value="TW" selected="selected">식기류</option>
+				  <option value="CW">조리도구</option>
+				  <option value="MK">밀키트</option>
+			  </select>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodStatus" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
+		    <div class="col-sm-4">
+		       <div class="btn-group" data-toggle="buttons">
+				    <input type="radio" name="prodStatus" id="option1" value="Y" checked> 판매중
+				    <input type="radio" name="prodStatus" id="option2" value="N"> 판매중지
+				</div>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="couponApply" class="col-sm-offset-1 col-sm-3 control-label">쿠폰적용여부</label>
+		    <div class="col-sm-4">
+		       <div class="btn-group" data-toggle="buttons">
+				    <input type="radio" name="couponApply" id="option1" value="Y" checked> 적용가능
+				    <input type="radio" name="couponApply" id="option2" value="N"> 적용불가
+				</div>
+		    </div>
+		  </div>
+
+			<div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary"  >등록</button>
+			  <button type="button" class="btn btn-default" href="#" >초기화</button>
+		    </div>
+		  </div>
+
+		</form>
+
+
+	</div>
+
+
+</body>
 </html>

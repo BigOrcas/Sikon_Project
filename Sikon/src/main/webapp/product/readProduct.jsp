@@ -1,14 +1,11 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page contentType="text/html; charset=euc-kr" %>
 <%@ page pageEncoding="EUC-KR"%>
 
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
+<html>
 
-<html lang="ko">
-	
 <head>
 	<meta charset="EUC-KR">
 	
@@ -29,37 +26,56 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
- 		body {
-            padding-top : 50px;
-        }
-     </style>
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
-  <!--  ///////////////////////// JavaScript ////////////////////////// -->
+<style>
+body>div.container{
+	padding-top : 50px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.row{
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.page-header{
+	font-family: 'Nanum Myeongjo', serif;
+}
+</style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	$(function() {
-		
-		$( "#OK" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			self.location = "/product/listProduct?menu=manage";
-		});
-		
-		
-		$( "#registerMore" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			self.location = "/product/addProductView.jsp";
-		});
-		
-	});	
-		
-	</script>
+
+
+
+
+$(function() {
 	
+	 $( "#check" ).on("click" , function() {
+		 console.log('확인');
+		 self.location = "/product/listProduct?menu=manage"
+	});
+	
+});
+
+
+$(function() {
+	
+	$("#add").click(function(){
+		console.log('추가등록');
+		self.location = "/product/addProductView.jsp"
+		
+	});
+	
+});
+
+
+
+</script>
 </head>
 
 <body>
-
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
@@ -69,53 +85,136 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">상품등록결과</h3>
+	       <h3 class=" text-info"  style="color:#bc8f8f">상품등록조회</h3>
 	    </div>
-		
+	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상 품 명</strong></div>
-			<div class="col-xs-8 col-md-4">${product.prodName}</div>
-		</div>
+		<div class="col-xs-12 col-md-12" align="center">
 		
-		<hr/>
+		<c:choose>
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
-			<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
-		</div>
+		<c:when test="${product.prodThumbnail.contains('&')}">
 		
-		<hr/>
+			<td class="ct_write01">
+				<c:choose>
+				<c:when test="${product.prodThumbnail.contains('mp4')}">
+					<c:forEach var="name" items="${product.prodThumbnail.split('&')}">
+						<video width="400" height="300" controls autoplay src="/resources/images/uploadFiles/${name}" type="video/mp4"></video>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="name" items="${product.prodThumbnail.split('&')}">
+						<img src="/resources/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+					</c:forEach>
+				</c:otherwise>
+				</c:choose>		
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.manuDate}</div>
-		</div>
+			</td>
 		
-		<hr/>
+		</c:when>
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가 격</strong></div>
-			<div class="col-xs-8 col-md-4">${product.price}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품이미지</strong></div>
-			<div class="col-xs-8 col-md-4">
-		<c:forEach var="listFile" items="${listFile}">
-			<img src="/images/uploadFiles/${listFile}" width="300" height="300" align="absmiddle"/>
-		</c:forEach>
+		<c:otherwise>
+			<img src="/resources/images/uploadFiles/${product.prodThumbnail}" width="300" height="300" align="absmiddle"/>
+		</c:otherwise>
+		</c:choose>
+
 		</div>
 		</div>
 		
 		<hr/>
 		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>상품명</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodName}</div>
+		</div>
+		
+		<hr/>
+		
+		
 		
 		<div class="row">
-	  		<div class="col-md-12 text-center ">
-	  			<button type="button" id="OK" class="btn btn-primary">확인</button>
-				<button type="button" id="registerMore" class="btn btn-primary">추가등록</button>
+	  		<div class="col-xs-4 col-md-4"><strong>재고량</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodStock }</div>
+		</div>
+		
+		<hr/>
+			
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>상품간략정보</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodDetail }</div>
+		</div>
+		
+		<hr/>
+		
+		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>가격</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodPrice }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>할인율</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodDisRate }</div>
+		</div>
+		
+		<hr/>
+				
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>할인가</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodDisPrice }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>테마</strong></div>
+			<div class="col-xs-8 col-md-8">
+			<c:if test = "${product.prodTheme == 'CW'}">
+			식기류 
+			</c:if>
+			<c:if test = "${product.prodTheme == 'TW'}">
+			조리기구
+			</c:if>
+			<c:if test = "${product.prodTheme == 'MK'}">
+			밀키트
+			</c:if>
+			</div>
+			
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>쿠폰적용유무</strong></div>
+			<div class="col-xs-8 col-md-8">
+			<c:if test = "${product.couponApply == 'Y'}">
+			적용가능 
+			</c:if>
+			<c:if test = "${product.couponApply == 'N'}">
+			적용불가
+			</c:if>
+			</div>
+			
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>상품상세정보</strong></div>
+			<div class="col-xs-8 col-md-8">${product.prodContent }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-right ">
+	  			<button type="button" class="btn btn-default" id="check">확인</button>
+	  			<button type="button" class="btn btn-default" id="add">추가등록</button>
 	  		</div>
 		</div>
 		
@@ -125,5 +224,4 @@
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
-
 </html>

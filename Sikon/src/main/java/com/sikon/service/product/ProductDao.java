@@ -26,4 +26,6 @@ public interface ProductDao {
 	
 	public List<Product> getProdNames(Search search) throws Exception ;
 	
+	
+	
 }

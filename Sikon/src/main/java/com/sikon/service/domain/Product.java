@@ -146,7 +146,7 @@ public class Product {
 
 
 
-	public void setProdDisRate(int prodDisRate) {
+	public void setProdDisRate(double prodDisRate) {
 		this.prodDisRate = prodDisRate;
 	}
 

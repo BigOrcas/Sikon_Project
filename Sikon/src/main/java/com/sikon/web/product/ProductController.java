@@ -66,10 +66,35 @@ public class ProductController {
 		
 		System.out.println("/product/addProduct : POST");
 		
-		System.out.println(product);
-
+		String temDir = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles\\";
 		
-		return null;
+		String fileName = "";
+	
+		
+		for(int i=0; i<fileArray.length;i++) {
+		
+			if(!fileArray[i].getOriginalFilename().isEmpty()) {
+				fileArray[i].transferTo(new File(temDir, fileArray[i].getOriginalFilename()));
+				System.out.println("파일명 :: "+fileArray[i].getOriginalFilename());
+				
+			}else {
+				System.out.println("파일업로드 실패...?");
+			}
+		
+			fileName+=fileArray[i].getOriginalFilename()+"&";
+			
+			System.out.println("저장될 파일이름 : "+fileName);
+		}
+				
+		
+		product.setProdThumbnail(fileName);
+		
+		System.out.println(product);
+		productService.addProduct(product);
+		
+		model.addAttribute(product);
+		
+		return "forward:/product/readProduct.jsp";
 	}
 //*/
 

@@ -55,6 +55,9 @@ div.form-group{
 </style>
 
 <script type="text/javascript">
+
+
+
 	function fncAddProduct() {
 		//Form 유효성 검증
 		
@@ -64,13 +67,6 @@ div.form-group{
 		//document.detailForm.submit();
 	}
 
-	$(function() {
-		$('#manuDate').datepicker({
-			format : "yyyy-mm-dd"
-
-		});
-
-	});
 
 	$(function() {
 		$("button.btn.btn-primary").on("click", function() {
@@ -137,7 +133,7 @@ div.form-group{
 		  <div class="form-group">
 		    <label for="prodDisRate" class="col-sm-offset-1 col-sm-3 control-label">할인율</label>
 		    <div class="col-sm-4">
-		      <input type="number" step="0.1" class="form-control" id="prodDisRate" name="prodDisRate" placeholder="할인율">
+		      <input type="number" step="0.1" class="form-control" id="prodDisRate" name="prodDisRate" >
 		    </div>
 		  </div>
 		  

@@ -1,16 +1,11 @@
 package com.sikon.web.product;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.sikon.common.Page;
 import com.sikon.common.Search;
@@ -40,9 +34,11 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
-	
-	@Value("#{commonProperties['filepath']}")
-	private String FILE_SERVER_PATH;
+	//setter Method 구현 않음
+		
+	public ProductController(){
+		System.out.println(this.getClass());
+	}
 	
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
@@ -54,157 +50,173 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-	
-	///Constructor
-	public ProductController(){
-		System.out.println(this.getClass());
-	}
-	
-	
-	///Method
-	@RequestMapping( value="/addProduct", method=RequestMethod.POST )
-	public String addProduct( @ModelAttribute("product") Product product, Model model, 
-							@RequestParam("uploadFile") List<MultipartFile> multiFileList ) throws IOException, Exception {
-
+///*
+	@RequestMapping(value="addProduct", method=RequestMethod.POST )
+	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray, Model model ) throws Exception {
+		
 		System.out.println("/product/addProduct : POST");
 		
-		System.out.println(product);
+		String temDir = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles\\";
 		
-		product.setManuDate(product.getManuDate().replaceAll("-", ""));
-		
-		//FileUpload
-		List<String> fileList = new ArrayList<String>();
 		String fileName = "";
+	
 		
-		if(multiFileList.size() != 0) {
-			for(MultipartFile mf : multiFileList) {
-				fileList.add(mf.getOriginalFilename());
-				mf.transferTo(new File(FILE_SERVER_PATH, mf.getOriginalFilename()));
-			}
+		for(int i=0; i<fileArray.length;i++) {
+		
+			if(!fileArray[i].getOriginalFilename().isEmpty()) {
+				fileArray[i].transferTo(new File(temDir, fileArray[i].getOriginalFilename()));
+				System.out.println("파일명 :: "+fileArray[i].getOriginalFilename());
 				
-			for(int i=0; i<fileList.size(); i++) {
-				if(i==fileList.size()-1) {
-					fileName += fileList.get(i);
-				} else {
-					fileName += fileList.get(i)+"/";
-				}
+			}else {
+				System.out.println("파일업로드 실패...?");
 			}
-			product.setFileName(fileName);
-		}
 		
-		if(fileList != null) {
-			String[] listFile = fileName.split("/");			
-			model.addAttribute("listFile", listFile);
+			fileName+=fileArray[i].getOriginalFilename()+"&";
+			
+			System.out.println("저장될 파일이름 : "+fileName);
 		}
+				
 		
-		//Business Logic
+		product.setProdThumbnail(fileName);
+		product.setProdStatus("Y");
+		product.setProdContent("prodContent");
 		productService.addProduct(product);
 		
-		return "forward:/product/listProduct?menu=manage";
+		model.addAttribute(product);
+		
+		return "forward:/product/readProduct.jsp";
 	}
+//*/
 
 	
-	@RequestMapping(value="/getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("prodNo") int prodNo , Model model, 
-			@CookieValue(value = "history", required = false) Cookie cookie, HttpServletResponse response) throws Exception {
+/*	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST)
+	public String addProduct( @ModelAttribute("product") Product product, Model model ) throws Exception {
+
+		System.out.println("/product/addProduct : POST");
+		//Business Logic
+		System.out.println(product);
 		
+		product.setManuDate(product.getManuDate().replace("-", ""));
+		productService.addProduct(product);
+		
+		model.addAttribute(product);
+		
+		return "forward:/product/readProduct.jsp";
+	}
+//*/
+	
+	@RequestMapping(value="getProduct", method=RequestMethod.GET)
+	public String getProduct( @RequestParam("prodNo") int prodNo , @CookieValue(value="history", required=false) Cookie cookie,  
+										HttpServletResponse response, Model model ) throws Exception {
 		
 		System.out.println("/product/getProduct : GET");
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
-		
-		if(product.getFileName() != null) {
-			String[] fileList = product.getFileName().split("/");
-			model.addAttribute("fileList", fileList);
-		}
-		
 		// Model 과 View 연결
 		model.addAttribute("product", product);
 		
-		String history = Integer.toString(prodNo) + "/" + product.getProdName();
-
-		///최근 본 상품
-		if(cookie == null) {
-			cookie = new Cookie("history", history);
-			System.out.println(cookie.getValue());
-		} else {
-			history = history + "/" + cookie.getValue();
-			cookie.setValue(history);
-			System.out.println(cookie.getValue());
+		
+		String img = product.getProdThumbnail();
+		String prod = product.getProdName().replace(" ", "_");
+		String pn = "/"+prodNo+"&"+img+"&"+prod;
+		String first = prodNo+"&"+img+"&"+prod;
+		
+		if (cookie == null) {
+			
+			Cookie prodCookie = new Cookie("history",first);
+			prodCookie.setPath("/");
+			response.addCookie(prodCookie);
+					
+		}else{
+	
+			String str1 = cookie.getValue()+ pn;
+			
+			Cookie prodCookie02 = new Cookie("history",str1);
+			prodCookie02.setPath("/");
+			response.addCookie(prodCookie02);
+			
+			System.out.println("Not NULL일 때 저장된 prod쿠키값"+cookie.getValue());
+			System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
 		}
 		
-		cookie.setPath("/");
-		response.addCookie(cookie);
-
 		return "forward:/product/getProduct.jsp";
 	}
 	
 	
-	@RequestMapping( value="/updateProduct", method=RequestMethod.GET )
-	public String updateProductView( @RequestParam("prodNo") int prodNo, Model model ) throws Exception{
+	@RequestMapping(value="updateProduct", method=RequestMethod.GET )
+	public String updateProduct( @ModelAttribute("product") Product product , Model model) throws Exception{
 
 		System.out.println("/product/updateProduct : GET");
 		//Business Logic
-		Product product = productService.getProduct(prodNo);
-		// Model 과 View 연결
-		model.addAttribute("product", product);
+		product = productService.getProduct(product.getProdNo());
 		
+		model.addAttribute("product", product);
+
 		return "forward:/product/updateProduct.jsp";
 	}
 	
-	
-	@RequestMapping( value="/updateProduct", method=RequestMethod.POST )
-	public String updateProduct( @ModelAttribute("product") Product product,
-								@RequestParam("uploadFile") List<MultipartFile> multiFileList ) throws IOException, Exception{
+/*	
+	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
+	public String updateProduct( @ModelAttribute("product") Product product , Model model , HttpSession session) throws Exception{
 
 		System.out.println("/product/updateProduct : POST");
-		
-		System.out.println(product);
-		
-		int prodNo= product.getProdNo();
-		product.setManuDate(product.getManuDate().replaceAll("-", ""));
-		
-		//FileUpload
-		List<String> fileList = new ArrayList<String>();
-		String fileName = "";
-		
-		if(multiFileList.size() != 0) {
-			for(MultipartFile mf : multiFileList) {
-				fileList.add(mf.getOriginalFilename());
-				mf.transferTo(new File(FILE_SERVER_PATH, mf.getOriginalFilename()));
-			}
-				
-			for(int i=0; i<fileList.size(); i++) {
-				if(i==fileList.size()-1) {
-					fileName += fileList.get(i);
-				} else {
-				fileName += fileList.get(i)+"/";
-				}
-			}
-				
-			product.setFileName(fileName);
-		
-		}
-			
 		//Business Logic
 		productService.updateProduct(product);
 		
-		return "redirect:/product/getProduct?prodNo="+prodNo;
+		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
 	}
+//*/	
+///*	
+	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
+	public String updateProduct( @ModelAttribute("product") Product product , @RequestParam("uploadfiles[]") MultipartFile[] fileArray) throws Exception{
 
-	
-	@RequestMapping("/listProduct")
-	public String listProduct( @ModelAttribute("search") Search search , Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		System.out.println("/product/updateProduct : POST");
 		
-		System.out.println("/listProduct");
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
+		
+		String fileName = "";
+	
+		System.out.println("prodNo"+product.getProdNo());
+		
+		
+		for(int i=0; i<fileArray.length;i++) {
+		
+			if(!fileArray[i].getOriginalFilename().isEmpty()) {
+				fileArray[i].transferTo(new File(temDir, fileArray[i].getOriginalFilename()));
+				System.out.println("파일명 :: "+fileArray[i].getOriginalFilename());
+				
+			}else {
+				System.out.println("파일업로드 실패...?");
+			}
+		
+			fileName+=fileArray[i].getOriginalFilename()+"&";
 			
+			System.out.println("저장될 파일이름 : "+fileName);
+		}
+		
+		
+		
+		product.setProdThumbnail(fileName);
+		productService.updateProduct(product);
+		
+		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
+	}
+//*/	
+	@RequestMapping( value="listProduct" )
+	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/product/listProduct :  GET / POST ");
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
 		// Business logic 수행
-		Map<String , Object> map = productService.getProductList(search);
+		Map<String , Object> map=productService.getProductList(search);
+		Map<String , Object> mapName = productService.getProdNames(search);
+		
+		String names = "";
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
@@ -213,16 +225,12 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("prodNames",mapName.get("list"));
 		
-		if( request.getParameter("menu") != null) {
-			session.setAttribute("menu", request.getParameter("menu"));
-		} else {
-			session.getAttribute("menu");
-		}
-
-		System.out.println(map.get("list"));
+		System.out.println("1:"+mapName);
+		System.out.println("2:"+mapName.get("list"));
+		
 		
 		return "forward:/product/listProduct.jsp";
 	}
-
 }

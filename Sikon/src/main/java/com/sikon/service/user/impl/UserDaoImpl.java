@@ -1,6 +1,7 @@
 package com.sikon.service.user.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,16 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	///Method
-	public void addUser(User user) throws Exception {
-		sqlSession.insert("UserMapper.addUser", user);
+	public void addUser(Map map) throws Exception {
+		sqlSession.insert("UserMapper.addUser", map);
 	}
 
 	public User getUser(String userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getUser", userId);
+	}
+	
+	public User findUserId(String userNickname) throws Exception {
+		return sqlSession.selectOne("UserMapper.findUserId", userNickname);
 	}
 	
 	public void updateUser(User user) throws Exception {
@@ -44,6 +49,10 @@ public class UserDaoImpl implements UserDao{
 
 	public List<User> getUserList(Search search) throws Exception {
 		return sqlSession.selectList("UserMapper.getUserList", search);
+	}
+	
+	public void deleteUser(User user) throws Exception {
+		 sqlSession.delete("UserMapper.deleteUser", user);
 	}
 
 	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return

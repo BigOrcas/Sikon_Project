@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CartMapper">
+ 	
+ 	
+	<resultMap id="CartSelectMap" type="cart">
+		<result property="cartNo" 				column="cart_no " 				jdbcType="NUMERIC"/>
+		<result property="cartProd.prodNo"	   	column="prod_no" 				jdbcType="NUMERIC" />
+		<result property="userId" 				column="user_id" 				jdbcType="VARCHAR" />
+		<result property="quantity" 			column="quantity" 				jdbcType="NUMERIC" />
+	</resultMap>	
+	
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addCart"		parameterType="cart" >
+		INSERT
+		INTO cart( cart_no , prod_no, user_id, quantity) 
+	 	VALUES (seq_cart_cart_no.NEXTVAL , #{cartProd.prodNo}, #{userId}, #{quantity});
+	 </insert>
+	 
+	 	 
+	 <!-- SQL : SELECT -->
+	  <select 	id="getCart"	parameterType="int"	resultMap="CartSelectMap">
+		SELECT *	
+		FROM cart
+		WHERE cart_no = #{cartNo};
+	 </select>
+	 
+	 
+	 <!-- SQL : SELECT -->
+	 <select 	id="getCartList"	parameterType="string"	resultMap="CartSelectMap">
+		SELECT p.*, c.*
+		FROM product p, cart c
+		WHERE p.prod_no=c.prod_no
+		AND user_id = ${value}
+		ORDER BY cart_no DESC;
+	 </select>
+	 
+	 <!-- SQL : UPDATE Stock -->
+	 <update	id="updateCart"	parameterType="map" >
+	   		UPDATE cart
+	   	<set>
+	   		quantity = #{quantity}
+	   	</set>
+	   		WHERE cart_no = #{cartNo}
+	 </update>
+	 
+	 <!-- SQL : DELETE -->
+	 <delete	id="deleteCart"	parameterType="int" >
+	   	DELETE
+	   	FROM cart
+	   	WHERE cart_no = #{cartNo}
+	 </delete>
+
+	 
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BookmarkMapper">
+ 	
+ 	
+	<resultMap id="bookmarkSelectMap" type="bookmark">
+		<result property="bookmarkNo" 			column="bookmark_no" 			jdbcType="NUMERIC"/>
+		<result property="userId" 	column="user_id" 		jdbcType="VARCHAR" />
+		<collection property="recipe" resultMap="recipeSelectMap"/>
+	</resultMap>
+	
+<resultMap id="recipeSelectMap" type="recipe">
+		<result property="recipeNo" 			column="recipe_no" 			jdbcType="NUMERIC"/>
+		<result property="writer.userNickname" 				column="writer_nickname" 					jdbcType="VARCHAR" />
+		<result property="recipeName"			column="recipe_name" 		jdbcType="VARCHAR" />
+		<result property="recipeDetail" 	column="recipe_detail" 		jdbcType="VARCHAR" />
+		<result property="recipeImg" 			column="recipe_img" 		jdbcType="VARCHAR" />
+		<result property="recipeVideo" 			column="recipe_video" 		jdbcType="VARCHAR" />
+		<result property="recipeDifficulty" 				column="recipe_difficulty" 					jdbcType="VARCHAR" />
+		<result property="recipeTheme"      column="recipe_theme"           jdbcType="VARCHAR"/>
+		<result property="cookingTime"      column="cooking_time"           jdbcType="NUMERIC"/>
+		<result property="recipeOrder"      column="recipe_order"            jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="recipeRegDate" 				column="recipe_regdate" 					jdbcType="DATE" />
+		<result property="reviewNum"      column="review_num"           jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addBookmark"		parameterType="bookmark" >
+	 	INSERT
+		INTO bookmark( bookmark_no , recipe_no,user_id) 
+		VALUES	 (	seq_bookmark_no.nextval  ,  #{recipe.recipeNo},#{userId})
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getBookmark"	parameterType="int"	resultMap="bookmarkSelectMap">
+		SELECT *
+		FROM bookmark 
+		WHERE bookmark_no= #{bookmarkNo}
+	 </select>
+	 
+	 
+	 <delete id="deleteBookmark" parameterType="bookmark" >
+	 DELETE
+	 FROM bookmark 
+	 WHERE bookmark_no= #{bookmarkNo} 
+	 </delete>
+	 
+	<select  id="getBookmarkList"  parameterType="map"	statementType="CALLABLE"  resultMap="bookmarkSelectMap">
+	  	 select b.*,r.*
+		from bookmark b,  recipe r
+		where 
+		r.recipe_no=b.recipe_no
+		and b.user_id=#{userId}
+	 </select>
+	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	select b.*,r.*
+		from bookmark b,  recipe r
+		where 
+		r.recipe_no=b.recipe_no
+		and b.user_id=#{userId}
+						) countTable
+	 </select>
+	 
+</mapper>

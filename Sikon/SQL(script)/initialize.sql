@@ -1,58 +1,58 @@
+DROP TABLE reviewimage;  
+DROP TABLE review;   
+DROP TABLE license;    
+DROP TABLE career;    
+DROP TABLE heart;    
+DROP TABLE apply; 
+DROP TABLE wish;
+DROP TABLE bookmark; 
+DROP TABLE ingredient; 
+DROP TABLE purchase;   
+DROP TABLE cart;   
 DROP TABLE coupon;
 DROP TABLE couponholder;
 DROP TABLE notice;
-DROP TABLE users;
-DROP TABLE license;
-DROP TABLE career;
-DROP TABLE bookmark;
-DROP TABLE ingredient;
 DROP TABLE recipe;
 DROP TABLE product;
-DROP TABLE purchase;
-DROP TABLE cart;
-DROP TABLE class;
-DROP TABLE heart;
-DROP TABLE wish;
-DROP TABLE apply;
-DROP TABLE reviewimage;
-DROP TABLE review;
+DROP TABLE cook;
+DROP TABLE users;
 
+
+DROP SEQUENCE seq_img_no;
+DROP SEQUENCE seq_review_no;
+DROP SEQUENCE seq_license_license_no;
+DROP SEQUENCE seq_career_career_no;
+DROP SEQUENCE seq_heart_heart_no;
+DROP SEQUENCE seq_apply_apply_no;
+DROP SEQUENCE seq_wish_wish_no;
+DROP SEQUENCE seq_bookmark_no;
+DROP SEQUENCE seq_ingredient_no;
+DROP SEQUENCE seq_purchase_tran_no;
+DROP SEQUENCE seq_cart_cart_no;
 DROP SEQUENCE seq_coupon_coupon_no;
 DROP SEQUENCE seq_couponhodler_issue_no;
 DROP SEQUENCE seq_notice_notice_no;
-DROP SEQUENCE seq_license_license_no;
-DROP SEQUENCE seq_career_career_no;
-DROP SEQUENCE seq_bookmark_no;
-DROP SEQUENCE seq_ingredient_no;
 DROP SEQUENCE seq_recipe_no;
 DROP SEQUENCE seq_product_prod_no;
-DROP SEQUENCE seq_purchase_tran_no;
-DROP SEQUENCE seq_cart_cart_no;
-DROP SEQUENCE seq_class_class_no;
-DROP SEQUENCE seq_wish_wish_no;
-DROP SEQUENCE seq_heart_heart_no;
-DROP SEQUENCE seq_apply_apply_no;
-DROP SEQUENCE seq_img_no;
-DROP SEQUENCE seq_review_no;
+DROP SEQUENCE seq_cook_cook_no;
 
-CREATE SEQUENCE seq_coupon_coupon_no 	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_couponhodler_issue_no 	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_notice_notice_no  	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_license_license_no	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_career_career_no	 INCREMENT BY 1 START WITH 10000;
-CREATE  SEQUENCE  seq_recipe_no	  	 INCREMENT  BY  1  START  WITH  10000;
-CREATE  SEQUENCE  seq_ingredient_no	 INCREMENT  BY  1  START  WITH  10000;
+CREATE  SEQUENCE  seq_img_no	 		 INCREMENT  BY  1  START  WITH  10000;
+CREATE  SEQUENCE  seq_review_no	 		 INCREMENT  BY  1  START  WITH  10000;
+CREATE SEQUENCE seq_license_license_no		 INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_career_career_no		 INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_heart_heart_no	  INCREMENT BY 1 START WITH 1;
+CREATE  SEQUENCE  seq_apply_apply_no	 INCREMENT  BY  1  START  WITH  10000;
+CREATE SEQUENCE seq_wish_wish_no	  INCREMENT BY 1 START WITH 10000;
 CREATE  SEQUENCE  seq_bookmark_no	 INCREMENT  BY  1  START  WITH  10000;
-CREATE SEQUENCE seq_product_prod_no 	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_purchase_tran_no 	 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_cart_cart_no 		 INCREMENT BY 1 START WITH 10000;
-CREATE  SEQUENCE  seq_cook_cook_no 	 INCREMENT BY  1  START  WITH  10000;
-CREATE  SEQUENCE  seq_class_class_no	 INCREMENT  BY  1  START  WITH  10000;
-CREATE SEQUENCE seq_wish_wish_no 		 INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_heart_heart_no	 INCREMENT BY 1 START WITH 1;
-CREATE  SEQUENCE  seq_apply_apply_no;	 INCREMENT  BY  1  START  WITH  10000;
-CREATE  SEQUENCE  seq_review_no		 INCREMENT  BY  1  START  WITH  10000;
-CREATE  SEQUENCE  seq_img_no		 INCREMENT  BY  1  START  WITH  10000;
+CREATE  SEQUENCE  seq_ingredient_no	 INCREMENT  BY  1  START  WITH  10000;
+CREATE SEQUENCE seq_purchase_tran_no 	INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_cart_cart_no 		INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_coupon_coupon_no  	 INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_couponhodler_issue_no  	 INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_notice_notice_no   	 INCREMENT BY 1 START WITH 10000;
+CREATE  SEQUENCE  seq_recipe_no	  	 INCREMENT  BY  1  START  WITH  10000;
+CREATE SEQUENCE seq_product_prod_no 	INCREMENT BY 1 START WITH 10000;
+CREATE  SEQUENCE  seq_cook_cook_no	 INCREMENT  BY  1  START  WITH  10000;
 
 
 CREATE TABLE coupon ( 
@@ -122,7 +122,7 @@ CREATE TABLE career (
 
 CREATE TABLE recipe(
 recipe_no NUMBER 	NOT NULL,
-writer_nickname  VARCHAR2(50) REFERENCES  users(user_id),
+writer_nickname  VARCHAR2(50) REFERENCES  users(user_nickname),
 recipe_name  VARCHAR2(100) NOT NULL,
 recipe_detail  VARCHAR2(200)  NOT NULL,
 recipe_img VARCHAR2(200) NOT NULL,
@@ -135,6 +135,7 @@ recipe_regdate  DATE NOT NULL,
 review_num  NUMBER NOT NULL,
 PRIMARY KEY(recipe_no)
 );
+
 
 CREATE TABLE ingredient(
 ingredient_no   NUMBER  NOT NULL,
@@ -198,35 +199,36 @@ CREATE TABLE cart (
 	PRIMARY KEY(cart_no)
 );
 
-CREATE TABLE class ( 
-	class_no 			 			NUMBER 		 		NOT NULL,
-	class_name 			 	VARCHAR2(100)  	NOT NULL,
-	class_filename 			 		VARCHAR2(200),
-	class_brief 		 		VARCHAR2(200),
-	class_difficuty				VARCHAR2(20) NOT NULL,
-	class_price 				 NUMBER(10)  NOT NULL,	
-	class_theme 			 	VARCHAR2(20) NOT NULL,	
-	apl_startime     			VARCHAR2(10),
+CREATE TABLE cook ( 
+	cook_no 			 			NUMBER 		 		NOT NULL,
+	cook_name 			 	VARCHAR2(100)  	NOT NULL,
+	cook_filename 			 		VARCHAR2(200),
+	cook_brief 		 		VARCHAR2(200),
+	cook_difficuty				VARCHAR2(20) NOT NULL,
+	cook_price 				 NUMBER(10)  NOT NULL,	
+	cook_theme 			 	VARCHAR2(20) NOT NULL,	
+	apl_startime     				 DATE    not null,	
 	apl_endtime         			 DATE    not null,	
-	class_recruit         			 NUMBER    not null,
+	cook_recruit         			 NUMBER    not null,
 	start_time         			 DATE    not null,
 	end_time         			 DATE    not null,	
-	class_location         			 VARCHAR2(200)    not null,
-	class_regdate         			 DATE    not null,	
-	class_video         			VARCHAR2(200)  ,
-	PRIMARY KEY(class_no)
+	cook_location         			 VARCHAR2(200)    not null,
+	cook_regdate         			 DATE    not null,	
+	cook_video         			VARCHAR2(200)  ,
+	cook_stock         			 NUMBER    not null,
+	PRIMARY KEY(cook_no)
 );
 
-alter table class add(class_stock NUMBER not null);
+alter table cook add(heart_hit NUMBER default 0 );
 
 
 CREATE TABLE apply ( 
 	apply_no 			 		NUMBER 			 NOT  NULL,
-	class_no 			 		NUMBER		 NOT  NULL  REFERENCES  class(class_no),
+	cook_no 			 		NUMBER		 NOT  NULL  REFERENCES  cook(cook_no),
 	applier_id 			 	VARCHAR2(50)	 NOT  NULL  REFERENCES  users(user_id),
 	payment_option	 	VARCHAR(50),	
 	apply_status 	VARCHAR(20),
-	class_status         			 NUMBER  not null,
+	cook_status         			 NUMBER  not null,
 	check_date 		 	DATE,	
 	PRIMARY KEY(apply_no)
 );
@@ -234,18 +236,18 @@ CREATE TABLE apply (
 
 CREATE TABLE wish(
 	wish_no				  NUMBER 			  	  NOT NULL,
-	class_no 			 		NUMBER		 NOT  NULL  REFERENCES  class(class_no),
+	cook_no 			 		NUMBER		 NOT  NULL  REFERENCES  cook(cook_no),
 	user_id				  VARCHAR2(50)	    NOT NULL REFERENCES     users(user_id),
 	quantity 		NUMBER,
-	class_name 			 	VARCHAR2(100)  	NOT NULL,
-	class_filename 			 		VARCHAR2(200),
-	class_price 				 NUMBER(10)  NOT NULL,
+	cook_name 			 	VARCHAR2(100)  	NOT NULL,
+	cook_filename 			 		VARCHAR2(200),
+	cook_price 				 NUMBER(10)  NOT NULL,
 		PRIMARY KEY(wish_no)
 );
 
 CREATE TABLE heart (
 	heart_no				  NUMBER 			  	  NOT NULL,
-	class_no 			 		NUMBER		 NOT  NULL  REFERENCES  class(class_no),
+	cook_no 			 		NUMBER		 NOT  NULL  REFERENCES  cook(cook_no),
 	user_id				  VARCHAR2(50)	    NOT NULL REFERENCES     users(user_id),
 	heart_check                           NUMBER(20)         DEFAULT 0              NOT NULL,	
 	PRIMARY KEY(heart_no)
@@ -253,17 +255,18 @@ CREATE TABLE heart (
 
 CREATE TABLE review(
 review_no  NUMBER 		 		NOT NULL,
-writer_id   VARCHAR2(50)   	REFERENCES  users(user_id),
+writer_nickname   VARCHAR2(50)   	REFERENCES  users(user_nickname),
 review_content         VARCHAR2(400) NOT NULL,
 review_regdate        DATE NOT NULL,
 review_category        VARCHAR2(20) NOT NULL,
-recipe_no   NUMBER(16)    NOT  NULL  REFERENCES  recipe(recipe_no),
-prod_no   NUMBER(16)    NOT  NULL  REFERENCES  product(prod_no),
-tran_no   NUMBER(16)    NOT  NULL  REFERENCES  purchase(tran_no),
-class_no   NUMBER(16)    NOT  NULL  REFERENCES  class(class_no),
-apply_no   NUMBER(16)    NOT  NULL  REFERENCES  apply(apply_no),
+recipe_no   NUMBER(16)    REFERENCES  recipe(recipe_no),
+prod_no   NUMBER(16)     REFERENCES  product(prod_no),
+tran_no   NUMBER(16)     REFERENCES  purchase(tran_no),
+cook_no   NUMBER(16)     REFERENCES  cook(cook_no),
+apply_no   NUMBER(16)    REFERENCES  apply(apply_no),
 PRIMARY KEY(review_no)
 );
+
 
 CREATE TABLE reviewimage(
 img_no  NUMBER   NOT NULL,
@@ -274,11 +277,17 @@ PRIMARY KEY(img_no)
 
 
 INSERT 
-INTO users
-VALUES ( 'admin', 'admin', '1234', '19980505', 'admin', 'aa.jpg', '수원', 'admin', '010-115-222',0,'n',sysdate,null,'n');  
-
-INSERT INTO users 
-VALUES ( 'user01', 'SCOTT', '1111', '19980505', 'user', 'aa.jpg', '수원', 'user', '010-111-222',0,'n',sysdate,null,'n');  
+INTO users ( user_id, user_name, password, user_birth, user_nickname, user_image, user_addr, role, user_phone, holdpoint, mentor_apply, user_regdate, quit_date, quit_status  ) 
+VALUES ( 'aa@naver.com', 'user', '1234', '19941111', 'fdds', 'ee.jpg', '서울시 서초구', 'admin', '01022249988', 1000, 'Y', SYSDATE, to_date('2013/01/14', 'YYYY/MM/DD'), to_date('2014/01/14', 'YYYY/MM/DD'));
+ 
+insert all
+into users
+VALUES ( 'asdf@naver.com', 'sasd', '12345', '19941111', 'aaaa', 'ee.jpg', '서울시 서초구', 'admin', '01023341200', 1000, 'Y', SYSDATE, to_date('2013/01/14', 'YYYY/MM/DD'), to_date('2014/01/14', 'YYYY/MM/DD'))
+into license
+VALUES ( seq_license_license_no.nextval, '2종보통', '강남구청', to_date('2017/05/24', 'YYYY/MM/DD'), 'asdf@naver.com' )
+INTO career
+VALUES (  seq_career_career_no.nextval, '오미라', to_date('2011/05/24', 'YYYY/MM/DD'), to_date('2012/05/24', 'YYYY/MM/DD'), '싸이', 'asdf@naver.com')
+select *from dual;
 
 insert into product values (seq_product_prod_no.nextval,'자전거', 50000, '자전거 디테일', 0.10, 45000, '자전거thumbnail.jpg', '자전거content', 50, 'TW', 'Y', 'Y', to_date('2012/12/01', 'YYYY/MM/DD'));
 insert into product values (seq_product_prod_no.nextval,'핸드크림', 76000, '핸드크림 디테일', 0.10, 60800, '핸드크림thumbnail.jpg', '핸드크림content', 50, 'TW', 'Y', 'Y', to_date('2012/12/02', 'YYYY/MM/DD'));
@@ -289,6 +298,15 @@ insert into product values (seq_product_prod_no.nextval,'슬리퍼', 50000, '슬
 insert into product values (seq_product_prod_no.nextval,'초콜릿', 2000, '초콜릿 디테일', 0.10, 1800, '초콜릿thumbnail.jpg', '초콜릿content', 50, 'TW', 'Y', 'Y', to_date('2012/12/07', 'YYYY/MM/DD'));
 
 
+INSERT
+INTO recipe
+VALUES	 (seq_recipe_no.nextval ,'fdds' , '라자냐', '베리굿','aa.jpg',null,'100','FO',50,'오롤로로',SYSDATE,0);
 
+insert into cook(cook_no, cook_name , cook_filename, cook_brief , cook_difficuty, cook_price, cook_theme, apl_startime ,apl_endtime, cook_recruit, start_time,  end_time , cook_location , cook_regdate, cook_video,cook_stock  )
+values (seq_cook_cook_no.nextval,'예다의 계란 후라이 쿠킹클래스', 'yyy.jpg', '진짜 쉬워요', '초급', 14000, '한식', sysdate, sysdate, 5, sysdate, sysdate, '강남구 비트캠프', sysdate, 'aaa.jpg', 20);
+
+INSERT
+INTO review
+VALUES	( seq_review_no.nextval  ,'aaaa' , '리뷰내용임',SYSDATE,'RE',10000,NULL,NULL,NULL,NULL);
 
 commit;

@@ -5,11 +5,11 @@ import java.sql.Date;
 public class Apply {
 
 	private int applyNo;
-	private Class classCook;
+	private Cook classCook;
 	private User applier;
 	private String paymentOption;
 	private String applyStatus;
-	private int classStatus;
+	private int cookStatus;
 	private Date checkDate;
 
 	public Apply() {
@@ -24,11 +24,11 @@ public class Apply {
 		this.applyNo = applyNo;
 	}
 
-	public Class getClassCook() {
+	public Cook getClassCook() {
 		return classCook;
 	}
 
-	public void setClassCook(Class classCook) {
+	public void setClassCook(Cook classCook) {
 		this.classCook = classCook;
 	}
 
@@ -56,12 +56,12 @@ public class Apply {
 		this.applyStatus = applyStatus;
 	}
 
-	public int getClassStatus() {
-		return classStatus;
+	public int getCookStatus() {
+		return cookStatus;
 	}
 
-	public void setClassStatus(int classStatus) {
-		this.classStatus = classStatus;
+	public void setCookStatus(int cookStatus) {
+		this.cookStatus = cookStatus;
 	}
 
 	public Date getCheckDate() {
@@ -75,8 +75,10 @@ public class Apply {
 	@Override
 	public String toString() {
 		return "Apply [applyNo=" + applyNo + ", classCook=" + classCook + ", applier=" + applier + ", paymentOption="
-				+ paymentOption + ", applyStatus=" + applyStatus + ", classStatus=" + classStatus + ", checkDate="
+				+ paymentOption + ", applyStatus=" + applyStatus + ", cookStatus=" + cookStatus + ", checkDate="
 				+ checkDate + "]";
 	}
+
+
 
 }

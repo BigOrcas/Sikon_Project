@@ -11,8 +11,8 @@ public class Review {
 	private Recipe recipe;
 	private Product product;
 	private Purchase purchase;
-	private Apply classApply;
-	private Class cookClass;
+	private Apply apply;
+	private Cook cook;
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -78,28 +78,29 @@ public class Review {
 		this.purchase = purchase;
 	}
 
-	public Apply getClassApply() {
-		return classApply;
+
+	public Apply getApply() {
+		return apply;
 	}
 
-	public void setClassApply(Apply classApply) {
-		this.classApply = classApply;
+	public void setApply(Apply apply) {
+		this.apply = apply;
 	}
 
-	public Class getCookClass() {
-		return cookClass;
+	public Cook getCook() {
+		return cook;
 	}
 
-	public void setCookClass(Class cookClass) {
-		this.cookClass = cookClass;
+	public void setCook(Cook cook) {
+		this.cook = cook;
 	}
 
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", writerNickname=" + writerNickname + ", reviewContent="
 				+ reviewContent + ", reviewRegdate=" + reviewRegdate + ", reviewCategory=" + reviewCategory
-				+ ", recipe=" + recipe + ", product=" + product + ", purchase=" + purchase + ", classApply="
-				+ classApply + ", cookClass=" + cookClass + "]";
+				+ ", recipe=" + recipe + ", product=" + product + ", purchase=" + purchase + ", Apply="
+				+ apply + ", cook=" + cook + "]";
 	}
 
 }

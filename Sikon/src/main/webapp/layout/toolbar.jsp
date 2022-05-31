@@ -30,6 +30,7 @@
 	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
 	             <ul class="nav navbar-nav">
 	             
+	             
 	              <!--  회원관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -53,7 +54,7 @@
 	                 </li>
 	                 
 	              <!-- 판매상품관리 DrowDown  -->
-	               <c:if test="${sessionScope.user.role == 'admin'}">
+	                <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		                         <span >판매관리</span>
@@ -66,6 +67,7 @@
 		                     </ul>
 		                </li>
 	                 </c:if>
+	                 
 	                 
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
@@ -83,8 +85,24 @@
 	                         <li><a href="#">최근 본 상품</a></li>
 	                     </ul>
 	                 </li>
+	                 
+	                 <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >레시피</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">레시피검색</a></li>
+              	             <li><a href="#">레시피등록</a></li>
+	                           <li><a href="#">나의레시피</a></li>
+	                         <li><a href="#">최근본상품</a></li>
+	                         <li class="divider"></li>
+	                     </ul>
+	                 </li>
 
 	             </ul>
+	             
+	             
 	             
 	             <ul class="nav navbar-nav navbar-right">
 	                <li><a href="#">로그아웃</a></li>
@@ -205,6 +223,27 @@
 	 		popWin = window.open("/history.jsp", "popWin",
 	 		"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 		}); 
+	 	
+	 	
+	 	$( "a:contains('레시피검색')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/recipe/listRecipe");
+		});
+		
+		$( "a:contains('레시피등록')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/recipe/addRecipe.jsp");
+		});
+		
+		$( "a:contains('마이페이지')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/bookmark/listBookmark");
+		});
+		
+		$( "a:contains('나의레시피')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/recipe/getMyRecipeList");
+		});
 	 	
 		
 		

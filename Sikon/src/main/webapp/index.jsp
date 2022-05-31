@@ -57,6 +57,33 @@
 			});
 		});
 		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('레시피검색')").on("click" , function() {
+				self.location = "/recipe/listRecipe"
+			});
+		});
+		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('레시피등록')").on("click" , function() {
+				self.location = "/recipe/addRecipe.jsp"
+			});
+		});
+		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('책갈피')").on("click" , function() {
+				self.location = "/bookmark/listBookmark"
+			});
+		});
+		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('나의레시피')").on("click" , function() {
+				self.location = "/recipe/getMyRecipeList"
+			});
+		});
 	</script>	
 	
 </head>
@@ -132,6 +159,25 @@
 					</ul>
 		        </div>
                
+               		<div class="panel panel-primary">
+					<div class="panel-heading">
+							<i class="glyphicon glyphicon-briefcase"></i> 레시피
+         			</div>
+					<ul class="list-group">
+						 <li class="list-group-item">
+						 	<a href="#">레시피검색</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 </li>
+						 <li class="list-group-item">
+						 	<a href="#">레시피등록</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 </li>
+						 <li class="list-group-item">
+						 	<a href="#">책갈피</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 </li>
+						  <li class="list-group-item">
+						 	<a href="#">나의레시피</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 </li>
+					</ul>
+		        </div>
                
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -149,6 +195,8 @@
 				</div>
 				
 			</div>
+			
+			
 			<!--  Menu 구성 end /////////////////////////////////////-->   
 
 	 	 	<!--  Main start /////////////////////////////////////-->   		

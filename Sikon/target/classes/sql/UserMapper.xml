@@ -5,94 +5,146 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="UserMapper">
- 	
- 	
-	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+
+
+<resultMap id="userSelectMap" type="user">
+		<result property="userId" 	column="user_id" 		jdbcType="VARCHAR"/>
 		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
 		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
-		<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
-		<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
-		<result property="email" 			column="email" 				jdbcType="VARCHAR"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
-	</resultMap>
-	
-	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
-	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
-	 </insert>
-	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
-		SELECT
-		user_id , user_name , password , role ,  cell_phone ,  addr , email , reg_date 		
-		FROM users 
-		WHERE user_id = #{value}
-	 </select>
-	 
-	 <!-- SQL : UPDATE -->
-	 <update	id="updateUser"	parameterType="user" >
+		<result property="userBirth" 	column="user_birth" 		jdbcType="VARCHAR" />
+		<result property="userNickname" 	column="user_nickname" 		jdbcType="VARCHAR" />
+		<result property="userImage" 	column="user_image" 		jdbcType="VARCHAR" />
+		<result property="addr" 	column="user_addr" 		jdbcType="VARCHAR" />
+		<result property="role" 	column="role" 			jdbcType="VARCHAR" />
+		<result property="phone" 	column="user_phone" 		jdbcType="VARCHAR" />
+		<result property="holdpoint" 	column="holdpoint" 		jdbcType="NUMERIC" />
+		<result property="mentorApply" 	column="mentor_apply" 		jdbcType="VARCHAR"  />
+		<result property="regDate" 	column="user_regdate" 		jdbcType="DATE" />
+		<result property="quitDate" 	column="quit_date" 		jdbcType="DATE" />
+		<result property="quitStatus" 	column="quit_status" 		jdbcType="VARCHAR"  />
+</resultMap>
+
+
+<resultMap id="careerSelectMap" type="career">
+		<result property="careerNo" 	column="career_no" 		jdbcType="NUMERIC"/>
+		<result property="company"	column="company" 		jdbcType="VARCHAR" />
+		<result property="careerExperience" 	 column="career_experience" 		jdbcType="VARCHAR" />
+		<result property="startDate"	column="start_date" 		jdbcType="DATE" />
+		<result property="endDate"	column="end_date" 		jdbcType="DATE" />
+		<result property="userId"	column="user_id" 		jdbcType="VARCHAR" />
+</resultMap>
+
+
+<resultMap id="licenseSelectMap" type="license">
+		<result property="licenseNo" 	column="license_no" 		jdbcType="NUMERIC"/>
+		<result property="licenseName"	column="license_name" 		jdbcType="VARCHAR" />
+		<result property="licenseInstitution" 	 column="license_institution" 		jdbcType="VARCHAR" />
+		<result property="licenseDate"	column="license_date" 		jdbcType="DATE" />
+		<result property="userId"	column="user_id" 		jdbcType="VARCHAR" />
+</resultMap>
+
+
+
+
+
+
+
+	<!-- 회원가입 -->
+	<insert  id="addUser"		parameterType="map" >
+		 INSERT
+		 INTO users( user_id , user_name , password , user_birth , user_nickname , user_image , user_addr , role , user_phone , holdpoint , mentor_apply , user_regdate , quit_date , quit_status ) 
+		 VALUES	 ( #{userId} , #{userName} , #{password} , #{userBirth}, #{userNickname}, #{userImage}, #{addr}, 'user', #{phone}, 
+						#{holdpoint:NUMERIC}, #{mentorApply}, SYSDATE , #{quitDate:DATE} , #{quitStatus} )
+		 INTO career( career_no , company , career_experience , start_date , end_date )
+		 VALUES ( seq_career_career_no.nextval , #{company} , #{careerExperience} , #{startDate:DATE} , #{endDate:DATE} )
+		 INTO license( license_no , license_name , license_institution , license_date )
+		 VALUES ( seq_license_license_no.nextval , #{licenseName} , #{licenseInstitution} , #{licenseDate:DATE})
+
+	</insert>
+
+
+
+
+
+	<!-- 회원상세조회 -->
+	<select  id="getUser"		parameterType="string"	resultMap="userSelectMap">
+		 SELECT
+		 user_id , user_name ,password, user_nickname , user_phone , user_birth ,  user_addr , user_image , role , mentor_apply , quit_status , quit_date , user_regdate 		
+		 FROM users 
+		 WHERE user_id = #{value}
+        </select>
+
+
+	<!-- ID찾기 -->
+	<select  id="findUserId"	parameterType="string"	resultMap="userSelectMap">
+		SELECT user_id
+		FROM users
+		WHERE user_nickname = #{userNickname}
+		     AND user_birth = #{userBirth}
+		     AND user_phone = #{phone}
+	</select>
+
+
+
+
+
+
+	<!-- 회원수정 -->
+	<update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
+			password	= #{password} , 
 	   		user_name 	= #{userName} ,
-			cell_phone	= #{phone},
-			addr 				= #{addr} ,
-			email				=	#{email}
+			user_nickname	= #{userNickname} ,
+			user_birth	= #{userBirth} ,
+			user_addr 	= #{addr} ,
+			user_phone	= #{phone} ,
+			mentor_apply	= #{mentorApply}
+
+
 	   	</set>
 	   	WHERE user_id = #{userId}
-	 </update>
-		 
-	<!-- SQL : SELECT LIST -->
+	</update>
+
+
+
+ 
+		
+
+
+
+	<!-- 회원목록 -->
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , email
+	  					FROM		(	SELECT user_id , user_name , user_nickname
 											FROM users
-											<if test="searchCondition != null">
-												<where>
+											<!-- <if test="searchCondition != null">
+												 <where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id LIKE '%'||#{searchKeyword}||'%'
+										 				user_id = #{searchKeyword}
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name LIKE '%'||#{searchKeyword}||'%'
+										 				user_name = #{searchKeyword}
 													</if>
 												</where>
 											</if>
+											-->
 											ORDER BY user_id ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
-	 	<!--  위 두번째 subQuery 의  
-	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
-	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
-	 			< 는 keyword 로 &lt; 를	사용.
-	 			
-	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
-	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
-
-				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
-		-->
 	
-	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , email
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id LIKE '%'||#{searchKeyword}||'%'
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 			user_name LIKE '%'||#{searchKeyword}||'%'
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
-	 
+
+
+	<!-- 회원탈퇴 -->
+	<update id="deleteUser" parameterType="user" >
+		UPDATE users
+		<set>
+			quit_status	= #{quitStatus} ,
+			quit_date	= SYSDATE ,
+
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

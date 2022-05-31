@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="IngredientMapper">
+ 	
+ 	
+	<resultMap id="ingredientSelectMap" type="ingredient">
+		<result property="ingredientNo" 			column="ingredient_no" 			jdbcType="NUMERIC"/>
+		<result property="ingredientName"			column="ingredient_name" 		jdbcType="VARCHAR" />
+		<result property="ingredientAmount" 	column="ingredient_amount" 		jdbcType="VARCHAR" />
+		<result property="recipeNo" 			column="recipe_no" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	 <insert 	id="addIngredient"		parameterType="ingredient" >
+	 	INSERT
+		INTO ingredient 
+		VALUES	 (	seq_ingredient_no.nextval , #{ingredientName}, #{ingredientAmount},#{recipeNo})
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getIngredient"	parameterType="int"	resultMap="ingredientSelectMap">
+		SELECT *
+		FROM ingredient 
+		WHERE ingredient_no= #{ingredientNo}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateIngredient"	parameterType="ingredient" >
+	   	UPDATE ingredient
+	   	<set>
+	   		ingredient_name 	= #{ingredientName} ,
+			ingredient_amount	= #{ingredientAmount},
+	   	</set>
+	   	WHERE ingredient_no = #{ingredientNo}
+	 </update>
+	 
+	 
+	<!-- SQL : SELECT LIST -->
+	<select  id="getIngredientList"  parameterType="int"	resultMap="ingredientSelectMap">
+	  	SELECT *
+			FROM ingredient
+											where ingredient_NO = #{ingredientNo}
+	 </select>
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT ingredient_no 
+						FROM ingredient
+														order by ingredient_no
+													) countTable						
+	 </select>
+	 
+	 
+</mapper>

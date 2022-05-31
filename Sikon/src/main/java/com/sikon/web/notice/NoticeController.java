@@ -60,16 +60,17 @@ public class NoticeController {
 	}
 	
 	///Method
-	@RequestMapping( value="addNotice", method=RequestMethod.POST )
-	public String addCoupon(@ModelAttribute("notice") Notice notice) throws Exception{
+	@RequestMapping( value="/addNotice", method=RequestMethod.POST )
+	public String addCoupon(@ModelAttribute("notice") Notice notice, Model model) throws Exception{
 
 		System.out.println("/notice/addNotice : POST");
 		
 		//Business Logic
 		System.out.println(notice);
 		noticeService.addNotice(notice);
+		model.addAttribute(notice);
 		
-		return "forward:/notice/addNotice.jsp";
+		return "forward:/notice/readNotice.jsp";
 	}
 	
 	@RequestMapping(value="/getNotice", method=RequestMethod.GET)

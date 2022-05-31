@@ -38,18 +38,8 @@
   <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	$(function() {
-		
-		$( "#purchase" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			
-			self.location = "/purchase/addPurchase?prodNo=${product.prodNo}";
-		});
-		
-		
+				
 		$( "#previous" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
 			history.go(-1);
 		});
 		
@@ -91,12 +81,7 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  		<c:if test = "${user.userId != 'admin'}">
-			<c:if test = "${product.proTranCode == null}">
-	  			<button type="button" id="purchase" class="btn btn-primary">구매</button>
-	  		</c:if>
-			</c:if>
-				<button type="button" id="previous" class="btn btn-primary">이전</button>
+	  			<button type="button" id="previous" class="btn btn-primary">이전</button>
 	  		</div>
 		</div>
 		

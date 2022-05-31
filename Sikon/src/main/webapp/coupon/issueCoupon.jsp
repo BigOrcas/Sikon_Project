@@ -46,7 +46,22 @@
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">				
+	<script type="text/javascript">	
+	
+		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
+		function fncGetList(currentPage) {
+			$("#currentPage").val(currentPage)
+			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
+		}
+		
+
+		//============= "검색"  Event  처리 =============	
+		 $(function() {
+			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
+			});
+		 });
+		
 		$(function(){
      	   $("#startDate").datepicker({ dateFormat: 'yy-mm-dd' });
 		});
@@ -55,25 +70,25 @@
 		$(function(){
    		    $("#endDate").datepicker({ dateFormat: 'yy-mm-dd' });
 		});
-	
-		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-		function fncGetList(currentPage) {
-			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
-		}
 		
-		
-		//============= "검색"  Event  처리 =============	
-		 $(function() {
-			$( "button.btn.btn-default" ).on("click" , function() {
-				fncGetList(1);
-			});
-		 });
-		
-		 $(function() {
+		$(function() {
+			$("#issueCoupon").on("click" , function() {
+							
+				var startDate = $("input[name='startDate']").val();
+				var endDate = $("input[name='endDate']").val();
 				
-			$("#giveCoupon").on("click" , function() {
-						
+				console.log(startDate);
+											
+				if(startDate == ""){
+					alert("쿠폰시작일자는 반드시 입력하셔야 합니다.");
+					return;
+				}
+				
+				if(endDate == ""){
+					alert("쿠폰만료일자는 반드시 입력하셔야 합니다.");
+					return;
+				}
+			
 			$("form").attr("method", "POST").attr("action", "/coupon/issueCoupon").submit();
 			});
 		});
@@ -139,7 +154,7 @@
 		    </div>
 		  </div>
 		  
-		  <button type="button" class="btn btn-primary" id="giveCoupon">발 &nbsp;급</button>
+		  <button type="button" class="btn btn-primary" id="issueCoupon">발 &nbsp;급</button>
 		    
 	    	
 		</div>

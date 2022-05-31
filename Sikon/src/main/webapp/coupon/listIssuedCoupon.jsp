@@ -64,7 +64,7 @@
 				$("button.cancel").on("click" , function() {
 					
 					console.log($(this).attr("value"));
-					self.location = "/coupon/updateCoupon?issueNo="+$(this).attr("value");
+					self.location = "/coupon/updateIssueStatus?issueNo="+$(this).attr("value");
 				});
 			});
 	
@@ -125,14 +125,21 @@
 		  <c:forEach var="coupon" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
+			  <c:if test = "${coupon.issueStatus != '회수'}">
 			  <td align="left"><input type="checkbox"></td>
+			  </c:if>
+			  <c:if test = "${coupon.issueStatus == '회수'}">
+			  <td align="left"></td>
+			  </c:if>
 			  <td align="left">${coupon.issueNo}</td>
 			  <td align="left">${coupon.couponName}</td>
 			  <td align="left">${coupon.couponUser.userId}</td> 
 			  <td align="left">${coupon.startDate}</td>
 			  <td align="left">${coupon.endDate}</td>
 			  <td align="left">${coupon.issueStatus}</td>
+			  <c:if test = "${coupon.issueStatus != '회수'}">
 			  <td align="left"><button type="button" class="btn btn-primary cancel" name="issueNo" value = "${coupon.issueNo}" >회수</button></td>
+			  </c:if>
 			</tr>
           </c:forEach>
         

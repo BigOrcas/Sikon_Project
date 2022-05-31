@@ -74,7 +74,7 @@
 				
 			$("#addCoupon").on("click" , function() {
 						
-				self.location = "/coupon/addCouponView.jsp";
+				self.location = "/coupon/addCoupon.jsp";
 			});
 		});
 		 

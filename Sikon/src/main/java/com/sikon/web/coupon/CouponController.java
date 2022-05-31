@@ -56,11 +56,10 @@ public class CouponController {
 	public CouponController(){
 		System.out.println(this.getClass());
 	}
-	
-	
+		
 	///Method
-	@RequestMapping( value="addCouponView" )
-	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	@RequestMapping( value="/manageCoupon" )
+	public String manageCoupon(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 				
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -68,22 +67,23 @@ public class CouponController {
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
-		Map<String , Object> map = userService.getUserList(search);
-		List <Coupon> couponList = couponService.getCoupon(); 
+		Map<String , Object> couponMap = couponService.getCouponList(search);
+		Map<String , Object> issueMap = couponService.getIssuedCouponList(search);
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		Page couponPage = new Page( search.getCurrentPage(), ((Integer)couponMap.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page issuePage = new Page( search.getCurrentPage(), ((Integer)issueMap.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		// Model 과 View 연결
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("couponList", couponMap.get("list"));
+		model.addAttribute("issueList", issueMap.get("list"));
+		model.addAttribute("couponPage", couponPage);
+		model.addAttribute("issuePage", issuePage);
 		model.addAttribute("search", search);
-		model.addAttribute("couponList", couponList);
 		
-		return "forward:/coupon/listAddCouponView.jsp";
+		return "forward:/coupon/manageCoupon.jsp";
 	}
-
-	@RequestMapping( value="addCoupon", method=RequestMethod.POST )
+	
+	@RequestMapping( value="/addCoupon", method=RequestMethod.POST )
 	public String addCoupon(@ModelAttribute("coupon") Coupon coupon) throws Exception{
 
 		System.out.println("/coupon/addCoupon : POST");
@@ -92,40 +92,11 @@ public class CouponController {
 		System.out.println(coupon.getCouponNo());
 		couponService.addCoupon(coupon);
 		
-		return "forward:/coupon/listAddCouponView.jsp";
+		return "forward:/coupon/manageCoupon";
 	}
 	
-	
-	@RequestMapping( value="/deleteCoupon", method=RequestMethod.GET)
-	public String updatePurchaseView( @RequestParam("couponNo") int couponNo ) throws Exception{
-
-		System.out.println("/coupon/deleteCoupon : GET");
-		
-		//Business Logic
-		couponService.deleteCoupon(couponNo);
-
-		return "forward:/coupon/listCoupon.jsp";
-	}
-	
-	@RequestMapping( value="issueCoupon", method=RequestMethod.POST )
-	public String addCoupon( @ModelAttribute("coupon") Coupon coupon, @RequestParam("userId") List<String> userId ) throws Exception{
-
-		System.out.println("/coupon/issueCoupon : POST");
-		
-		System.out.println(coupon.getIssueStatus());
-		
-		//Business Logic		
-		for (String c : userId) {
-			User user = userService.getUser(c);
-			coupon.setCouponUser(user);
-			couponService.issueCoupon(coupon);
-	    }
-		
-		return "forward:/coupon/listAddCouponView.jsp";
-	}
-	
-	@RequestMapping( value="listCoupon" )
-	public String listCoupon( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	@RequestMapping( value="/listCoupon" )
+	public String listCoupon(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		
 		if(search.getCurrentPage() ==0 ){
@@ -147,8 +118,62 @@ public class CouponController {
 		return "forward:/coupon/listCoupon.jsp";
 	}
 	
-	@RequestMapping( value="listIssuedCoupon" )
-	public String listIssuedCoupon( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	@RequestMapping( value="/deleteCoupon", method=RequestMethod.GET)
+	public String updatePurchaseView(@RequestParam("couponNo") int couponNo) throws Exception{
+
+		System.out.println("/coupon/deleteCoupon : GET");
+		
+		//Business Logic
+		couponService.deleteCoupon(couponNo);
+
+		return "forward:/coupon/manageCoupon";
+	}
+	
+	@RequestMapping(value="/issueCoupon", method=RequestMethod.GET)
+	public String issueCouponView(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+				
+		System.out.println("/coupon/issueCoupon : GET");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		// Business logic 수행
+		Map<String , Object> map = userService.getUserList(search);
+		List <Coupon> couponList = couponService.getCoupon(); 
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		model.addAttribute("couponList", couponList);
+		
+		return "forward:/coupon/issueCoupon.jsp";
+	}
+	
+	@RequestMapping( value="/issueCoupon", method=RequestMethod.POST )
+	public String issueCoupon(@ModelAttribute("coupon") Coupon coupon, @RequestParam("userId") List<String> userId) throws Exception{
+
+		System.out.println("/coupon/issueCoupon : POST");
+		
+		System.out.println(coupon.getIssueStatus());
+		
+		//Business Logic		
+		for (String c : userId) {
+			User user = userService.getUser(c);
+			coupon.setCouponUser(user);
+			couponService.issueCoupon(coupon);
+	    }
+		
+		return "forward:/coupon/manageCoupon";
+	}
+	
+	@RequestMapping( value="/listIssuedCoupon" )
+	public String listIssuedCoupon(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		
 		if(search.getCurrentPage() ==0 ){
@@ -170,17 +195,17 @@ public class CouponController {
 		return "forward:/coupon/listIssuedCoupon.jsp";
 	}
 	
-	@RequestMapping( value="/updateCoupon", method=RequestMethod.GET )
-	public String updateCoupon( @RequestParam("issueNo") int issueNo) throws Exception{
+	@RequestMapping( value="/updateIssueStatus", method=RequestMethod.GET )
+	public String updateIssueStatus(@RequestParam("issueNo") int issueNo) throws Exception{
 
-		System.out.println("/coupon/updateCoupon : GET");
+		System.out.println("/coupon/updateIssueStatus : GET");
 	
 		//Business Logic
 		Coupon coupon = couponService.getIssuedCoupon(issueNo);
 		coupon.setIssueStatus("회수");
 		couponService.updateIssueStatus(coupon);
 		
-		return "forward:/coupon/listIssuedCoupon.jsp";
+		return "forward:/coupon/manageCoupon";
 	}
 	
 }

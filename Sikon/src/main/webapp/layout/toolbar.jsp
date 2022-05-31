@@ -173,19 +173,19 @@
 	 	
 	 	$(function() {
 		 	$("a:contains('ÄíÆù°ü¸®')").on("click" , function() {
-		 		self.location = "/coupon/manageCoupon.jsp"
+		 		self.location = "/coupon/manageCoupon"
 			}); 
 		});
 	 	
 	 	$(function() {
 		 	$("a:contains('ÄíÆù»ý¼º')").on("click" , function() {
-		 		self.location = "/coupon/addCouponView.jsp"
+		 		self.location = "/coupon/addCoupon.jsp"
 			}); 
 		});
 	 	
 		$(function() {
 		 	$("a:contains('ÄíÆù¹ß±Þ')").on("click" , function() {
-		 		self.location = "/coupon/addCouponView"
+		 		self.location = "/coupon/issueCoupon"
 			}); 
 		});
 		

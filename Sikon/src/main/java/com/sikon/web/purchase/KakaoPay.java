@@ -46,9 +46,9 @@ public class KakaoPay {
         params.add("partner_user_id", "gorany");
         params.add("item_name", "legoland");
         params.add("quantity", "1");
-        params.add("total_amount", Integer.toString(product.getPrice()));
+        params.add("total_amount", Integer.toString(product.getProdDisPrice()));
         params.add("tax_free_amount", "10");
-        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess?price="+Integer.toString(product.getPrice())+"&issueNo="+coupon.getIssueNo());
+        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess?price="+Integer.toString(product.getProdDisPrice())+"&issueNo="+coupon.getIssueNo());
         params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
         params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
  

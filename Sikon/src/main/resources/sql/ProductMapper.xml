@@ -26,21 +26,21 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product( prod_no , prod_name , prod_price, prod_detail, prod_disrate, prod_disprice, prod_thumbnail, prod_content, prod_stock, prod_theme, prod_status, coupon_apply, prod_regdate) 
+		INTO prodsikon( prod_no , prod_name , prod_price, prod_detail, prod_disrate, prod_disprice, prod_thumbnail, prod_content, prod_stock, prod_theme, prod_status, coupon_apply, prod_regdate ) 
 		VALUES	 (	seq_product_prod_no.NEXTVAL , #{prodName}, #{prodPrice} , #{prodDetail} ,#{prodDisRate} , #{prodDisPrice} , #{prodThumbnail} , #{prodContent},
-							#{prodStock}, #{prodTheme}, #{prodStatus}, #{couponApply}, SYSDATE)
+							#{prodStock}, #{prodTheme}, #{prodStatus}, #{couponApply}, SYSDATE )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
 		SELECT *		
-		FROM product
+		FROM prodsikon
 		WHERE prod_no = #{value};
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateProduct"	parameterType="product" >
-	   	UPDATE product
+	   	UPDATE prodsikon
 	   	<set>
 	   		prod_name = #{prodName} ,
 	   		prod_price = #{prodPrice}, 
@@ -62,7 +62,7 @@
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT * 
-											FROM product
+											FROM prodsikon
 											
 											<if test="searchCondition != null">
 													<if test="searchCondition == 0 ">
@@ -111,7 +111,7 @@
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT * 
-											FROM product
+											FROM prodsikon
 											<if test="searchCondition != null">
 													<if test="searchCondition == 0 ">
 										 				WHERE prod_no LIKE '%'||#{searchKeyword}||'%'
@@ -154,7 +154,7 @@
 	 
 	 <select  id="getProductNames" resultMap="productSelectMap">
 	  	SELECT * 
-	  	FROM product
+	  	FROM prodsikon
 	  	ORDER BY prod_no
 	 </select>
 	 

@@ -7,19 +7,6 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 
-<link rel="stylesheet"
-	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-
-
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-<script
-	src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
-
-<link rel="stylesheet"
-	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -70,29 +57,25 @@ div.form-group{
 <script type="text/javascript">
 	function fncAddProduct() {
 		//Form 유효성 검증
-		var name = $("input[name='prodName']").val();
-		var detail = $("input[name='prodDetail']").val();
-		var price = $("input[name='prodName']").val();
-
-		if (name == null || name.length < 1) {
-			alert("상품명은 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (detail == null || detail.length < 1) {
-			alert("상품간략정보는 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (price == null || price.length < 1) {
-			alert("가격은 반드시 입력하셔야 합니다.");
-			return;
-		}
+		
 
 		$("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "/product/addProduct").submit();
+		//document.detailForm.action='/product/addProduct';
+		//document.detailForm.submit();
 	}
 
+	$(function() {
+		$('#manuDate').datepicker({
+			format : "yyyy-mm-dd"
+
+		});
+
+	});
 
 	$(function() {
 		$("button.btn.btn-primary").on("click", function() {
+			
+			console.log($('input[name=prodDisRate]').val());
 			alert($("button.btn.btn-primary").text());
 			fncAddProduct();
 		})
@@ -105,7 +88,9 @@ div.form-group{
 		})
 	})
 
-
+	//function resetData(){
+	//	document.detailForm.reset();
+	//}
 </script>
 </head>
 
@@ -143,21 +128,21 @@ div.form-group{
 			  </div>
 
 			<div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">정상가</label>
+		    <label for="prodPrice" class="col-sm-offset-1 col-sm-3 control-label">정상가</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodPrice" name="prodPrice" placeholder="정상가">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">할인율</label>
+		    <label for="prodDisRate" class="col-sm-offset-1 col-sm-3 control-label">할인율</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDisRate" name="prodDisRate" placeholder="할인율">
+		      <input type="number" step="0.1" class="form-control" id="prodDisRate" name="prodDisRate" placeholder="할인율">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">할인가</label>
+		    <label for="prodDisPrice" class="col-sm-offset-1 col-sm-3 control-label">할인가</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodDisPrice" name="prodDisPrice" placeholder="할인가">
 		    </div>
@@ -171,14 +156,14 @@ div.form-group{
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">상품상세내용</label>
+		    <label for="prodContent" class="col-sm-offset-1 col-sm-3 control-label">상품상세내용</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodContent" name="prodContent" placeholder="썸머노트 예정">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">상품테마</label>
+		    <label for="prodTheme" class="col-sm-offset-1 col-sm-3 control-label">상품테마</label>
 		    <div class="col-sm-4">
 		      <select class="form-control" name="prodTheme" id="prodTheme">
 				  <option value="TW" selected="selected">식기류</option>
@@ -189,25 +174,24 @@ div.form-group{
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
+		    <label for="prodStatus" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
 		    <div class="col-sm-4">
 		       <div class="btn-group" data-toggle="buttons">
-				    <input type="radio" name="prodStatus" id="option1" value="1" checked> 판매중
-				    <input type="radio" name="prodStatus" id="option2" value="0"> 판매중지
+				    <input type="radio" name="prodStatus" id="option1" value="Y" checked> 판매중
+				    <input type="radio" name="prodStatus" id="option2" value="N"> 판매중지
 				</div>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">쿠폰적용여부</label>
+		    <label for="couponApply" class="col-sm-offset-1 col-sm-3 control-label">쿠폰적용여부</label>
 		    <div class="col-sm-4">
 		       <div class="btn-group" data-toggle="buttons">
-				    <input type="radio" name="couponApply" id="option1" value="1" checked> 작용가능
-				    <input type="radio" name="couponApply" id="option2" value="0"> 적용불가
+				    <input type="radio" name="couponApply" id="option1" value="Y" checked> 적용가능
+				    <input type="radio" name="couponApply" id="option2" value="N"> 적용불가
 				</div>
 		    </div>
 		  </div>
-		  
 
 			<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">

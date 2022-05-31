@@ -13,7 +13,7 @@ public class Product {
 	private int prodStock;
 	private String prodTheme;
 	private int prodPrice;
-	private int prodDisRate;
+	private double prodDisRate;
 	private int prodDisPrice;
 	private Date prodRegDate;
 	private String prodStatus;
@@ -139,7 +139,7 @@ public class Product {
 
 
 
-	public int getProdDisRate() {
+	public double getProdDisRate() {
 		return prodDisRate;
 	}
 

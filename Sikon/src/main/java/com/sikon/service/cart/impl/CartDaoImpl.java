@@ -47,16 +47,8 @@ public class CartDaoImpl implements CartDao{
 	}
 
 	@Override
-	public void updateCart(int cartNo, int quantity) throws Exception {
-		
-		String buyNumber = quantity+"";
-		String cartNumber = cartNo+"";
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("quantity", buyNumber);
-		map.put("cartNo",  cartNumber );
-		
-		sqlSession.update("CartMapper.updateCart",map);
+	public void updateCart(Cart cart) throws Exception {		
+		sqlSession.update("CartMapper.updateCart",cart);
 	}
 
 	@Override

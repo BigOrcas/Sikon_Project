@@ -1,7 +1,6 @@
 package com.sikon.service.user.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.sikon.common.Search;
+import com.sikon.service.domain.Career;
+import com.sikon.service.domain.License;
 import com.sikon.service.domain.User;
 import com.sikon.service.user.UserDao;
 
@@ -34,7 +35,13 @@ public class UserDaoImpl implements UserDao{
 	public void addUser(User user) throws Exception {
 		sqlSession.insert("UserMapper.addUser", user);
 	}
-
+	public void addCareer(Career career) throws Exception {
+		sqlSession.insert("CareerMapper.addCareer", career);
+	}
+	public void addLicense(License license) throws Exception {
+		sqlSession.insert("LicenseMapper.addlicense", license);
+	}
+	
 	public User getUser(String userId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}

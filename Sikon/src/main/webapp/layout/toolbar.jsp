@@ -6,11 +6,11 @@
 
 
 <!-- ToolBar Start /////////////////////////////////////-->
-<div class="navbar  navbar-inverse navbar-fixed-top">
+<div class="navbar  navbar-default navbar-fixed-top">
 	
 	<div class="container">
 	       
-		<a class="navbar-brand" href="/index.jsp">Lego Land</a>
+		<a class="navbar-brand" href="/index.jsp">식탁의온도</a>
 		
 		<!-- toolBar Button Start //////////////////////// -->
 		<div class="navbar-header">
@@ -57,13 +57,14 @@
 	                <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >판매관리</span>
+		                         <span >스토어관리</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
-		                         <li><a href="#">판매상품등록</a></li>
-		                         <li><a href="#">판매상품관리</a></li>
-		                         <li><a href="#">판매목록조회</a></li>
+		                         <li><a href="#">상품등록</a></li>
+		                         <li><a href="#">상품관리</a></li>
+		                         <li class="divider"></li>
+		                         <li><a href="#">판매리스트조회</a></li>
 		                     </ul>
 		                </li>
 	                 </c:if>
@@ -72,17 +73,17 @@
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >상품구매</span>
+	                         <span >스토어</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                         <li><a href="#">상 품 검 색</a></li>
-	                         
+	                         <li><a href="#">상품검색</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">최근 본 상품</a></li>
 	                         <c:if test="${sessionScope.user.role == 'user'}">
+	                         <li class="divider"></li>
 	                           <li><a href="#">구매이력조회</a></li>
 	                         </c:if>
-	                         
-	                         <li><a href="#">최근 본 상품</a></li>
 	                     </ul>
 	                 </li>
 	                 
@@ -99,14 +100,58 @@
 	                         <li class="divider"></li>
 	                     </ul>
 	                 </li>
+	                 
+	                 <!-- 판매상품관리 DrowDown  -->
+	                <c:if test="${sessionScope.user.role == 'admin'}">
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span >쿠킹클래스관리</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">클래스등록</a></li>
+		                         <li><a href="#">클래스관리</a></li>
+		                         <li class="divider"></li>
+		                         <li><a href="#">판매리스트조회</a></li>
+		                     </ul>
+		                </li>
+	                 </c:if>
+	                 
+	                 
+	              <!-- 구매관리 DrowDown -->
+	              <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >쿠킹클래스</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">클래스검색</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">최근 본 클래스</a></li>
+	                         <c:if test="${sessionScope.user.role == 'user'}">
+	                         <li class="divider"></li>
+	                           <li><a href="#">신청이력조회</a></li>
+	                         </c:if>
+	                     </ul>
+	                 </li>
 
 	             </ul>
 	             
 	             
 	             
-	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
-	            </ul>
+	             <c:if test="${! empty sessionScope.user.role}">
+				<ul class="nav navbar-nav navbar-right">
+	                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"/> Cart</a></li>
+	                 <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"/> MyPage</a></li>
+	                <li><a href="#"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"/> LOGOUT</a></li>
+				</ul>
+				</c:if>
+				
+				<c:if test="${empty sessionScope.user.role}">
+				<ul class="nav navbar-nav navbar-right">
+	                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"/> Cart</a></li>
+				</ul>
+				</c:if>
 		</div>
 		<!-- dropdown hover END -->	       
 	    
@@ -121,7 +166,7 @@
 		//============= logout Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('로그아웃')").on("click" , function() {
+		 	$("a:contains(' LOGOUT')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
@@ -136,39 +181,53 @@
 			}); 
 		 });
 		
+		
 		//=============  개인정보조회 Event  처리 =============	
 	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
 			
+		
+		//=============  마이페이지 Event  처리 =============	
+		 $( "a:contains(' MyPage')" ).on("click" , function() {
+		 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
+			});
+		
+	 	//=============  장바구니 Event  처리 =============	
+	 	$( "a:contains(' Cart')" ).on("click" , function() {
+	 		
+			$(self.location).attr("href","/cart/getCartlist");
+		});
+		
 	 	 $(function() {
 	 		//=============  판매상품등록 Event  처리 =============
-		 	$("a:contains('판매상품등록')").on("click" , function() {
+		 	$("a:contains('상품등록')").on("click" , function() {
 				self.location = "/product/addProductView.jsp"
 			}); 			 		
 		 });
 	 	 
 	 	$(function() {
 	 	//=============  판매상품관리 Event  처리 =============
-		 	$("a:contains('판매상품관리')").on("click" , function() {
+		 	$("a:contains('상품관리')").on("click" , function() {
 				self.location = "/product/listProduct?menu=manage"
 			}); 
 	 	 });
 	 	
+	 	//=============  판매리스트조회 Event  처리 =============	
+	 	$( "a:contains('판매리스트조회')" ).on("click" , function() {
+	 		
+			$(self.location).attr("href","/purchase/listSales?menu=manage");
+		});
+	 	
 	 	$(function() {
 		//=============  상 품 검 색 Event  처리 =============
-			$("a:contains('상 품 검 색')").on("click" , function() {
+			$("a:contains('상품검색')").on("click" , function() {
 				self.location = "/product/listProduct?menu=search"
 			}); 
 		});
 	 	
-	 	$(function() {
-		 //=============  판매목록조회 Event  처리 =============
-		 	$("a:contains('판매목록조회')").on("click" , function() {
-				self.location = "/purchase/listSale?menu=manage"
-			}); 
-		});
 	 	
 	 	$(function() {
 		//=============  구매이력조회 Event  처리 =============

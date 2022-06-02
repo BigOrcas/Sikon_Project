@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HeartMapper">
+ 	
+ 	
+	<resultMap id="heartSelectMap" type="heart">
+		<result property="heartNo" 				column="heart_no" 				jdbcType="NUMERIC"/>
+		<result property="cookNo"	   			column="cook_no" 				jdbcType="NUMERIC" />		
+		<result property="userId" 			column="user_id" 		jdbcType="VARCHAR" />
+		<result property="heartCheck" 			column="heart_check" 		jdbcType="NUMERIC" />
+		
+		
+		
+	</resultMap>
+	
+<update id="updateHeart" parameterType="int">
+update cook
+<set> 
+heart_hit = heart_hit +1
+</set>
+WHERE cook_no=#{cookNo}
+</update>
+
+<!-- 게시글 추천수취소 -->
+<update id="updateHeartCancel" parameterType="int">
+update cook
+<set> 
+heart_hit = heart_hit -1
+</set>
+WHERE cook_no=#{cookNo}
+</update>
+
+<!-- 게시글 추천 시 Like 테이블에 insert -->
+<insert id="insertHeart">
+insert into heart(heart_no , cook_no , user_id) 
+values(seq_heart_heart_no.nextval,#{cookNo} ,#{userId})
+</insert>
+
+<!-- 게시글 추천취소 시 delete -->
+<delete id="deleteHeart">
+delete from heart
+ where cook_no = #{cookNo} and user_id = #{userId}
+</delete>
+
+<!-- 게시글 추천 시 Check를 1로 만들어서 중복방지-->
+<update id="updateHeartCheck">
+update heart
+<set>  
+heart_check = 1
+</set>
+where cook_no = #{cookNo} and user_id = #{userId}
+</update>
+
+<!-- 게시글 추천취소 시 다시 0  -->
+<update id="updateHeartCheckCancel">
+update heart
+<set>
+heart_check = 0
+</set>
+where cook_no = #{cookNo} and user_id = #{userId}
+</update>
+
+<!-- 게시글 추천 중복방지 select문 -->
+<select id="heartCheck" resultType="int">
+select count(*) from heart
+ where cook_no = #{cookNo} and user_id = #{userId} 
+</select>
+
+
+	 
+</mapper>

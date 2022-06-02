@@ -50,16 +50,16 @@
 
 
 	<!-- 회원가입 -->
-	<insert  id="addUser"		parameterType="map" >
+	<insert  id="addUser"		parameterType="user" >
 		 INSERT
 		 INTO users( user_id , user_name , password , user_birth , user_nickname , user_image , user_addr , role , user_phone , holdpoint , mentor_apply , user_regdate , quit_date , quit_status ) 
 		 VALUES	 ( #{userId} , #{userName} , #{password} , #{userBirth}, #{userNickname}, #{userImage}, #{addr}, 'user', #{phone}, 
 						#{holdpoint:NUMERIC}, #{mentorApply}, SYSDATE , #{quitDate:DATE} , #{quitStatus} )
-		 INTO career( career_no , company , career_experience , start_date , end_date )
+	<!-- INTO career( career_no , company , career_experience , start_date , end_date )
 		 VALUES ( seq_career_career_no.nextval , #{company} , #{careerExperience} , #{startDate:DATE} , #{endDate:DATE} )
 		 INTO license( license_no , license_name , license_institution , license_date )
 		 VALUES ( seq_license_license_no.nextval , #{licenseName} , #{licenseInstitution} , #{licenseDate:DATE})
-
+  	-->	
 	</insert>
 
 

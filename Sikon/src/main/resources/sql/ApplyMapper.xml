@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="applyMapper">
+ 	
+ 	
+	<resultMap id="applySelectMap" type="apply">
+		<result property="applyNo" 			column="apply_no" 			jdbcType="NUMERIC"/>
+		<result property="classCook.cookNo" 				column="cook_no" 					jdbcType="NUMERIC" />
+		<result property="applier.userId" 		column="applier_id"		jdbcType="VARCHAR"/>
+		<result property="paymentOption" 		column="PAYMENT_OPTION" 					jdbcType="VARCHAR" />
+		<result property="applyStatus" 				column="apply_status" 					jdbcType="VARCHAR" />
+		<result property="cookStatus" 			column="cook_status" 		jdbcType="NUMERIC" />
+		<result property="checkDate" 				column="check_date" 			jdbcType="DATE"/>
+		
+		
+		
+
+	</resultMap>	
+
+
+
+
+	<!-- SQL : INSERT -->
+	<insert 	id="addApply"		parameterType="apply" >
+	
+	 	INSERT
+		insert into apply(apply_no , cook_no, applier_id  , payment_option, apply_status, cook_status,check_date ) 
+		VALUES	 (	seq_apply_apply_no.nextval , #{classCook.cookNo},#{applier.userId}, #{paymentOption} , #{applyStatus} , #{cookStatus} ,  #{checkDate})
+	 </insert>
+	 
+	  <!-- SQL : SELECT ONE -->
+	 <select 	id="getApply"	parameterType="int"	resultMap="applySelectMap">
+		SELECT
+		* 		
+		FROM apply
+		WHERE apply_no= #{applyNo}
+	 </select>
+	 
+	 	 <!-- SQL : UPDATE -->
+	 <update	id="updateApplyStatus"	parameterType="apply" >
+	   	UPDATE apply
+	   	<set>
+	   	apply_status 	= #{applyStatus}
+	   	</set>
+	   	WHERE apply_no = #{applyNo}
+	 </update>
+	 
+	
+	 
+	 
+	 <!-- SQL : 물건을 샀을경우 -->
+	 	 <update	id="buyCook"	parameterType="map" >
+	   		UPDATE cook
+	   	<set>
+	   		cook_stock   = cook_stock  - #{cookStatus}
+	   	</set>
+	   			WHERE cook_no=#{cookNo}
+	 </update>	
+	 
+	  <!-- SQL : 구매취소를 했을경우 -->
+	 <update	id="cancel"	parameterType="map" >
+	   	UPDATE cook
+	   	<set>
+	   		cook_stock   = cook_stock  + #{cookStatus}
+	   	</set>
+	   		WHERE cook_no=#{cookNo}
+	 </update>	
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="getApplyList"  parameterType="map"	resultMap="applySelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT *
+											FROM apply
+											<if test="applierId!='admin'">
+											<where>
+											applier_id=#{applierId}
+											</where>
+											</if>
+											ORDER BY apply_no ) inner_table
+											
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+		
+		
+	 </select>
+	 
+	 	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM (	SELECT *
+	  					FROM		(	SELECT *
+											FROM apply
+											<if test="applierId!='admin'">
+											<where>
+											applier_id=#{applierId}
+											</where>
+											</if>
+											ORDER BY apply_no ) countTable	)					
+											
+	 </select>
+	 
+</mapper>

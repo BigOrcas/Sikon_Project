@@ -57,15 +57,15 @@
 	        <div class="carousel-inner" role="listbox">
 	          
 	          <div class="item active">
-	            <img src="/images/uploadFiles/레고메인.jpg"  width="100%" height="100%" alt="First slide">
+	            <img src="/resources/images/homedeco/main30.jpg"  width="100%" height="100%" alt="First slide">
 	          </div>
 	          
 	          <div class="item">
-	            <img src="/images/uploadFiles/레고2.jpg"  width="100%" height="100%"alt="Second slide">
+	            <img src="/resources/images/homedeco/main32.jpg"  width="100%" height="100%"alt="Second slide">
 	          </div>
 	          
 	          <div class="item">
-	            <img src="/images/uploadFiles/레고3.jpg"  width="100%" height="100%"alt="Third slide">
+	            <img src="/resources/images/homedeco/main09.jpg"  width="100%" height="100%"alt="Third slide">
 	          </div>
 	          
 	        </div>

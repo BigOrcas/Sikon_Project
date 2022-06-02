@@ -95,7 +95,7 @@
 		
         <div class="container">
         
-        	<a class="navbar-brand" href="#">Lego Land</a>
+        	<a class="navbar-brand" href="#">식탁의온도</a>
 			
 			<!-- toolBar Button Start //////////////////////// -->
 			<div class="navbar-header">

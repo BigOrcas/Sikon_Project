@@ -11,7 +11,7 @@ import com.sikon.service.domain.User;
 public interface UserDao {
 	
 	// INSERT
-	public void addUser(Map map) throws Exception ;
+	public void addUser(User user) throws Exception ;
 
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;
@@ -19,7 +19,7 @@ public interface UserDao {
 	// ID찾기
 	public User findUserId(String userNickname) throws Exception ;
 
-	// UPDATE
+	// 회원정보수정
 	public void updateUser(User user) throws Exception ;
 	
 	// 회원목록

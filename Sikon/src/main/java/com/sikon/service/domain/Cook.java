@@ -20,7 +20,7 @@ public class Cook {
 	private String cookRegdate ;
 	private String cookVideo;
 	private int cookStock  ;
-	
+	//·¹¾²°í
 	
 	public int getcookNo() {
 		return cookNo;

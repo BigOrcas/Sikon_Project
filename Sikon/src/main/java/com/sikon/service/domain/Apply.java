@@ -5,11 +5,11 @@ import java.sql.Date;
 public class Apply {
 
 	private int applyNo;
-	private Cook classCook;
-	private User applier;
+	private Cook classCook; //cook 객체
+	private User applier; 	//user 객체
 	private String paymentOption;
-	private String applyStatus;
-	private int cookStatus;
+	private String applyStatus; //tranCode 같은친구
+	private int cookStatus;		//cookStock(재고)-cookStatus(신청인원)
 	private Date checkDate;
 
 	public Apply() {

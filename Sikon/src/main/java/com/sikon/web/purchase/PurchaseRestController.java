@@ -121,7 +121,7 @@ public class PurchaseRestController {
 		//Business Logic
 		System.out.println(search);
 		search.setPageSize(pageSize);
-		Map<String, Object> map = purchaseService.getSaleList(search);
+		Map<String, Object> map = purchaseService.getSalesList(search);
 		System.out.println(map.get("list"));
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());

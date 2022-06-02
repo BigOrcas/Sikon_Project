@@ -32,14 +32,22 @@ public class UserServiceImpl implements UserService{
 	}
 
 	///Method
-	public void addUser(Map map) throws Exception {
-		userDao.addUser(map);
+	public void addUser(User user) throws Exception {
+		userDao.addUser(user);
 	}
 
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}
+	
+	public User findUserId(String userNickname) throws Exception {
+		return userDao.findUserId(userNickname);
+	}
 
+	public void updateUser(User user) throws Exception {
+		userDao.updateUser(user);
+	}
+	
 	public Map<String , Object > getUserList(Search search) throws Exception {
 		List<User> list= userDao.getUserList(search);
 		int totalCount = userDao.getTotalCount(search);
@@ -51,8 +59,8 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 
-	public void updateUser(User user) throws Exception {
-		userDao.updateUser(user);
+	public void deleteUser(User user) throws Exception {
+		userDao.deleteUser(user);
 	}
 
 	public boolean checkDuplication(String userId) throws Exception {

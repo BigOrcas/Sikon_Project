@@ -15,7 +15,7 @@ public class Notice {
 	public int getNoticeNo() {
 		return noticeNo;
 	}
-//
+
 	public void setNoticeNo(int noticeNo) {
 		this.noticeNo = noticeNo;
 	}

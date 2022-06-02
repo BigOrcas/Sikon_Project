@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sikon.common.Search;
 import com.sikon.service.purchase.PurchaseService;
-import com.sikon.service.purchase.dao.PurchaseDAO;
+import com.sikon.service.purchase.PurchaseDao;
 import com.sikon.service.coupon.CouponDao;
 import com.sikon.service.coupon.CouponService;
 import com.sikon.service.domain.Coupon;
@@ -38,12 +38,12 @@ public class CouponServiceImpl implements CouponService{
 		couponDao.insertCoupon(coupon);
 	}
 	
-	//ÄíÆùÁö±Þ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void issueCoupon(Coupon coupon) throws Exception{
 		couponDao.issueCoupon(coupon);
 	};
 	
-	//ÄíÆù°Ë»ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 	public List<Coupon> getCoupon() throws Exception {
 		
 		List<Coupon> couponList = couponDao.findCoupon();
@@ -53,7 +53,7 @@ public class CouponServiceImpl implements CouponService{
 		return couponList;
 	}
 	
-	//¹ßÇàÄíÆù°Ë»ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 	public Coupon getIssuedCoupon(int issueNo) throws Exception {
 		
 		Coupon issuedCoupon = couponDao.findIssuedCoupon(issueNo);
@@ -63,7 +63,7 @@ public class CouponServiceImpl implements CouponService{
 		return issuedCoupon;
 	}
 	
-	//°¡¿ëÄíÆù°Ë»ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 	public List<Coupon> getUsableCoupon(String userId) throws Exception {
 		
 		List<Coupon> couponList = couponDao.findUsableCoupon(userId);
@@ -74,7 +74,7 @@ public class CouponServiceImpl implements CouponService{
 	}
 	
 	
-	//»ý¼ºÄíÆù¸®½ºÆ® °Ë»ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ë»ï¿½
 	public Map<String , Object > getCouponList(Search search) throws Exception {
 		List<Coupon> list= couponDao.getCouponList(search);
 		int totalCount = couponDao.getTotalCount(search);
@@ -86,7 +86,7 @@ public class CouponServiceImpl implements CouponService{
 		return map;
 	}
 	
-	//¹ß±ÞÄíÆù¸®½ºÆ® °Ë»ö
+	//ï¿½ß±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ë»ï¿½
 	public Map<String , Object > getIssuedCouponList(Search search) throws Exception {
 		List<Coupon> list= couponDao.getIssuedCouponList(search);
 		int totalCount = couponDao.getIssuedTotalCount(search);
@@ -98,12 +98,12 @@ public class CouponServiceImpl implements CouponService{
 		return map;
 	}
 	
-	//ÄíÆù»óÅÂº¯°æ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½
 	public void updateIssueStatus(Coupon coupon) throws Exception{
 		couponDao.updateIssueStatus(coupon);
 	}
 	
-	// ÄíÆù»èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void deleteCoupon(int couponNo) throws Exception{
 		couponDao.deleteCoupon(couponNo);
 	};

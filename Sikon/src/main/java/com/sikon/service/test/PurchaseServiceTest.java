@@ -28,18 +28,19 @@ public class PurchaseServiceTest {
 	@Qualifier("purchaseServiceImpl")
 	private PurchaseService purchaseService;
 
-	//@Test
+	@Test
 	public void testAddPurchase() throws Exception {
 		
 		User user = new User();
-		user.setUserId("user01");
+		user.setUserId("user@naver.com");
 		
 		Product product = new Product();
-		product.setProdNo(10020);
+		product.setProdNo(10000);
 		
 		Purchase purchase = new Purchase();		
 		purchase.setPurchaseProd(product);
 		purchase.setBuyer(user);
+		purchase.setSerialNo("2022060210000");
 		purchase.setUsedCoupon("10% «“¿ŒƒÌ∆˘");
 		purchase.setReceiverName("woong");
 		purchase.setReceiverPhone("01012345678");

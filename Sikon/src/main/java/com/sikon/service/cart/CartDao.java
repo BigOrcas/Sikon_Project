@@ -14,7 +14,7 @@ public interface CartDao {
 	public List<Cart> getCartList(String userId) throws Exception ;
 
 	//update
-	public void updateCart(int cartNo, int quantity) throws Exception ;
+	public void updateCart(Cart cart) throws Exception ;
 		
 	//delete
 	public void deleteCart(int cartNo) throws Exception ;

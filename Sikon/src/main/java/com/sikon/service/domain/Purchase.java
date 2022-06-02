@@ -11,6 +11,7 @@ public class Purchase {
 	private int tranNo;
 	private Product purchaseProd;
 	private User buyer;
+	private String serialNo;
 	private String usedCoupon;
 	private String receiverName;
 	private String receiverPhone;
@@ -33,6 +34,18 @@ public class Purchase {
 	}
 	
 	
+
+	public String getSerialNo() {
+		return serialNo;
+	}
+
+
+
+	public void setSerialNo(String serialNo) {
+		this.serialNo = serialNo;
+	}
+
+
 
 	public int getTranNo() {
 		return tranNo;
@@ -239,7 +252,7 @@ public class Purchase {
 
 
 	public String toString() {
-		return "Purchase [tranNo=" + tranNo + ", usedCoupon=" + usedCoupon + ", receiverName=" + receiverName + ", receiverPhone=" + receiverPhone 
+		return "Purchase [tranNo=" + tranNo + ", serialNo=" + serialNo + ", usedCoupon=" + usedCoupon + ", receiverName=" + receiverName + ", receiverPhone=" + receiverPhone 
 				+ ", receiverEmail=" + receiverEmail+ ", divyAddr=" + divyAddr + ", divyMessage="+ divyMessage + ", purchaseQuantity=" + purchaseQuantity
 				+ ", orderDate=" + orderDate + ", invoiceNum="+ invoiceNum + ", usedPoint=" + usedPoint + ", earnPoint="+ earnPoint+ ", divyFee="+ divyFee
 				 + ", PaymentOpt="+ PaymentOpt + ", divyStatus="+ divyStatus+ ", Product="+ purchaseProd+ ", User="+ buyer + "]";

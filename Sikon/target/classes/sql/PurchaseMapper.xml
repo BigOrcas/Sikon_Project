@@ -11,6 +11,7 @@
 		<result property="tranNo" 					column="tran_no" 				jdbcType="NUMERIC"/>
   		<result property="purchaseProd.prodNo" 		column="prod_no" 				jdbcType="NUMERIC"/>
   		<result property="buyer.userId" 			column="user_id"				jdbcType="VARCHAR"/>
+  		<result property="serialNo" 				column="serial_no" 				jdbcType="VARCHAR"/>
   		<result property="receiverName"				column="receiver_name" 			jdbcType="VARCHAR"/>
   		<result property="receiverPhone" 			column="receiver_phone" 		jdbcType="VARCHAR"/>
   		<result property="purchaseQuantity" 		column="quantity" 				jdbcType="NUMERIC"/>
@@ -32,10 +33,11 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addPurchase"		parameterType="purchase" >
 	 	INSERT
-		INTO purchase( tran_no , prod_no, user_id, receiver_name, receiver_phone, receiver_email, quantity, divy_addr, divy_message, used_coupon, used_point, earn_point, orderdate, payment_opt, divy_status, invoice_num, divy_fee) 
+		INTO purchase( tran_no , prod_no, user_id, serial_no, receiver_name, receiver_phone, receiver_email, quantity, divy_addr, divy_message, used_coupon, used_point, earn_point, orderdate, payment_opt, divy_status, invoice_num, divy_fee) 
 		VALUES (seq_purchase_tran_no.NEXTVAL , 
 				#{purchaseProd.prodNo}, 
 				#{buyer.userId}, 
+				#{serialNo}, 
 				#{receiverName}, 
 				#{receiverPhone}, 
 				#{receiverEmail}, 

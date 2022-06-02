@@ -32,10 +32,14 @@ public class CartServiceTest {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 
-	@Test
-	public void testAddPurchase() throws Exception {
+	
+	
+	
+	//method
+	//@Test
+	public void testAddCart() throws Exception {
 		
-		Product product = productService.getProduct(10020);		
+		Product product = productService.getProduct(10007);		
 		
 		Cart cart = new Cart();		
 		cart.setCartProd(product);
@@ -46,171 +50,73 @@ public class CartServiceTest {
 
 	}
 
-/*	
+	
 	//@Test
-	public void testGetPurchase() throws Exception {
+	public void testGetCart() throws Exception {
 		
-		Purchase purchase = new Purchase();
-		//==> 필요하다면...
-		purchase = purchaseService.getPurchase(10022);
+		Cart cart = cartService.getCart(10020);
 
-		//==> console 확인
-		System.out.println(purchase);
+		System.out.println(cart);
 		
 		//==> API 확인
-		Assert.assertEquals(10022, purchase.getPurchaseProd().getProdNo());
-		Assert.assertEquals("user01", purchase.getBuyer().getUserId());
+		Assert.assertEquals(10020, cart.getCartNo());
+		Assert.assertEquals("user01", cart.getUserId());
+		Assert.assertEquals(10020, cart.getCartProd().getProdNo());
 
-		Assert.assertNotNull(purchaseService.getPurchase(10022));
+		Assert.assertNotNull(cartService.getCart(10020));
 	}
 	
 	
-	
+
 	//@Test
-	 public void testUpdatePurchase() throws Exception{
+	 public void testUpdateCart() throws Exception{
 		 
-		Purchase purchase = purchaseService.getPurchase(10022);
+		Cart cart = cartService.getCart(10020);
 		
-		Assert.assertNotNull(purchase);		
-		Assert.assertEquals("woong", purchase.getReceiverName());
+		Assert.assertNotNull(cart);		
+		Assert.assertEquals(10020, cart.getCartNo());
 
-
-		purchase.setReceiverName("woong");
-		purchase.setReceiverPhone("01098765432");
-		purchase.setReceiverEmail("camp@gmail.com");
-		purchase.setDivyAddr("강남역");
-		purchase.setDivyMessage("경비실에 맡겨주세요");
+		cart.setQuantity(7);
 		
-		purchaseService.updatePurchase(purchase);
+		System.out.println("1: "+cart);
 		
-		purchase = purchaseService.getPurchase(10022);
+		cartService.updateCart(cart);
+		
+		cart = cartService.getCart(10020);
 		
 		//==> console 확인
-		System.out.println(purchase);
+		System.out.println("2: "+cart);
 			
 		//==> API 확인
 		
-		Assert.assertEquals("woong", purchase.getReceiverName());
-		Assert.assertEquals("강남역", purchase.getDivyAddr());
+		Assert.assertEquals(10020, cart.getCartNo());
+		Assert.assertEquals(7, cart.getQuantity());
 		
 		
 	 }
 	 
 
-	//@Test
-	public void testUpdateDivyStatus() throws Exception{
-		
-		Purchase purchase = purchaseService.getPurchase(10022);
+	@Test
+	public void testDeleteCart() throws Exception{
 
-		System.out.println("1: "+purchase);
+		cartService.deleteCart(10020);
 		
-		Assert.assertEquals("003", purchase.getDivyStatus());
-		
-		purchase.setDivyStatus("004");
-		purchase.setInvoiceNum("2022060210022");
-		
-		System.out.println("2: "+purchase);
-		
-		purchaseService.updateDivyStatus(purchase);
-		
-		purchase = purchaseService.getPurchase(10022);
-		
-		System.out.println("3: "+purchase);
-			
-		//==> API 확인
-		Assert.assertEquals("004", purchase.getDivyStatus());
-				
+		Assert.assertNull(cartService.getCart(10020));
 	 }
 	
-	//@Test
-	public void testUpdateStock() throws Exception{
-		
-		Purchase purchase = purchaseService.getPurchase(10022);
-		
-		Assert.assertEquals("003", purchase.getDivyStatus());
-
-		
-		int purchaseQuantity = purchase.getPurchaseQuantity();
-		int prodNo = purchase.getPurchaseProd().getProdNo();
-		
-		
-		System.out.println("1: "+purchaseQuantity);	
-		System.out.println("2: "+prodNo);	
-		
-		
-		purchaseService.updateStock(purchaseQuantity,prodNo);
-		
-		purchase = purchaseService.getPurchase(10022);
-		
-		System.out.println("3: "+purchase);
-			
-		//==> API 확인
-		Assert.assertEquals("003", purchase.getDivyStatus());
-				
-	 }
-	
-	//@Test
-	public void testCancelOrder() throws Exception{
-		
-		Purchase purchase = purchaseService.getPurchase(10022);
-		
-		Assert.assertEquals("003", purchase.getDivyStatus());
-
-		
-		int purchaseQuantity = purchase.getPurchaseQuantity();
-		int prodNo = purchase.getPurchaseProd().getProdNo();
-		
-		
-		System.out.println("1: "+purchaseQuantity);	
-		System.out.println("2: "+prodNo);	
-		
-		
-		purchaseService.cancelOrder(purchaseQuantity,prodNo);
-		
-		purchase = purchaseService.getPurchase(10022);
-		
-		System.out.println("3: "+purchase);
-			
-		//==> API 확인
-		Assert.assertEquals("003", purchase.getDivyStatus());
-				
-	 }
-	 
 
 	 //@Test
-	 public void testGetPurchaseListAll() throws Exception{
+	 public void testGetCartList() throws Exception{
 		 
-	 	Search search = new Search();
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
-	 	String buyerId="user01";
-	 	Map<String,Object> map = purchaseService.getPurchaseList(search, buyerId);
 	 	
-	 	List<Object> list = (List<Object>)map.get("list");
+	 	String userId="user01";
+	 	List<Cart> list = cartService.getCartList(userId);
+	 	
 	 	Assert.assertEquals(2, list.size());
 	 	
 		//==> console 확인
 	 	System.out.println(list);
 	 	
-	 	Integer totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
-	 	
-	 	System.out.println("=======================================");
-	 	
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
-	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("");
-	 	map = purchaseService.getPurchaseList(search, buyerId);
-	 	
-	 	list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(2, list.size());
-	 	
-	 	//==> console 확인
-	 	System.out.println(list);
-	 	
-	 	totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
 	 }
-//*/
+
 }

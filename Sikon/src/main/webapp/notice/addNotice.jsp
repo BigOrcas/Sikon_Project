@@ -94,11 +94,40 @@
 					}
 				});
 			}
+		 	
 		 
-	
+		 function commentInsert(insertData){
+				console.debug("reply.socket",socket)
+					
+			    $.ajax({
+			        url : '/reply/writeReply',
+			        type : 'post',
+			        data : insertData,
+			        processData: false, contentType: false,
+
+			        enctype : 'multipart/form-data', 
+			        success : function(data){
+			         
+			                commentList(); //댓글 작성 후 댓글 목록 reload
+			                $('[name=content]').val('');
+			           		$('.myEditor').summernote('reset');
+			                
+			           		//소켓
+			           		if(readWriter != writer){
+			           		if(socket){
+			        			let socketMsg = "reply,"+writer+","+readWriter+","+bno+","+readTitle+","+bgno;
+			        			console.log(socketMsg);
+			        			socket.send(socketMsg);
+			           		}
+			        	}
+			        }
+			    
+			    })
+		 };
+		 
 		 $(function() {
 				$( "#register" ).on("click" , function() {
-					$("form").attr("method", "POST").attr("action", "/notice/addNotice").submit();
+					commentInsert();
 				});
 			});
 		 

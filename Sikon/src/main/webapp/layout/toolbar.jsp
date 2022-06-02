@@ -4,6 +4,49 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<script type="text/javascript">
+	var socket = null;
+	
+	$(document).ready(function(){
+		//if(${login != null}){
+			connectWs();
+		//}
+	})
+		
+	//家南
+		
+	function connectWs(){
+		console.log("tttttt")
+		var ws = new SockJS("/alram");
+		socket = ws;
+	
+		ws.onopen = function() {
+		 	console.log('open');
+		};
+	
+		ws.onmessage = function(event) {
+			console.log("onmessage"+event.data);
+			let $socketAlert = $('div#socketAlert');
+			$socketAlert.html(event.data)
+			$socketAlert.css('display', 'block');
+			
+			setTimeout(function(){
+				$socketAlert.css('display','none');
+				
+			}, 5000);
+		};
+	
+		ws.onclose = function() {
+		    console.log('close');
+	 	};
+	 
+	};
+	
+	//家南场
+</script>
+
 
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar  navbar-default navbar-fixed-top">

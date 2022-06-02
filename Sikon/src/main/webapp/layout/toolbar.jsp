@@ -109,7 +109,7 @@
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
-		                         <li><a href="#">클래스등록</a></li>
+		                         <li><a href="#">쿠킹클래스등록</a></li>
 		                         <li><a href="#">클래스관리</a></li>
 		                         <li class="divider"></li>
 		                         <li><a href="#">판매리스트조회</a></li>
@@ -125,12 +125,18 @@
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                         <li><a href="#">클래스검색</a></li>
+	                         <li><a href="#">쿠킹클래스검색</a></li>
+	                         <li><a href="#"> 장바구니</a></li>
+	                         <li><a href="#"> 신청목록조회</a></li>
+	                         <li><a href="#">판매목록관리</a></li>
+	                        
 	                         <li class="divider"></li>
 	                         <li><a href="#">최근 본 클래스</a></li>
 	                         <c:if test="${sessionScope.user.role == 'user'}">
 	                         <li class="divider"></li>
 	                           <li><a href="#">신청이력조회</a></li>
+	                          
+	                           
 	                         </c:if>
 	                     </ul>
 	                 </li>
@@ -303,6 +309,31 @@
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/recipe/getMyRecipeList");
 		});
+	 	$( "a:contains('쿠킹클래스검색')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/cook/listCook?menu=search");
+		});
+	 	
+	 	$( "a:contains('쿠킹클래스등록')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(self.location).attr("href","/cook/addCook.jsp");
+		});
+		$( "a:contains(' 장바구니')" ).on("click" , function() {
+	 		
+			$(self.location).attr("href","/wish/getWish?userId=${sessionScope.user.userId}");
+		});
+		
+		
+		$( "a:contains('신청목록조회')" ).on("click" , function() {
+			//Debug..
+			//alert(  $( ".Depth03:contains('회원정보조회')" ) );
+	 		$(self.location).attr("href","/apply/listApply?menu=search");
+		});
+		$( "a:contains('판매목록관리')" ).on("click" , function() {
+			//Debug..
+			//alert(  $( ".Depth03:contains('회원정보조회')" ) );
+	 		$(self.location).attr("href","/apply/listSale?menu=manage");
+		}); 
 	 	
 		
 		

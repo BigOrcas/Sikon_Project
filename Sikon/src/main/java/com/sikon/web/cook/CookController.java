@@ -103,7 +103,7 @@ public class CookController {
 		
 	String cookFilename = "";
 	//String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Mini-PJT-Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
-	String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\images\\uploadFiles";
+	String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles";
 	//String FILE_SERVER_PATH = "C:\\Users\\sweet\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\images\\uploadFiles";
 		
 		for(int i=0; i<fileArray.length;i++) {
@@ -189,7 +189,7 @@ public class CookController {
 		//String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Mini-PJT-Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
 		//String FILE_SERVER_PATH = "C:\\workspace(1)\\Sikon-PJT\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
 		//String FILE_SERVER_PATH = "C:\\Users\\sweet\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\images\\uploadFiles";
-		String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\images\\uploadFiles";
+		String FILE_SERVER_PATH = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles";
 			for(int i=0; i<fileArray.length;i++) {
 			
 				if(!fileArray[i].getOriginalFilename().isEmpty()) {

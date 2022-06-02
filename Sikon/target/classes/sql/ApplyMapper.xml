@@ -4,7 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="applyMapper">
+<mapper namespace="ApplyMapper">
  	
  	
 	<resultMap id="applySelectMap" type="apply">
@@ -28,7 +28,7 @@
 	<insert 	id="addApply"		parameterType="apply" >
 	
 	 	INSERT
-		insert into apply(apply_no , cook_no, applier_id  , payment_option, apply_status, cook_status,check_date ) 
+		into apply(apply_no , cook_no, applier_id  , payment_option, apply_status, cook_status,check_date ) 
 		VALUES	 (	seq_apply_apply_no.nextval , #{classCook.cookNo},#{applier.userId}, #{paymentOption} , #{applyStatus} , #{cookStatus} ,  #{checkDate})
 	 </insert>
 	 
@@ -76,7 +76,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT *
 											FROM apply
-											<if test="applierId!='admin'">
+											<if test="applierId!='admin@naver.com'">
 											<where>
 											applier_id=#{applierId}
 											</where>
@@ -95,7 +95,7 @@
 	  	FROM (	SELECT *
 	  					FROM		(	SELECT *
 											FROM apply
-											<if test="applierId!='admin'">
+											<if test="applierId!='admin@naver.com'">
 											<where>
 											applier_id=#{applierId}
 											</where>

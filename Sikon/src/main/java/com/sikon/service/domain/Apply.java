@@ -11,6 +11,7 @@ public class Apply {
 	private String applyStatus; //tranCode 같은친구
 	private int cookStatus;		//cookStock(재고)-cookStatus(신청인원)
 	private Date checkDate;
+	private String receiverPhone;
 
 	public Apply() {
 		// TODO Auto-generated constructor stub
@@ -72,12 +73,22 @@ public class Apply {
 		this.checkDate = checkDate;
 	}
 
+	public String getReceiverPhone() {
+		return receiverPhone;
+	}
+
+	public void setReceiverPhone(String receiverPhone) {
+		this.receiverPhone = receiverPhone;
+	}
+
 	@Override
 	public String toString() {
 		return "Apply [applyNo=" + applyNo + ", classCook=" + classCook + ", applier=" + applier + ", paymentOption="
 				+ paymentOption + ", applyStatus=" + applyStatus + ", cookStatus=" + cookStatus + ", checkDate="
-				+ checkDate + "]";
+				+ checkDate + ", receiverPhone=" + receiverPhone + "]";
 	}
+
+
 
 
 

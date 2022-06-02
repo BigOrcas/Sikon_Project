@@ -26,8 +26,8 @@
 	 -->
 	<insert 	id="addWish"		parameterType="wish" >
 		INSERT 
-	 	INTO wish(wish_no, cook_no, cook_status, user_Id, cook_price) 
-	 	values (seq_wish_wish_no.nextval, #{cookNo}, #{cookStatus},#{userId}, #{cookPrice})
+	 	INTO wish(wish_no, cook_no, cook_status, user_Id, cook_price,cook_name,cook_filename) 
+	 	values (seq_wish_wish_no.nextval, #{cookNo}, #{cookStatus},#{userId},#{cookPrice}, #{cookName},#{cookFilename})
 	 </insert>
 	 
 	 <!-- SQL : SELECT -->

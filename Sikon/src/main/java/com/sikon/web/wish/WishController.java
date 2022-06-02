@@ -52,7 +52,10 @@ public class WishController {
 		System.out.println("/addWish");
 		System.out.println("userId : "+wish.getUserId());
 		System.out.println("cookNo : "+wish.getCookNo());
+		System.out.println("cookName : "+wish.getCookName());
 		
+		
+		wish.setCookFilename("aaa.jpg");
 		wishService.addWish(wish);
 		
 		return "redirect:/cook/getCook?menu=search&cookNo="+wish.getCookNo();

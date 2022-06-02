@@ -152,8 +152,6 @@ public class ApplyController {
 			
 			if(applyStatus.equals("100")) {
 				applyStatus="200";
-			}else if(applyStatus.equals("200")) {
-				applyStatus="300";
 			}
 			
 			System.out.println("applyStatusÈÄ:"+applyStatus);
@@ -164,7 +162,7 @@ public class ApplyController {
 			
 			ModelAndView modelAndView=new ModelAndView();
 			
-			if(applyStatus.equals("200")) {
+			if(applyStatus.equals("100")) {
 			modelAndView.setViewName("forward:/apply/listSale");
 			}else {
 			modelAndView.setViewName("forward:/apply/listApply");

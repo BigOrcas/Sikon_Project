@@ -195,7 +195,7 @@ public class PurchaseController {
 		search.setPageSize(pageSize);
 		
 		// Business logic ผ๖วเ
-		Map<String , Object> map = purchaseService.getSaleList(search);
+		Map<String , Object> map = purchaseService.getSalesList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
@@ -206,7 +206,6 @@ public class PurchaseController {
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
-		
 		return modelAndView;
 	}
 

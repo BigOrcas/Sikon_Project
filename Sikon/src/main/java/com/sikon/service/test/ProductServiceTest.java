@@ -61,27 +61,27 @@ public class ProductServiceTest {
 		System.out.println("Ω√¿€");
 		Product product = new Product();
 		//==> « ø‰«œ¥Ÿ∏È...
-		product = productService.getProduct(10043);
+		product = productService.getProduct(10020);
 
 		//==> console »Æ¿Œ
 		System.out.println(product);
 		
 		//==> API »Æ¿Œ
-		Assert.assertEquals(10043, product.getProdNo());
+		Assert.assertEquals(10020, product.getProdNo());
 
-		Assert.assertNotNull(productService.getProduct(10043));
+		Assert.assertNotNull(productService.getProduct(10020));
 	}
 	
 	//@Test
 	 public void testUpdateProduct() throws Exception{
 		 
-		 Product product = productService.getProduct(10043);
+		 Product product = productService.getProduct(10020);
 		Assert.assertNotNull(product);
 		
 		Assert.assertEquals("πËπŒ", product.getProdName());
 		Assert.assertEquals("πËπŒµ≈◊¿œ", product.getProdDetail());
 
-		product.setProdNo(10043);
+		product.setProdNo(10020);
 		product.setProdName("πËπŒ");
 		product.setProdThumbnail("πËπŒ.jpg");
 		product.setProdContent("πËπŒcontent");
@@ -96,7 +96,7 @@ public class ProductServiceTest {
 		
 		productService.updateProduct(product);
 		
-		product = productService.getProduct(10043);
+		product = productService.getProduct(10020);
 		Assert.assertNotNull(product);
 		
 		//==> console »Æ¿Œ
@@ -151,7 +151,7 @@ public class ProductServiceTest {
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
 	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("43");
+	 	search.setSearchKeyword("20");
 	 	
 	 	System.out.println("Test Search: "+search);
 	 	
@@ -169,7 +169,7 @@ public class ProductServiceTest {
 	 	System.out.println("=======================================");
 	 	
 	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("43");
+	 	search.setSearchKeyword("20");
 	 	map = productService.getProductList(search);
 	 	
 	 	list = (List<Object>)map.get("list");
@@ -209,14 +209,14 @@ public class ProductServiceTest {
 		 	
 		 }
 	 
-	 	//@Test
+	 	@Test
 		 public void testGetProductListByprodPrice() throws Exception{
 			 
 		 	Search search = new Search();
 		 	search.setCurrentPage(1);
 		 	search.setPageSize(3);
 		 	search.setSearchCondition("2");
-		 	search.setSearchKeyword("8000");
+		 	search.setSearchKeyword("3000");
 		 	Map<String,Object> map = productService.getProductList(search);
 		 	
 		 	List<Object> list = (List<Object>)map.get("list");
@@ -231,7 +231,7 @@ public class ProductServiceTest {
 		 	System.out.println("=======================================");
 		 	
 		 	search.setSearchCondition("2");
-		 	search.setSearchKeyword(""+System.currentTimeMillis());
+		 	search.setSearchKeyword("3000");
 		 	map = productService.getProductList(search);
 		 	
 		 	list = (List<Object>)map.get("list");

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LicenseMapper">
+
+
+<resultMap id="licenseSelectMap" type="license">
+		<result property="licenseNo" 	column="license_no" 		jdbcType="NUMERIC"/>
+		<result property="licenseName"	column="license_name" 		jdbcType="VARCHAR" />
+		<result property="licenseInstitution" 	 column="license_institution" 		jdbcType="VARCHAR" />
+		<result property="licenseDate"	column="license_date" 		jdbcType="DATE" />
+		<result property="userId"	column="user_id" 		jdbcType="VARCHAR" />
+</resultMap>
+
+
+	<!-- 자격증 추가 -->
+	<insert  id="addLicense"		parameterType="license" >
+	INSERT
+	INTO license( license_name , license_institution , license_date )
+	VALUES ( #{licenseName} , #{licenseInstitution} , #{licenseDate:DATE})
+	</insert>
+
+
+
+	<!-- 자격증 수정 -->
+	<update	id="updateLicense" 	parameterType="license" >
+		UPDATE license
+		<set>
+			license_name		= #{licenseName} ,
+			license_institution	= #{licenseInstitution} ,
+			license_date		= #{licenseDate:DATE}
+		</set>
+		WHERE license_no = #{licenseNo}
+	</update>
+
+
+
+	<!-- 자격증 조회 -->
+	<select  id="getLicense"	parameterType="string"	resultMap="licenseSelectMap">
+		SELECT *
+		FROM license
+		WHERE license_no = #{licenseNo}
+	</select>
+
+</mapper>

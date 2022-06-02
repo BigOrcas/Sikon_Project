@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.sikon.common.Search;
+import com.sikon.service.domain.Career;
+import com.sikon.service.domain.License;
 import com.sikon.service.domain.User;
-import com.sikon.service.user.UserService;
-import com.sikon.service.user.UserDao;;
+import com.sikon.service.user.UserDao;
+import com.sikon.service.user.UserService;;
 
 
 //==> 회원관리 서비스 구현
@@ -35,7 +37,13 @@ public class UserServiceImpl implements UserService{
 	public void addUser(User user) throws Exception {
 		userDao.addUser(user);
 	}
-
+	public void addCareer(Career career) throws Exception {
+		userDao.addCareer(career);
+	}
+	public void addLicense(License license) throws Exception {
+		userDao.addLicense(license);
+	}
+	
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}

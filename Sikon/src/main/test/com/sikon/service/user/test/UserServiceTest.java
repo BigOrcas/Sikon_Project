@@ -1,5 +1,6 @@
 package com.sikon.service.user.test;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,27 +61,48 @@ public class UserServiceTest {
 		user.setPhone("01033334444");
 		user.setHoldpoint(1);
 		user.setMentorApply("N");
+		user.setQuitStatus("N");
+		career.setCareerNo(
 		career.setCompany("강남");
 		career.setCareerExperience("ㅇㅇㅇㅇㅇㅇㅇ");
-		career.setStartDate(Date);
+		career.setStartDate(new Date(2017/11/25));
+		career.setEndDate(new Date(2018/10/22));
+		license.setLicenseName("1종보통");
+		license.setLicenseInstitution("강남구청");
+		license.setLicenseDate(new Date(2019/02/03));
 		
 		
 		
 		
 		userService.addUser(user);
+		userService.addCareer(career);
+		userService.addLicense(license);
 		
 		user = userService.getUser("testUserId");
-
+	//	career = userService.get
+		
 		//==> console 확인
-		//System.out.println(user);
+		System.out.println(user);
 		
 		//==> API 확인
 		Assert.assertEquals("testUserId", user.getUserId());
 		Assert.assertEquals("testUserName", user.getUserName());
 		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("경기도", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
+		Assert.assertEquals("19991111", user.getUserBirth());
+		Assert.assertEquals("testddd", user.getUserNickname());
+		Assert.assertEquals("11.jpg", user.getUserImage());
+		Assert.assertEquals("user", user.getAddr());
+		Assert.assertEquals("경기도", user.getRole());
+		Assert.assertEquals("01033334444", user.getPhone());
+		Assert.assertEquals(1, user.getHoldpoint());
+		Assert.assertEquals("N", user.getMentorApply());
+		Assert.assertEquals("강남", career.getCompany());
+		Assert.assertEquals("ㅇㅇㅇㅇㅇㅇㅇ", career.getCareerExperience());
+		Assert.assertEquals("2017/11/25", career.getStartDate());
+		Assert.assertEquals("2018/10/22", career.getEndDate());
+		Assert.assertEquals("1종보통", license.getLicenseName());
+		Assert.assertEquals("강남구청", license.getLicenseInstitution());
+		Assert.assertEquals("2019/02/03", license.getLicenseDate());
 	}
 	
 	//@Test

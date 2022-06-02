@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CareerMapper">
+
+
+<resultMap id="careerSelectMap" type="career">
+		<result property="careerNo" 	column="career_no" 		jdbcType="NUMERIC"/>
+		<result property="company"	column="company" 		jdbcType="VARCHAR" />
+		<result property="careerExperience" 	 column="career_experience" 		jdbcType="VARCHAR" />
+		<result property="startDate"	column="start_date" 		jdbcType="DATE" />
+		<result property="endDate"	column="end_date" 		jdbcType="DATE" />
+		<result property="userId"	column="user_id" 		jdbcType="VARCHAR" />
+</resultMap>
+
+	
+	<!-- 경력사항 추가 -->
+	<insert  id="addCareer"		parameterType="career" >
+	INSERT
+	INTO career( company , career_experience , start_date , end_date )
+	VALUES ( #{company} , #{careerExperience} , #{startDate:DATE} , #{endDate:DATE} )
+	</insert>
+
+
+
+	<!-- 경력사항 수정 -->
+	<update	id="updateCareer" 	parameterType="career" >
+		UPDATE license
+		<set>
+			company			= #{company} ,
+			career_experience	= #{careerExperience} ,
+			start_date		= #{startDate:DATE} ,
+			end_date		= #{endDate:DATE}
+		</set>
+		WHERE career_no = #{careerNo}
+	</update>
+	
+	
+
+	<!-- 경력사항 조회 -->
+	<select  id="getCareer"		parameterType="string"	resultMap="careerSelectMap">
+		SELECT *
+		FROM career
+		WHERE career_no = #{careerNo}
+	</select>
+
+		
+</mapper>

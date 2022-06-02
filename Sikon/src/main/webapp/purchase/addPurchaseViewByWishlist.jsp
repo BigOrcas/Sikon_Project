@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -116,41 +116,16 @@ body>div.container {
 		//====================================================
 		function fncAddPurchase() {
 			
-			var prodStock=$("#prodStock").val();
-			var buyNum=$("input[name='buyNum']").val();
-			console.log(prodStock);
-			console.log(buyNum);
-			if (prodStock < buyNum) {
-				alert("구매 가능 개수가 초과되었습니다");
-				return;
-			}
-			
 			var addr = $("#sample6_postcode").val() + "/" +  $("#sample6_address").val() + "/" +  $("#sample6_detailAddress").val() + "/" + $("#sample6_extraAddress").val();
 			console.log('submit');
 			console.log(addr);
 			$("input:hidden[name='divyAddr']").val( addr );
 			
-			$("form").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
+			$("form").attr("method" , "POST").attr("action" , "/purchase/addPurchaseByWishlist").submit();
 
 			
 		}
 		
-		//====================================================
-		function fncAddWishlist() {
-			
-			var prodStock=$("#prodStock").val();
-			var buyNum=$("input[name='buyNum']").val();
-			console.log(prodStock);
-			console.log(buyNum);
-			if (prodStock < buyNum) {
-				alert("장바구니 담기가능 개수가 초과되었습니다");
-				return;
-			}
-			
-			
-			$("form").attr("method" , "POST").attr("action" , "/wishList/addWishlist").submit();
-			
-		}
 		
 		//====================================================
 
@@ -280,26 +255,28 @@ function payment(data) {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-defualt text-center" style="color:#bc8f8f">상품구매</h1>
+		<h1 class="bg-defualt text-center" style="color:#bc8f8f">장바구니구매</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
+		<c:forEach var="product" items="${list}">
 		  <div class="form-group">
 		    <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control"  name="prodNo" placeholder="상품번호" value="${product.prodNo}" readonly>
+		      <input type="text" class="form-control"  name="prodNo1" placeholder="상품번호" value="${product.prodNo}" readonly>
 		    </div>
 		  </div>
-		  
+		
+		
+		
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명" value="${product.prodName}" readonly>
+		      <input type="text" class="form-control" id="prodName1" name="prodName" placeholder="상품명" value="${product.prodName}" readonly>
 		    </div>
-		  </div>
+		  </div>	
 		  
-		  <input type="hidden" id="prodStock" value="${product.prodStock }" />
 		  
 		  <div class="form-group">
 		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
@@ -311,17 +288,26 @@ function payment(data) {
 		  <div class="form-group">
 		    <label for="regDate" class="col-sm-offset-1 col-sm-3 control-label">등록일자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="regDate" name="regDate" placeholder="등록일자" value="${product.regDate}" readonly>
+		      <input type="text" class="form-control" id="regDate" name="regDate1" placeholder="등록일자" value="${product.regDate}" readonly>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="가격" value="${product.price}" readonly>
+		      <input type="text" class="form-control" id="price" name="price1" placeholder="가격" value="${product.price}" readonly>
 		    </div>
 		  </div>
 		  
+		   <div class="form-group">
+		    <label for="buyNum" class="col-sm-offset-1 col-sm-3 control-label">구매수량</label>
+		    <div class="col-sm-4">
+		      <input type="number" min="0" class="form-control" id="buyNum1" name="buyNum" >
+		    </div>
+		  </div>
+		  
+		  <hr/>
+		  </c:forEach>
 		  	  
 		  <div class="form-group">
 		    <label for="buyerId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
@@ -369,12 +355,7 @@ function payment(data) {
 		    <input type="hidden" name="divyAddr" value="${user.addr}">
 		  </div>
 		  
-		     <div class="form-group">
-		    <label for="buyNum" class="col-sm-offset-1 col-sm-3 control-label">구매수량</label>
-		    <div class="col-sm-4">
-		      <input type="number" min="0" class="form-control" id="buyNum" name="buyNum" placeholder="남은 수량 : ${product.prodStock }">
-		    </div>
-		  </div>
+		    
 		  
 		     <div class="form-group">
 		    <label for="divyRequest" class="col-sm-offset-1 col-sm-3 control-label">구매요청사항</label>

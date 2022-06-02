@@ -73,7 +73,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Lego Land</a>
+        	<a class="navbar-brand" href="/index.jsp">식탁의온도</a>
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->	

@@ -47,13 +47,9 @@ body{
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 			 $( "button.btn.btn-default" ).on("click" , function() {
-				 self.location = "/purchase/listPurchase"
+				 self.location = "/product/listProduct?menu=search"
 			});
 			
-			 $( "#update" ).on("click" , function() {
-					self.location = "/purchase/updatePurchase?tranNo=${purchase.tranNo}"
-					
-			});
 			 
 		});
 		
@@ -72,7 +68,7 @@ body{
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info" style="color:#bc8f8f">상품상세조회</h3>
+	       <h3 class=" text-info" style="color:#bc8f8f">구매정보조회</h3>
 	    </div>
 	
 		<div class="row">
@@ -182,12 +178,6 @@ body{
 			<div class="col-xs-8 col-md-8">${purchase.divyDate }</div>
 		</div>
 		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>주문일</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.orderDate }</div>
-		</div>
 		
 		
 		
@@ -196,9 +186,6 @@ body{
 	  		<div class="col-md-12 text-right ">
 	  		
 	  			<button type="button" class="btn btn-default" id="check">확인</button>
-	  		<c:if test="${purchase.tranCode.equals('001') }">	
-	  			<button type="button" class="btn btn-primary" id="update">수정</button>
-	  		</c:if>
 		</div>
 		
 		<br/>

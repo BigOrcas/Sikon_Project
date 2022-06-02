@@ -8,7 +8,7 @@ public class License {
 	private int licenseNo;
 	private String licenseName;
 	private String licenseInstitution;
-	private Date licenseDate;
+	private String licenseDate;
 	private String userId;
 	
 	
@@ -49,12 +49,12 @@ public class License {
 	}
 
 
-	public Date getLicenseDate() {
+	public String getLicenseDate() {
 		return licenseDate;
 	}
 
 
-	public void setLicenseDate(Date licenseDate) {
+	public void setLicenseDate(String licenseDate) {
 		this.licenseDate = licenseDate;
 	}
 

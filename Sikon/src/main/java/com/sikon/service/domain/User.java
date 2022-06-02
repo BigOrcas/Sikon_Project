@@ -22,17 +22,17 @@ public class User {
 	private Date quitDate;
 	private String quitStatus;
 	
-	private int careerNo;
-	private String company;
-	private String careerExperience;
-	private Date startDate;
-	private Date endDate;
+//	private int careerNo;
+//	private String company;
+//	private String careerExperience;
+//	private Date startDate;
+//	private Date endDate;
 //	private String userId;
 	
-	private int licenseNo;
-	private String licenseName;
-	private String licenseInstitution;
-	private Date licenseDate;
+//	private int licenseNo;
+//	private String licenseName;
+//	private String licenseInstitution;
+//	private Date licenseDate;
 //	private String userId;
 	
 	/////////////// EL 적용 위해 추가된 Field ///////////
@@ -151,111 +151,111 @@ public class User {
 	}
 	
 	
-	public int getCareerNo() {
-		return careerNo;
-	}
-
-
-
-	public void setCareerNo(int careerNo) {
-		this.careerNo = careerNo;
-	}
-
-
-
-	public String getCompany() {
-		return company;
-	}
-
-
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-
-
-	public String getCareerExperience() {
-		return careerExperience;
-	}
-
-
-
-	public void setCareerExperience(String careerExperience) {
-		this.careerExperience = careerExperience;
-	}
-
-
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-
-
-	public int getLicenseNo() {
-		return licenseNo;
-	}
-
-
-
-	public void setLicenseNo(int licenseNo) {
-		this.licenseNo = licenseNo;
-	}
-
-
-
-	public String getLicenseName() {
-		return licenseName;
-	}
-
-
-
-	public void setLicenseName(String licenseName) {
-		this.licenseName = licenseName;
-	}
-
-
-
-	public String getLicenseInstitution() {
-		return licenseInstitution;
-	}
-
-
-
-	public void setLicenseInstitution(String licenseInstitution) {
-		this.licenseInstitution = licenseInstitution;
-	}
-
-
-
-	public Date getLicenseDate() {
-		return licenseDate;
-	}
-
-
-
-	public void setLicenseDate(Date licenseDate) {
-		this.licenseDate = licenseDate;
-	}
+//	public int getCareerNo() {
+//		return careerNo;
+//	}
+//
+//
+//
+//	public void setCareerNo(int careerNo) {
+//		this.careerNo = careerNo;
+//	}
+//
+//
+//
+//	public String getCompany() {
+//		return company;
+//	}
+//
+//
+//
+//	public void setCompany(String company) {
+//		this.company = company;
+//	}
+//
+//
+//
+//	public String getCareerExperience() {
+//		return careerExperience;
+//	}
+//
+//
+//
+//	public void setCareerExperience(String careerExperience) {
+//		this.careerExperience = careerExperience;
+//	}
+//
+//
+//
+//	public Date getStartDate() {
+//		return startDate;
+//	}
+//
+//
+//
+//	public void setStartDate(Date startDate) {
+//		this.startDate = startDate;
+//	}
+//
+//
+//
+//	public Date getEndDate() {
+//		return endDate;
+//	}
+//
+//
+//
+//	public void setEndDate(Date endDate) {
+//		this.endDate = endDate;
+//	}
+//
+//
+//
+//	public int getLicenseNo() {
+//		return licenseNo;
+//	}
+//
+//
+//
+//	public void setLicenseNo(int licenseNo) {
+//		this.licenseNo = licenseNo;
+//	}
+//
+//
+//
+//	public String getLicenseName() {
+//		return licenseName;
+//	}
+//
+//
+//
+//	public void setLicenseName(String licenseName) {
+//		this.licenseName = licenseName;
+//	}
+//
+//
+//
+//	public String getLicenseInstitution() {
+//		return licenseInstitution;
+//	}
+//
+//
+//
+//	public void setLicenseInstitution(String licenseInstitution) {
+//		this.licenseInstitution = licenseInstitution;
+//	}
+//
+//
+//
+//	public Date getLicenseDate() {
+//		return licenseDate;
+//	}
+//
+//
+//
+//	public void setLicenseDate(Date licenseDate) {
+//		this.licenseDate = licenseDate;
+//	}
 	/////////////// EL 적용 위해 추가된 getter Method ///////////
 	
 	@Override

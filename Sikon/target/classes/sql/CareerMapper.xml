@@ -28,7 +28,7 @@
 
 	<!-- 경력사항 수정 -->
 	<update	id="updateCareer" 	parameterType="career" >
-		UPDATE license
+		UPDATE career
 		<set>
 			company			= #{company} ,
 			career_experience	= #{careerExperience} ,

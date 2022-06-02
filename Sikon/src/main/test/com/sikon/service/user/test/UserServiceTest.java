@@ -1,6 +1,7 @@
 package com.sikon.service.user.test;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,16 +44,17 @@ public class UserServiceTest {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-	@Test
+	//@Test
 	public void testAddUser() throws Exception {
 		
 		User user = new User();
 		Career career = new Career();
 		License license = new License();
 		
-		user.setUserId("testUserId");
+		
+		user.setUserId("test@naver.com");
 		user.setUserName("testUserName");
-		user.setPassword("testPasswd");
+		user.setPassword("3333");
 		user.setUserBirth("19991111");
 		user.setUserNickname("testddd");
 		user.setUserImage("11.jpg");
@@ -60,49 +62,55 @@ public class UserServiceTest {
 		user.setRole("user");
 		user.setPhone("01033334444");
 		user.setHoldpoint(1);
-		user.setMentorApply("N");
+		user.setMentorApply("Y");
 		user.setQuitStatus("N");
-		career.setCareerNo(
+	
 		career.setCompany("강남");
 		career.setCareerExperience("ㅇㅇㅇㅇㅇㅇㅇ");
-		career.setStartDate(new Date(2017/11/25));
-		career.setEndDate(new Date(2018/10/22));
+		career.setStartDate("2017-10-23");
+		career.setEndDate("2018-10-23");
+		career.setUserId("test@naver.com");
+	
 		license.setLicenseName("1종보통");
 		license.setLicenseInstitution("강남구청");
-		license.setLicenseDate(new Date(2019/02/03));
+		license.setLicenseDate("2019-10-23");
+		license.setUserId("test@naver.com");
+		
+
+		Map map=new HashMap();
+		map.put("user", user);
+		map.put("career", career);
+		map.put("license", license);
 		
 		
+		userService.addUser(map);
+
 		
-		
-		userService.addUser(user);
-		userService.addCareer(career);
-		userService.addLicense(license);
-		
-		user = userService.getUser("testUserId");
-	//	career = userService.get
+		user = userService.getUser("test@naver.com");
+	
 		
 		//==> console 확인
-		System.out.println(user);
+		System.out.println(map);
 		
 		//==> API 확인
-		Assert.assertEquals("testUserId", user.getUserId());
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("19991111", user.getUserBirth());
-		Assert.assertEquals("testddd", user.getUserNickname());
-		Assert.assertEquals("11.jpg", user.getUserImage());
-		Assert.assertEquals("user", user.getAddr());
-		Assert.assertEquals("경기도", user.getRole());
-		Assert.assertEquals("01033334444", user.getPhone());
-		Assert.assertEquals(1, user.getHoldpoint());
-		Assert.assertEquals("N", user.getMentorApply());
-		Assert.assertEquals("강남", career.getCompany());
-		Assert.assertEquals("ㅇㅇㅇㅇㅇㅇㅇ", career.getCareerExperience());
-		Assert.assertEquals("2017/11/25", career.getStartDate());
-		Assert.assertEquals("2018/10/22", career.getEndDate());
-		Assert.assertEquals("1종보통", license.getLicenseName());
-		Assert.assertEquals("강남구청", license.getLicenseInstitution());
-		Assert.assertEquals("2019/02/03", license.getLicenseDate());
+//		Assert.assertEquals("testUserId", user.getUserId());
+//		Assert.assertEquals("testUserName", user.getUserName());
+//		Assert.assertEquals("testPasswd", user.getPassword());
+//		Assert.assertEquals("19991111", user.getUserBirth());
+//		Assert.assertEquals("testddd", user.getUserNickname());
+//		Assert.assertEquals("11.jpg", user.getUserImage());
+//		Assert.assertEquals("user", user.getAddr());
+//		Assert.assertEquals("경기도", user.getRole());
+//		Assert.assertEquals("01033334444", user.getPhone());
+//		Assert.assertEquals(1, user.getHoldpoint());
+//		Assert.assertEquals("N", user.getMentorApply());
+//		Assert.assertEquals("강남", career.getCompany());
+//		Assert.assertEquals("ㅇㅇㅇㅇㅇㅇㅇ", career.getCareerExperience());
+//		Assert.assertEquals("2017/11/25", career.getStartDate());
+//		Assert.assertEquals("2018/10/22", career.getEndDate());
+//		Assert.assertEquals("1종보통", license.getLicenseName());
+//		Assert.assertEquals("강남구청", license.getLicenseInstitution());
+//		Assert.assertEquals("2019/02/03", license.getLicenseDate());
 	}
 	
 	//@Test
@@ -110,60 +118,87 @@ public class UserServiceTest {
 		
 		User user = new User();
 		//==> 필요하다면...
-//			user.setUserId("testUserId");
-//			user.setUserName("testUserName");
-//			user.setPassword("testPasswd");
-//			user.setSsn("1111112222222");
-//			user.setPhone("111-2222-3333");
-//			user.setAddr("경기도");
-//			user.setEmail("test@test.com");
+//		user.setUserId("test@naver.com");
+//		user.setUserName("testUserName");
+//		user.setPassword("3333");
+//		user.setUserBirth("19991111");
+//		user.setUserNickname("testddd");
+//		user.setUserImage("11.jpg");
+//		user.setAddr("경기도");
+//		user.setRole("user");
+//		user.setPhone("01033334444");
+//		user.setHoldpoint(1);
+//		user.setMentorApply("Y");
+//		user.setQuitStatus("N");
 		
-		user = userService.getUser("testUserId");
+		user = userService.getUser("test@naver.com");
 
 		//==> console 확인
-		//System.out.println(user);
+		System.out.println(user);
 		
 		//==> API 확인
-		Assert.assertEquals("testUserId", user.getUserId());
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("경기도", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
-
-		Assert.assertNotNull(userService.getUser("user02"));
-		Assert.assertNotNull(userService.getUser("user05"));
+//		Assert.assertEquals("testUserId", user.getUserId());
+//		Assert.assertEquals("testUserName", user.getUserName());
+//		Assert.assertEquals("testPasswd", user.getPassword());
+//		Assert.assertEquals("111-2222-3333", user.getPhone());
+//		Assert.assertEquals("경기도", user.getAddr());
+//
+//		Assert.assertNotNull(userService.getUser("user02"));
+//		Assert.assertNotNull(userService.getUser("user05"));
 	}
 	
 	//@Test
+	public void testFindUserId() throws Exception{
+		
+		User user = new User();
+	//	user.setUserNickname("testddd");
+	//	user.setUserBirth("19991111");
+	//	user.setPhone("01033334444");
+		
+		user = userService.findUserId("testddd");
+		
+		System.out.println(user);
+	}
+	//@Test
 	 public void testUpdateUser() throws Exception{
-		 
-		User user = userService.getUser("testUserId");
+		
+		Career career = new Career();
+		License license = new License();
+		User user = userService.getUser("test@naver.com");
 		Assert.assertNotNull(user);
 		
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("경기도", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
-
+		Assert.assertEquals("3333", user.getPassword());
+		Assert.assertEquals("exchange", user.getUserName());
+		Assert.assertEquals("testddd", user.getUserNickname());
+		Assert.assertEquals("19991111", user.getUserBirth());
+		Assert.assertEquals("안면도", user.getAddr());
+		Assert.assertEquals("01044449999", user.getPhone());
+		Assert.assertEquals("Y", user.getMentorApply());
+		
+		Assert.assertEquals("회사", career.getCompany());
+	
+		user.setPassword("4444");
 		user.setUserName("change");
-		user.setPhone("777-7777-7777");
-		user.setAddr("change");
-		user.setEmail("change@change.com");
+		user.setUserNickname("testa");
+		user.setUserBirth("20001212");
+		user.setAddr("제주도");
+		user.setPhone("01011119999");
+		user.setMentorApply("N");
+		
+	//	user.setEmail("change@change.com");
 		
 		userService.updateUser(user);
 		
-		user = userService.getUser("testUserId");
+		user = userService.getUser("test@naver.com");
 		Assert.assertNotNull(user);
 		
 		//==> console 확인
-		//System.out.println(user);
+		System.out.println(user);
 			
 		//==> API 확인
-		Assert.assertEquals("change", user.getUserName());
-		Assert.assertEquals("777-7777-7777", user.getPhone());
-		Assert.assertEquals("change", user.getAddr());
-		Assert.assertEquals("change@change.com", user.getEmail());
+//		Assert.assertEquals("change", user.getUserName());
+//		Assert.assertEquals("01077776666", user.getPhone());
+//		Assert.assertEquals("울릉도", user.getAddr());
 	 }
 	 
 	//@Test
@@ -296,4 +331,27 @@ public class UserServiceTest {
 	 	totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(totalCount);
 	 }	 
+	 
+	 @Test
+	 public void testDeleteUser() throws Exception{
+		 User user = userService.getUser("test@naver.com");
+			Assert.assertNotNull(user);
+			
+			Assert.assertEquals("Y", user.getQuitStatus());
+//			Assert.assertEquals(null, user.getQuitDate());
+			
+			
+			user.setQuitStatus("N");
+//			user.setQuitDate("2020/05/05");
+						
+			
+			userService.deleteUser(user);
+			
+			user = userService.getUser("test@naver.com");
+			Assert.assertNotNull(user);
+			
+			//==> console 확인
+			System.out.println(user);
+	 }
+	 
 }

@@ -34,16 +34,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	///Method
-	public void addUser(User user) throws Exception {
-		userDao.addUser(user);
+	public void addUser(Map map) throws Exception {
+		System.out.println(map);
+		userDao.addUser(map);
 	}
-	public void addCareer(Career career) throws Exception {
-		userDao.addCareer(career);
-	}
-	public void addLicense(License license) throws Exception {
-		userDao.addLicense(license);
-	}
-	
+
 	public User getUser(String userId) throws Exception {
 		return userDao.getUser(userId);
 	}

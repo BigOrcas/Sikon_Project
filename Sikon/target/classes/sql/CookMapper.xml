@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CookMapper">
+ 	
+ 	
+	<resultMap id="cookSelectMap" type="cook">
+	
+		<result property="cookNo" 			column="cook_no" 			jdbcType="NUMERIC"/>
+		<result property="cookName"			column="cook_name" 		jdbcType="VARCHAR" />
+		<result property="cookFilename" 	column="cook_filename" 		jdbcType="VARCHAR" />
+		<result property="cookBrief"      column="cook_brief"           jdbcType="VARCHAR"/>
+		<result property="cookDifficuty" 				column="cook_difficuty" 					jdbcType="VARCHAR" />		
+		<result property="cookPrice" 				column="cook_price" 					jdbcType="NUMERIC" />	
+		<result property="cookTheme" 			column="cook_theme" 		jdbcType="VARCHAR" />
+		<result property="aplstarTime"      column="apl_startime"           jdbcType="VARCHAR"/>
+		<result property="aplendTime"      column="apl_endtime"           jdbcType="VARCHAR"/>	
+		<result property="cookRecruit" 				column="cook_recruit" 					jdbcType="NUMERIC" />
+		<result property="startTime"      column="start_time"           jdbcType="VARCHAR"/>		
+		<result property="endTime"      column="end_time"           jdbcType="VARCHAR"/>		
+		<result property="cookLocation"      column="cook_location"           jdbcType="VARCHAR"/>
+		<result property="cookRegdate"      column="cook_regdate"           jdbcType="DATE"/>
+		<result property="cookVideo"      column="cook_video"           jdbcType="VARCHAR"/>
+		<result property="cookStock"      column="cook_stock"           jdbcType="NUMERIC"/>
+		<result property="hearthit"      column="heart_hit"           jdbcType="NUMERIC"/>
+	
+		
+	
+		
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addCook"		parameterType="cook" >
+	 	INSERT
+		INTO cook(cook_no , cook_name , cook_filename , cook_brief, cook_difficuty, cook_price,cook_theme,apl_startime,apl_endtime,cook_recruit,start_time,end_time,cook_location,cook_regdate,cook_video, cook_stock,heart_hit) 
+		VALUES	 (	seq_cook_cook_no.nextval , #{cookName} , #{cookFilename} , #{cookBrief} , #{cookDifficuty} , #{cookPrice} , #{cookTheme} , #{aplstarTime} , #{aplendTime} ,
+		#{cookRecruit} , #{startTime}, #{endTime}, #{cookLocation},SYSDATE, #{cookVideo}, #{cookStock:NUMERIC}, #{hearthit:NUMERIC})
+	 </insert>
+	 
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getCook"	parameterType="cook"	resultMap="cookSelectMap">
+		SELECT
+		*
+		FROM 
+		cook
+		WHERE cook_no=#{cookNo}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+ <update	id="updateCook"	parameterType="cook" >
+	   	UPDATE cook
+	   	<set>
+	   		cook_name 	= #{cookName} ,
+			cook_filename	= #{cookFilename},
+			cook_brief 	= #{cookBrief} ,
+			cook_difficuty	= #{cookDifficuty},
+			cook_price		= #{cookPrice} ,
+			cook_theme 	= #{cookTheme}, 
+			apl_startime     	= #{aplstarTime},
+			apl_endtime        = #{aplendTime},
+			cook_recruit         =#{cookRecruit},
+			start_time            =#{startTime},
+			end_time             =#{endTime},
+			cook_location       =#{cookLocation},			
+			cook_video          =#{cookVideo},
+			cook_stock	 = #{cookStock}
+			
+			
+	   	</set>
+	   	WHERE cook_no=#{cookNo}
+	 </update>
+	 
+
+
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="getCookList"  parameterType="search"	resultMap="cookSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT *
+											FROM cook
+											
+												
+												<if test="searchCondition != null">
+												
+												
+												
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				WHERE cook_no like '%' || #{searchKeyword} || '%'
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				WHERE cook_name like '%' || #{searchKeyword} || '%'
+													</if>
+												
+												
+											</if>
+										
+											ORDER BY  cook_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT cook_no , cook_name ,cook_price
+						FROM cook
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			cook_no LIKE '%'||#{searchKeyword}||'%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		cook_name LIKE '%'||#{searchKeyword}||'%'
+								</if>
+							
+							</where>
+							
+						</if>  
+						
+					
+													) countTable						
+	 </select>
+	 
+	 <delete	id="deleteCook"	parameterType="int" >
+	   	DELETE
+	   	FROM cook
+	   	WHERE cook_no = #{cookNo}
+	 </delete>
+	 
+
+	 
+</mapper>

@@ -3,6 +3,8 @@ package com.sikon.service.user;
 import java.util.Map;
 
 import com.sikon.common.Search;
+import com.sikon.service.domain.Career;
+import com.sikon.service.domain.License;
 import com.sikon.service.domain.User;
 
 
@@ -11,7 +13,8 @@ public interface UserService {
 	
 	// 회원가입
 	public void addUser(User user) throws Exception;
-	
+	public void addCareer(Career career) throws Exception ;
+	public void addLicense(License license) throws Exception ;
 	// 내정보확인 / 로그인
 	public User getUser(String userId) throws Exception;
 	

@@ -76,8 +76,8 @@ public class PurchaseRestController {
 		//Business Logic
 		Purchase purchase = new Purchase();
 		purchase.setTranNo(tranNo);
-		purchase.setTranCode(tranCode);
-		purchaseService.updateTranCode(purchase);
+		purchase.setDivyStatus(tranCode);
+		purchaseService.updateDivyStatus(purchase);
 		
 		return purchaseService.getPurchase(tranNo);
 	}

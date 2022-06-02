@@ -92,7 +92,7 @@ public class PurchaseController {
 		purchase.setPurchaseProd(product);
 		User user = (User)session.getAttribute("user");
 		purchase.setBuyer(user);
-		purchase.setTranCode("구매완료");
+		purchase.setDivyStatus("구매완료");
 		purchaseService.addPurchase(purchase);
 		
 		//M/V 연결
@@ -167,8 +167,8 @@ public class PurchaseController {
 		
 		//Business Logic
 		Purchase purchase = purchaseService.getPurchase(tranNo);
-		purchase.setTranCode(tranCode);
-		purchaseService.updateTranCode(purchase);
+		purchase.setDivyStatus(tranCode);
+		purchaseService.updateDivyStatus(purchase);
 
 
 		// Model 과 View 연결

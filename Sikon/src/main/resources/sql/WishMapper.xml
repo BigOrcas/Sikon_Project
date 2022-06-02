@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WishMapper">
+ 	
+ 	
+	<resultMap id="wishSelectMap" type="wish">
+		<result property="wishNo" 				column="wish_no" 				jdbcType="NUMERIC"/>
+		<result property="cookNo"	   			column="cook_no" 				jdbcType="NUMERIC" />
+		<result property="cookStatus" 			    column="cook_status" 			jdbcType="NUMERIC" />
+		<result property="userId" 			column="user_id" 		jdbcType="VARCHAR" />
+		<result property="cookName"			column="cook_name" 			jdbcType="VARCHAR" />
+		<result property="cookFilename" 		column="cook_filename" 		jdbcType="VARCHAR" />
+		<result property="cookPrice" 		column="cook_price" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT
+	resultType: SELECT문 실행 결과를 담을 객체 패키지 이름을 포함한 클래스 이름 또는 객체 alias 지정
+	resultMap:  SELECT문 실행 결과를 담을 객체를 resultMap으로 지정 <resultMap>을 따로 선언해줘야 한다. 
+	resultType과 resultMap 중 하나를 택해서 설정한다.
+	parameterType:이 속성에 지정한 객체의 프로퍼티값이 SQL문의 입력 파라미터에 지정된다.
+	
+	 -->
+	<insert 	id="addWish"		parameterType="wish" >
+		INSERT 
+	 	INTO wish(wish_no, cook_no, cook_status, user_Id, cook_price) 
+	 	values (seq_wish_wish_no.nextval, #{cookNo}, #{cookStatus},#{userId}, #{cookPrice})
+	 </insert>
+	 
+	 <!-- SQL : SELECT -->
+	 <select 	id="getWish"	parameterType="string"	resultMap="wishSelectMap">
+		SELECT c.cook_name, c.cook_filename, c.cook_price, w.*
+		FROM cook c, wish w 
+		WHERE c.cook_no=w.cook_no 
+		AND user_id = #{userId}
+		ORDER BY wish_no DESC
+	 </select>
+	 
+	 <!-- SQL : UPDATE Stock -->
+	 <update	id="updateWish"	parameterType="map" >
+	   		UPDATE wish
+	   	<set>
+	   		cook_status = #{cookStatus}
+	   	</set>
+	   		WHERE wish_no = #{wishNo}
+	 </update>
+	 
+	 <!-- SQL : DELETE -->
+	 <delete	id="deleteWish"	parameterType="int" >
+	   	DELETE
+	   	FROM wish
+	   	WHERE wish_no = #{wishNo}
+	 </delete>
+	 
+	 
+</mapper>

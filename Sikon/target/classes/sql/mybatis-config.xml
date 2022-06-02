@@ -30,6 +30,9 @@
 		<typeAlias alias="cook" type="com.sikon.service.domain.Cook" />
 		<typeAlias alias="career" type="com.sikon.service.domain.Career" />
 		<typeAlias alias="license" type="com.sikon.service.domain.License" />
+		<typeAlias alias="wish" type="com.sikon.service.domain.Wish" />
+		<typeAlias alias="heart" type="com.sikon.service.domain.Heart" />
+		<typeAlias alias="cart" type="com.sikon.service.domain.Cart" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -46,6 +49,11 @@
 		<mapper resource="sql/RecipeMapper.xml"/>
 		<mapper resource="sql/BookmarkMapper.xml"/>
 		<mapper resource="sql/IngredientMapper.xml"/>
+		<mapper resource="sql/HeartMapper.xml"/>
+		<mapper resource="sql/WishMapper.xml"/>
+		<mapper resource="sql/CookMapper.xml"/>
+		<mapper resource="sql/ApplyMapper.xml"/>
+		<mapper resource="sql/CartMapper.xml"/>
 	</mappers>
 
 </configuration>

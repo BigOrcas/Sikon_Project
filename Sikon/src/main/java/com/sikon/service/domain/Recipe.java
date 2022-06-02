@@ -1,6 +1,7 @@
 package com.sikon.service.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Recipe {
 private int recipeNo;
@@ -15,6 +16,18 @@ private int cookingTime;
 private String recipeOrder;
 private String recipeTheme;
 private int reviewNum;
+private List<Ingredient> ingredient;
+
+
+public List<Ingredient> getIngredient() {
+	return ingredient;
+}
+
+
+
+public void setIngredient(List<Ingredient> ingredient) {
+	this.ingredient = ingredient;
+}
 
 
 
@@ -165,7 +178,13 @@ public void setReviewNum(int reviewNum) {
 
 @Override
 public String toString() {
-	return "RecipeVO[recipeNo="+recipeNo+", recipeName="+recipeName+
-			"recipeDetail"+recipeDetail+"writer"+writer+"regDate"+recipeRegDate+", difficulty="+recipeDifficulty+", cookingTime="+cookingTime+"img="+recipeImg+"video"+recipeVideo; 
+	return "Recipe [recipeNo=" + recipeNo + ", recipeName=" + recipeName + ", recipeDetail=" + recipeDetail
+			+ ", writer=" + writer + ", recipeRegDate=" + recipeRegDate + ", recipeImg=" + recipeImg + ", recipeVideo="
+			+ recipeVideo + ", recipeDifficulty=" + recipeDifficulty + ", cookingTime=" + cookingTime + ", recipeOrder="
+			+ recipeOrder + ", recipeTheme=" + recipeTheme + ", reviewNum=" + reviewNum + ", ingredient=" 
+			+ "]";
 }
+
+
+
 }

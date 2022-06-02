@@ -73,20 +73,4 @@ public class ReviewController {
 	
 	
 	
-	@RequestMapping(value = "getReview")
-	public ModelAndView getReview(@ModelAttribute("review") Review review, @RequestParam("menu") String menu)
-			throws Exception {
-
-		System.out.println("/review/getReview : post / get");
-		// Business Logic
-		Review review1=reviewService.getReview(review.getReviewNo());
-		// Model °ú View ¿¬°á
-		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.addObject("review",review1);
-		modelAndView.setViewName("forward:/review/getReview.jsp");
-	
-		return modelAndView;
-	}
-	
-
 }

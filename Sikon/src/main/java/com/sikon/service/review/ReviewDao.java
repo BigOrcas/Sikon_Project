@@ -5,20 +5,22 @@ import java.util.List;
 import com.sikon.common.Search;
 import com.sikon.service.domain.Review;
 
-//==> È¸¿ø°ü¸®¿¡¼­ CRUD Ãß»óÈ­/Ä¸½¶È­ÇÑ DAO Interface Definition
+//¸®ºä¿¡¼­ CRUD Ãß»óÈ­/Ä¸½¶È­ÇÑ DAO Interface Definition
 public interface ReviewDao {
 
 	// INSERT
 	public void addReview(Review review) throws Exception;
 
+	//SELECT LIST
 	public List<Review> getReviewList(Search search,int category, int textNo) throws Exception;
 
-	public Review getReview(int reviewNo) throws Exception;
-
+	//UPDATE
 	public void updateReview(Review review) throws Exception;
 
-	public int getTotalCount(Search search,int textNo) throws Exception ;
-	
+	//DELETE
 	public void deleteReview(Review review) throws Exception;
+	
+	//SELECT ROW Count
+	public int getTotalCount(Search search,int category,int textNo) throws Exception ;
 
 }

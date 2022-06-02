@@ -35,15 +35,8 @@
 		VALUES	 (	seq_bookmark_no.nextval  ,  #{recipe.recipeNo},#{userId})
 	 </insert>
 	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getBookmark"	parameterType="int"	resultMap="bookmarkSelectMap">
-		SELECT *
-		FROM bookmark 
-		WHERE bookmark_no= #{bookmarkNo}
-	 </select>
 	 
-	 
-	 <delete id="deleteBookmark" parameterType="bookmark" >
+	 <delete id="deleteBookmark" parameterType="int" >
 	 DELETE
 	 FROM bookmark 
 	 WHERE bookmark_no= #{bookmarkNo} 

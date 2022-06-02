@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sikon.common.Page;
@@ -36,11 +37,9 @@ public class BookmarkController {
 	}
 	
 	@Value("#{commonProperties['pageUnit']}")
-	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
 
 	@Value("#{commonProperties['pageSize']}")
-	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
 	@RequestMapping(value="addBookmark" )
@@ -62,20 +61,6 @@ public class BookmarkController {
 		return modelAndView;
 	}
 	
-//	@RequestMapping(value = "getBookmark")
-//	public String getBookmark(@RequestParam("bookmarkNo") int bookmarkNo,  Model model)
-//			throws Exception {
-//
-//		System.out.println("/bookmark/getBookmark : post / get");
-//		// Business Logic
-//		Bookmark bookmark = bookmarkService.getBookmark(bookmarkNo);
-//		
-//
-//		// Model °ú View ¿¬°á
-//		model.addAttribute("bookmark", bookmark);
-//
-//		return "forward:/bookmark/getRecipe.jsp?";
-//	}
 	
 	@RequestMapping(value = "listBookmark")
 	public String listBookmark(@ModelAttribute("search") Search search, Model model,
@@ -112,13 +97,12 @@ public class BookmarkController {
 	}
 	
 	@RequestMapping(value="deleteBookmark" )
-	public ModelAndView deleteBookmark(@ModelAttribute("bookmark") Bookmark bookmark) throws Exception {
+	public ModelAndView deleteBookmark(@RequestParam("bookmarkNo") int bookmarkNo) throws Exception {
 
 		System.out.println("/bookmark/deleteBookmark : POST");
 
-		Bookmark bookmark2=bookmarkService.getBookmark(bookmark.getBookmarkNo());
 
-		bookmarkService.deleteBookmark(bookmark2);
+		bookmarkService.deleteBookmark(bookmarkNo);
 		
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("forward:/bookmark/listBookmark");

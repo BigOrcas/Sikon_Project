@@ -10,65 +10,86 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.sikon.common.Search;
+import com.sikon.service.domain.Ingredient;
 import com.sikon.service.domain.Recipe;
 import com.sikon.service.recipe.RecipeDao;
 
-
-//==> 회원관리 DAO CRUD 구현
+//레시피 DAO CRUD 구현
 @Repository("recipeDaoImpl")
-public class RecipeDaoImpl implements RecipeDao{
-	
-	///Field
+public class RecipeDaoImpl implements RecipeDao {
+
+	/// Field
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-	
-	///Constructor
+
+	/// Constructor
 	public RecipeDaoImpl() {
 		System.out.println(this.getClass());
 	}
 
-	///Method
-	public void addRecipe(Recipe recipe) throws Exception {
-		System.out.println("오냐");
+	/// Method
+	public void addRecipe(Recipe recipe,Map ingredient) throws Exception {
+		System.out.println("recipe=" + recipe);
+		System.out.println("ingredient=" + ingredient);
+//		Recipe recipe=(Recipe)map.get("recipe");
+		
 		sqlSession.insert("RecipeMapper.addRecipe", recipe);
+		sqlSession.insert("RecipeMapper.addIngredient",ingredient.get("list"));
 	}
 
-	public Recipe getRecipe(int recipeNo) throws Exception {
-		return sqlSession.selectOne("RecipeMapper.getRecipe", recipeNo);
+	public List getRecipe(int recipeNo) throws Exception {
+		System.out.println("recipeNo=" + recipeNo);
+		return sqlSession.selectList("RecipeMapper.getRecipe", recipeNo);
 	}
 	
-	public void updateRecipe(Recipe recipe) throws Exception {
-		sqlSession.update("RecipeMapper.updateRecipe", recipe);
-	}
+//	public Ingredient getIngredient(int recipeNo) throws Exception {
+//		System.out.println("recipeNo=" + recipeNo);
+//		return sqlSession.selectOne("RecipeMapper.getIngredient", recipeNo);
+//	} 
 
 	public List<Recipe> getRecipeList(Search search) throws Exception {
+		System.out.println("search=" + search);
 		return sqlSession.selectList("RecipeMapper.getRecipeList", search);
 	}
-	
-	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
+
 	public int getTotalCount(Search search) throws Exception {
-		
+		System.out.println("search=" + search);
 		return sqlSession.selectOne("RecipeMapper.getTotalCount", search);
 	}
 
-	@Override
 	public List<Recipe> getMyRecipeList(Search search, String writerNickname) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("search=" + search);
+		System.out.println("writerNickname=" + writerNickname);
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("writerNickname", writerNickname);
 		map.put("search", search);
 		return sqlSession.selectList("RecipeMapper.getMyRecipeList", map);
 	}
-	
-	public int getTotalMyCount(Search search,String userId) throws Exception {
+
+	public int getTotalMyCount(Search search, String writerNickname) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("writer", userId);
+		map.put("writerNickname", writerNickname);
 		map.put("search", search);
 		return sqlSession.selectOne("RecipeMapper.getTotalMyCount", map);
+	}
+
+	public void updateRecipe(Recipe recipe,Map ingredient) throws Exception {
+		System.out.println("recipe=" + recipe);
+		System.out.println("ingredient=" + ingredient);
+		sqlSession.update("RecipeMapper.updateRecipe", recipe);
+		System.out.println(ingredient.get("list"));
+		sqlSession.update("RecipeMapper.updateIngredient", ingredient.get("list"));
+	}
+
+	public void deleteRecipe(Recipe recipe) throws Exception {
+		System.out.println("recipe=" + recipe);
+		sqlSession.delete("RecipeMapper.deleteRecipe", recipe);
 	}
 
 }

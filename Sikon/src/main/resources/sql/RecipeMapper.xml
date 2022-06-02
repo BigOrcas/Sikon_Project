@@ -20,37 +20,71 @@
 		<result property="recipeOrder"      column="recipe_order"            jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="recipeRegDate" 				column="recipe_regdate" 					jdbcType="DATE" />
 		<result property="reviewNum"      column="review_num"           jdbcType="NUMERIC"/>
+		<collection property="ingredient" resultMap="ingredientSelectMap" javaType="java.util.ArrayList" />
 	</resultMap>
 	
+		<resultMap id="ingredientSelectMap" type="ingredient">
+			<result property="ingredientNo" 			column="ingredient_no" 			jdbcType="NUMERIC"/>
+			<result property="ingredientName"			column="ingredient_name" 		jdbcType="VARCHAR" />
+			<result property="ingredientAmount"			column="ingredient_amount" 		jdbcType="VARCHAR" />
+			<result property="recipeNo" 			column="recipe_no" 			jdbcType="NUMERIC"/>
+	
+		</resultMap>
+		<resultMap id="getselectmap" type="ingredient">
+		</resultMap>
+	
 	<!-- SQL : INSERT -->
-	 <insert 	id="addRecipe"		parameterType="recipe" >
+	 <insert 	id="addRecipe"		parameterType="Recipe" >
 	 	INSERT
-		INTO recipe( recipe_no, writer_nickname , recipe_name, recipe_detail,recipe_img,recipe_video,recipe_difficulty,recipe_theme,cooking_time,recipe_order,recipe_regdate,review_num) 
-		VALUES	 (	seq_recipe_no.nextval ,#{writer.userNickname} , #{recipeName}, #{recipeDetail},#{recipeImg},#{recipeVideo},#{recipeDifficulty},#{recipeTheme},#{cookingTime},#{recipeOrder},SYSDATE,0)
+		INTO recipe VALUES	 (	seq_recipe_no.nextval ,#{writer.userNickname} , #{recipeName}, #{recipeDetail},#{recipeImg},#{recipeVideo},#{recipeDifficulty},#{recipeTheme},#{cookingTime},#{recipeOrder},SYSDATE,0)
+	 	
 	 </insert>
 	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getRecipe"	parameterType="int"	resultMap="recipeSelectMap">
-		SELECT *
-		FROM recipe 
-		WHERE recipe_no= #{recipeNo}
-	 </select>
+	  <insert id="addIngredient" parameterType="java.util.Map">
+	  	insert 
+        into ingredient(ingredient_no,ingredient_name, ingredient_amount, recipe_no)
+        select seq_ingredient_no.nextval, a.ingredientName,a.ingredientAmount, (select nvl(max(recipe_no),0) from recipe )
+        from(
+        <foreach collection="list" item="item" separator="UNION ALL ">
+        SELECT #{item.ingredientName} AS ingredientName , #{item.ingredientAmount} AS ingredientAmount FROM DUAL
+        </foreach>
+        ) A
+	 </insert>
+	 
+	 
+	 <select id="getRecipe" parameterType="int"  resultType="java.util.HashMap">
+		SELECT r.*, i.*
+		FROM recipe r, ingredient i
+		WHERE
+		r.recipe_no=i.recipe_no
+		AND r.recipe_no= #{recipeNo}
+	</select>
+	
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="updateRecipe"	parameterType="recipe" >
-	   	UPDATE recipe
-	   	<set>
-	   		recipe_name 	= #{recipeName} ,
+	<update id="updateRecipe" parameterType="Recipe">
+		update recipe
+		<set>
+		recipe_name 	= #{recipeName} ,
 			recipe_detail	= #{recipeDetail},
 			recipe_img				=	#{recipeImg},
-			recipe_video =	#{recipeVideo},
+			recipe_video				=	#{recipeVideo},
 			recipe_difficulty=#{recipeDifficulty},
-			recipe_theme=#{recipeTheme} 
 			cooking_time=#{cookingTime},
-			recipe_order=#{recipeOrder},
-	   	</set>
-	   	WHERE recipe_no = #{recipeNo}
-	 </update>
+			recipe_order=#{recipeOrder} ,
+			recipe_theme=#{recipeTheme} 
+		</set>
+		WHERE recipe_no = #{recipeNo}
+	</update>
+	
+	<update id="updateIngredient" parameterType="java.util.List">
+			<foreach collection="list" item="item" index="index">
+		update ingredient
+		set	ingredient_name=#{item.ingredientName},
+			ingredient_amount=#{item.ingredientAmount}
+		WHERE recipe_no = 10002
+			</foreach>
+	</update>
 	 
 	 
 	<!-- SQL : SELECT LIST -->

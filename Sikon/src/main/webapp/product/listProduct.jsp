@@ -69,7 +69,7 @@ div.row{
 }   
     
 div.thumbnail {
-	height:420px;
+	height:450px;
 	border-radius: 5px;
 }
        
@@ -156,23 +156,23 @@ div.bar{
 			                		///*
 			                		var image;
 			                		var message;
-			                		var onSale;
+			                		var prodStatus;
 			                		var button;
 			                		
 			                	
 			                		
-			                		if(JSONData.list[i].onSale == '1'){
-		                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
-		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image'>";
+			                		if(JSONData.list[i].prodStatus == 'Y'){
+		                				if(JSONData.list[i].prodThumbnail.indexOf('mp4',0) != -1){
+		                					image="<img src='/resources/images/uploadFiles/tumbnail.png' id='image'>";
 		                				}else{
-		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image'>";
+		                					image = "<img src='/resources/images/uploadFiles/"+JSONData.list[i].prodThumbnail.split('&')[0]+"' id='image'>";
 		                				}
 			                			
-			                		}else if(JSONData.list[i].onSale == '0'){
-			                			if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
-		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image_none'>";
+			                		}else if(JSONData.list[i].prodStatus == 'N'){
+			                			if(JSONData.list[i].prodThumbnail.indexOf('mp4',0) != -1){
+		                					image="<img src='/resources/images/uploadFiles/tumbnail.png' id='image_none'>";
 		                				}else{
-		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image_none'>";
+		                					image = "<img src='/resources/images/uploadFiles/"+JSONData.list[i].prodThumbnail.split('&')[0]+"' id='image_none'>";
 		                				}
 			                		}
 			                		
@@ -184,12 +184,12 @@ div.bar{
 			                		}
 			                		
 			                		
-			                		if(JSONData.list[i].onSale == '0' && param.menu.equals('search')){
-			                			onSale = "<p style='color:#DB4455'>판매중지</p>";
-			                		}else if(JSONData.list[i].onSale == '0' && param.menu.equals('manage')){
-			                			onSale = "<p style='color:#DB4455'>*판매중지된 상품입니다.</p>";
-			                		}else if(JSONData.list[i].onSale == '1'){
-			                			onSale = "<p></p>";
+			                		if(JSONData.list[i].prodStatus == 'N' && param.menu.equals('search')){
+			                			prodStatus = "<p style='color:#DB4455'>판매중지</p>";
+			                		}else if(JSONData.list[i].prodStatus == 'N' && param.menu.equals('manage')){
+			                			prodStatus = "<p style='color:#DB4455'>*판매중지된 상품입니다.</p>";
+			                		}else if(JSONData.list[i].prodStatus == 'Y'){
+			                			prodStatus = "<p></p>";
 			                		}
 			                		
 			                		if(${param.menu=='manage' }){
@@ -198,7 +198,7 @@ div.bar{
 			                			if(JSONData.list[i].prodStock == "0"){
 			                				button = "<a class='btn btn-defualt btn disabled' role='button' >재고없음</a>";
 			                			}else{
-			                				if(JSONData.list[i].onSale=='1'){
+			                				if(JSONData.list[i].prodStatus=='Y'){
 			                					button = "<a class='btn btn-default btn buy' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
 			                				}else{
 			                					button = "<a class='btn btn-default btn disabled' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
@@ -212,8 +212,8 @@ div.bar{
 			                     						+"<div class='caption'>"
 			                     						+"<h3>"+JSONData.list[i].prodName+"</h3>"
 			                     						+message
-			                     						+onSale
-			                     						+"<p>"+JSONData.list[i].price+" 원</p>"
+			                     						+prodStatus
+			                     						+"<p>"+JSONData.list[i].prodPrice+" 원</p>"
 			                     						+"<p align='right'>"
 			                     						+"<a class='btn btn-defualt btn'  role='button' value='"+JSONData.list[i].prodNo+"' style='color:#bc8f8f'>상세조회</a>"
 			                     						+button
@@ -360,7 +360,6 @@ div.bar{
 						 	<option value="0"  ${ ! empty search.orderCondition && search.orderCondition==0 ? "selected" : "" }>--정렬하기--</option>
 							<option value="1"  ${ ! empty search.orderCondition && search.orderCondition==1 ? "selected" : "" }>낮은가격순</option>
 							<option value="2"  ${ ! empty search.orderCondition && search.orderCondition==2 ? "selected" : "" }>높은가격순</option>
-							<!-- <option value="3"  ${ ! empty search.orderCondition && search.orderCondition==3 ? "selected" : "" }>판매중인 상품</option> -->
 						</select>
 					</c:if>
 					<c:if test="${ user.role.equals('admin')}">
@@ -368,10 +367,12 @@ div.bar{
 							<option value="0"  ${ ! empty search.orderCondition && search.orderCondition==0 ? "selected" : "" }>--정렬하기--</option>
 							<option value="3"  ${ ! empty search.orderCondition && search.orderCondition==3 ? "selected" : "" }>판매중</option>
 							<option value="4"  ${ ! empty search.orderCondition && search.orderCondition==4 ? "selected" : "" }>판매중지</option>
-							<option value="5"  ${ ! empty search.orderCondition && search.orderCondition==4 ? "selected" : "" }>재고없음</option>
+							<option value="5"  ${ ! empty search.orderCondition && search.orderCondition==5 ? "selected" : "" }>재고없음</option>
 						</select>
 					</c:if>
 				  </div>
+				  
+				  
 				  <button type="button" class="btn btn-default" id="sorting">조회</button>
 				  </div>
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -398,59 +399,64 @@ div.bar{
 			  <div class="col-sm-6 col-md-3">
 			    <div class="thumbnail">
 			    
-			    <c:if test="${product.onSale.contains('1') }">
+			    <c:if test="${product.prodStatus.contains('Y') }">
 				    <c:choose>
-				    <c:when test="${product.fileName.contains('&')}">
+				    <c:when test="${product.prodThumbnail.contains('&')}">
 					    <c:choose>
-						<c:when test="${product.fileName.contains('mp4')}">
-							<img src="/images/uploadFiles/tumbnail.png" id="image">
+						<c:when test="${product.prodThumbnail.contains('mp4')}">
+							<img src="/resources/images/uploadFiles/tumbnail.png" id="image">
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-								<img src="/images/uploadFiles/${name}" id="image">
+							<c:forEach var="name" items="${product.prodThumbnail.split('&')[0]}">
+								<img src="/resources/images/uploadFiles/${name}" id="image">
 							</c:forEach>
 						</c:otherwise>
 						</c:choose>
 				    </c:when>
 				    <c:otherwise>
-						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image">
+						<img src="/resources/images/uploadFiles/${product.prodThumbnail}" class="img-responsive img-rounded" id="image">
 					</c:otherwise>
 					</c:choose>
 			    </c:if>
 			    
-			    <c:if test="${product.onSale.contains('0') }">
+			    <c:if test="${product.prodStatus.contains('N') }">
 				    <c:choose>
-				    <c:when test="${product.fileName.contains('&')}">
+				    <c:when test="${product.prodThumbnail.contains('&')}">
 					    <c:choose>
-						<c:when test="${product.fileName.contains('mp4')}">
-							<img src="/images/noimage.jpg" id="image_none">
+						<c:when test="${product.prodThumbnail.contains('mp4')}">
+							<img src="/resources/images/noimage.jpg" id="image_none">
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-								<img src="/images/uploadFiles/${name}" id="image_none">
+							<c:forEach var="name" items="${product.prodThumbnail.split('&')[0]}">
+								<img src="/resources/images/uploadFiles/${name}" id="image_none">
 							</c:forEach>
 						</c:otherwise>
 						</c:choose>
 				    </c:when>
 				    <c:otherwise>
-						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image_none">
+						<img src="/resources/images/uploadFiles/${product.prodThumbnail}" class="img-responsive img-rounded" id="image_none">
 					</c:otherwise>
 					</c:choose>
 			    </c:if>
 		    
 			    
 			      <div class="caption">
-			        <h3>${product.prodName}</h3>
+			      
+			      <p>${product.prodDetail}<p>	      
+			      <h3>${product.prodName}</h3>
+			      <p style="text-align:right"><del>${product.prodPrice} 원</del></p>
+			      <p style="text-align:right">${(product.prodDisRate*100)}% <strong>${product.prodDisPrice} 원</strong></p>
+			      
+			      
 			        <c:choose>
 			        	<c:when test="${user.role.equals('admin') && param.menu.equals('manage')}">
 			        		<p>남은 재고량 : ${product.prodStock}</p>
-			        		<c:if test="${product.onSale.contains('0') }">
+			        		<c:if test="${product.prodStatus.contains('N') }">
 			        			<p style="color:#DB4455">판매중지</p>
 			        		</c:if>
 			        	</c:when>
 			        	<c:otherwise>
-			        		<p>${product.price} 원</p>
-			        		<c:if test="${product.onSale.contains('0') }">
+			        		<c:if test="${product.prodStatus.contains('N') }">
 			        			<p style="color:#DB4455">*판매중지된 상품입니다.</p>
 			        		</c:if>
 			        	</c:otherwise>
@@ -469,10 +475,10 @@ div.bar{
 			        			<a class="btn btn-defualt btn disabled" role="button" >품절</a>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<c:if test="${product.onSale.contains('1') }">
+			        			<c:if test="${product.prodStatus.contains('Y') }">
 			        				<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
 			        			</c:if>
-			        			<c:if test="${product.onSale.contains('0') }">
+			        			<c:if test="${product.prodStatus.contains('N') }">
 			        				<a class="btn btn-default btn disabled" role="button" value="${product.prodNo}">구매하기</a>
 			        			</c:if>
 			        		</c:otherwise>

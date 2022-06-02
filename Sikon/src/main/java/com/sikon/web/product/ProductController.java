@@ -60,13 +60,17 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-///*
+	@Value("#{commonProperties['filepath']}")
+	String filePath;
+	
+
 	@RequestMapping(value="addProduct", method=RequestMethod.POST )
 	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray, Model model ) throws Exception {
 		
 		System.out.println("/product/addProduct : POST");
 		
-		String temDir = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles\\";
+		//String temDir = "C:\\Users\\bitcamp\\git\\Sikon_Project\\Sikon\\src\\main\\webapp\\resources\\images\\uploadFiles\\";
+		String temDir = filePath;
 		
 		String fileName = "";
 	
@@ -96,24 +100,46 @@ public class ProductController {
 		
 		return "forward:/product/readProduct.jsp";
 	}
-//*/
 
 	
-/*	
-	@RequestMapping(value="addProduct", method=RequestMethod.POST)
-	public String addProduct( @ModelAttribute("product") Product product, Model model ) throws Exception {
-
-		System.out.println("/product/addProduct : POST");
-		//Business Logic
-		System.out.println(product);
+	@RequestMapping( value="listProduct" )
+	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		product.setManuDate(product.getManuDate().replace("-", ""));
-		productService.addProduct(product);
+		System.out.println("/product/listProduct :  GET / POST ");
 		
-		model.addAttribute(product);
+		System.out.println("productlist Ctrl: "+search);
+		System.out.println("productlist Ctrl: "+search.getOrderCondition());
 		
-		return "forward:/product/readProduct.jsp";
+		if(search.getOrderCondition()=="3") {
+			search.setThemeCondition("Y");
+			System.out.println("//// 3 ////");
+		}
+		
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		// Business logic 수행
+		Map<String , Object> map=productService.getProductList(search);
+		Map<String , Object> mapName = productService.getProdNames(search);
+		
+		String names = "";
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		model.addAttribute("prodNames",mapName.get("list"));
+		
+		System.out.println("1:"+mapName);
+		System.out.println("2:"+mapName.get("list"));
+		
+		
+		return "forward:/product/listProduct.jsp";
 	}
-//*/
 
 }

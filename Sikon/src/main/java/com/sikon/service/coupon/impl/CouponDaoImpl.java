@@ -14,7 +14,7 @@ import com.sikon.service.domain.Coupon;
 import com.sikon.service.domain.Product;
 import com.sikon.service.domain.Purchase;
 import com.sikon.service.domain.User;
-import com.sikon.service.purchase.dao.PurchaseDAO;
+import com.sikon.service.purchase.PurchaseDao;
 
 
 @Repository("couponDaoImpl")
@@ -64,7 +64,7 @@ public class CouponDaoImpl implements CouponDao {
 		return sqlSession.selectList("CouponMapper.getCouponList", search);
 	}
 	
-	// °Ô½ÃÆÇ Page Ã³¸®¸¦ À§ÇÑ ÀüÃ¼ Row(totalCount)  return
+	// ï¿½Ô½ï¿½ï¿½ï¿½ Page Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ Row(totalCount)  return
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("CouponMapper.getTotalCount", search);
 	}
@@ -73,7 +73,7 @@ public class CouponDaoImpl implements CouponDao {
 		return sqlSession.selectList("CouponHolderMapper.getIssuedCouponList", search);
 	}
 	
-	// °Ô½ÃÆÇ Page Ã³¸®¸¦ À§ÇÑ ÀüÃ¼ Row(totalCount)  return
+	// ï¿½Ô½ï¿½ï¿½ï¿½ Page Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ Row(totalCount)  return
 	public int getIssuedTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("CouponHolderMapper.getTotalCount", search);
 	}
@@ -83,7 +83,7 @@ public class CouponDaoImpl implements CouponDao {
 		sqlSession.update("CouponHolderMapper.updateIssueStatus", coupon);
 	}
 	
-	//ÄíÆù»èÁ¦
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void deleteCoupon(int couponNo) throws Exception{
 		sqlSession.delete("CouponMapper.deleteCoupon", couponNo);
 	};

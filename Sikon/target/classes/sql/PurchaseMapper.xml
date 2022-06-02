@@ -16,7 +16,7 @@
   		<result property="purchaseQuantity" 		column="quantity" 				jdbcType="NUMERIC"/>
   		<result property="divyAddr" 				column="divy_addr" 				jdbcType="VARCHAR"/>
   		<result property="divyMessage" 				column="divy_message" 			jdbcType="VARCHAR"/>
-  		<result property="receiverEmail" 			column="receiver_email" 			jdbcType="VARCHAR"/>
+  		<result property="receiverEmail" 			column="receiver_email" 		jdbcType="VARCHAR"/>
   		<result property="usedCoupon" 				column="used_coupon" 			jdbcType="VARCHAR"/>
   		<result property="usedPoint" 				column="used_point" 			jdbcType="NUMERIC"/>  		 
   		<result property="earnPoint" 				column="earn_point"				jdbcType="NUMERIC"/>
@@ -38,10 +38,10 @@
 				#{buyer.userId}, 
 				#{receiverName}, 
 				#{receiverPhone}, 
+				#{receiverEmail}, 
 				#{purchaseQuantity}, 
 				#{divyAddr}, 
-				#{divyMessage}, 
-				#{receiverEmail}, 
+				#{divyMessage}, 				
 				#{usedCoupon}, 
 				#{usedPoint}, 
 				#{earnPoint}, 
@@ -49,7 +49,7 @@
 				#{PaymentOpt}, 
 				#{divyStatus}, 
 				#{invoiceNum}, 
-				#{divyFee});
+				#{divyFee})
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -81,7 +81,7 @@
 	 <update	id="updateDivyStatus"	parameterType="purchase" >
 	   	UPDATE purchase
 	   	<set>
-	   		divy_status = #{tranCode}
+	   		divy_status = #{divyStatus},
 	   		invoice_num = #{invoiceNum}
 	   	</set>
 	   		WHERE tran_no = #{tranNo}

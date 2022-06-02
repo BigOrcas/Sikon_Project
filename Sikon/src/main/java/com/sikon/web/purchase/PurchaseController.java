@@ -168,7 +168,7 @@ public class PurchaseController {
 		//Business Logic
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 		purchase.setTranCode(tranCode);
-		purchaseService.updateTranCode(purchase);
+		purchaseService.updateDivyStatus(purchase);
 
 
 		// Model °ú View ¿¬°á

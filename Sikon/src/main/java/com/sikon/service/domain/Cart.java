@@ -13,34 +13,21 @@ public class Cart {
 	public Cart(){
 	}
 
-
-	
-
 	public int getCartNo() {
 		return cartNo;
 	}
 
-
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
-	}
-
-
-	
+	}	
 
 	public Product getCartProd() {
 		return cartProd;
 	}
 
-
-
-
 	public void setCartProd(Product cartProd) {
 		this.cartProd = cartProd;
 	}
-
-
-
 
 	public String getUserId() {
 		return userId;

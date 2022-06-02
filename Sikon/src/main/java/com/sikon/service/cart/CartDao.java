@@ -8,7 +8,7 @@ import com.sikon.service.domain.Cart;
 public interface CartDao {
 	
 	// INSERT
-	public void addCart(Cart cartlist) throws Exception ;
+	public void addCart(Cart cart) throws Exception ;
 
 	// SELECT LIST
 	public List<Cart> getCartList(String userId) throws Exception ;

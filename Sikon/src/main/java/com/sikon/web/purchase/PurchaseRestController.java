@@ -77,7 +77,7 @@ public class PurchaseRestController {
 		Purchase purchase = new Purchase();
 		purchase.setTranNo(tranNo);
 		purchase.setTranCode(tranCode);
-		purchaseService.updateTranCode(purchase);
+		purchaseService.updateDivyStatus(purchase);
 		
 		return purchaseService.getPurchase(tranNo);
 	}

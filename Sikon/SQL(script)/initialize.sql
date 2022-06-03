@@ -119,7 +119,7 @@ CREATE TABLE notice (
 
 CREATE TABLE recipe(
 recipe_no NUMBER 	NOT NULL,
-writer_nickname  VARCHAR2(50) REFERENCES  users(user_id),
+writer_nickname  VARCHAR2(50) REFERENCES  users(user_nickname),
 recipe_name  VARCHAR2(100) NOT NULL,
 recipe_detail  VARCHAR2(200)  NOT NULL,
 recipe_img VARCHAR2(200) NOT NULL,
@@ -276,6 +276,10 @@ VALUES (  seq_career_career_no.nextval, '오미라', to_date('2011/05/24', 'YYYY
 select *from dual;
 
 INSERT 
+INTO users ( user_id, user_name, password, user_birth, user_nickname, user_image, user_addr, role, user_phone, holdpoint, mentor_apply, user_regdate, quit_date, quit_status  ) 
+VALUES ( 'aa@naver.com', 'user', '1234', '19941111', 'fdds', 'ee.jpg', '서울시 서초구', 'user', '01022249988', 1000, 'Y', SYSDATE, to_date('2013/01/14', 'YYYY/MM/DD'), to_date('2014/01/14', 'YYYY/MM/DD'));
+
+INSERT 
 INTO coupon(coupon_no, coupon_name, discount_rate, discount_value, coupon_regdate)
 VALUES (seq_coupon_coupon_no.NEXTVAL, '50% 할인쿠폰', 0.5, 0, SYSDATE);
 
@@ -315,9 +319,11 @@ INSERT
 INTO notice(notice_no, notice_title, notice_content, notice_image, notice_date) 
 VALUES (seq_notice_notice_no.NEXTVAL, '공지합니다', '공지내용입니다', '공지.jpg', SYSDATE);
 
-INSERT
-INTO recipe
-VALUES	 (seq_recipe_no.nextval,'asdf@naver.com', '라자냐', '베리굿','aa.jpg',null,'100','FO',50,'오롤로로',SYSDATE,0);
+INSERT ALL
+INTO recipe VALUES (seq_recipe_no.nextval ,'fdds' , '11', '11','11',null,'11','11',1,'d',SYSDATE,0)
+INTO ingredient VALUES(seq_ingredient_no.nextval,'11', '11', seq_recipe_no.nextval )
+SELECT * FROM duall;
+
 
 INSERT
 INTO ingredient

@@ -28,6 +28,9 @@
 	
 		ws.onmessage = function(event) {
 			console.log("onmessage"+event.data);
+			
+			alert(event.data);
+			
 			let $socketAlert = $('div#socketAlert');
 			$socketAlert.html(event.data)
 			$socketAlert.css('display', 'block');

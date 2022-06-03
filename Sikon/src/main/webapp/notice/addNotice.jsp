@@ -94,15 +94,17 @@
 			}
 		 
 	
-		 $(function() {
+		 $( document ).ready(function() {
 				$( "#register" ).on("click" , function() {
 					//var pushData = {
 					//		"noticeTitle" : $("input[name='noticeTitle']").val(),
 					//		"noticeContent" :$('#summernote').val() };
-					
+										
 					var pushData = $("input[name='noticeTitle']").val();
 					console.log(pushData);
 					commentInsert(pushData);
+					
+					//$("form").attr("method", "POST").attr("action", "/notice/addNotice").submit();
 				});
 			});
 		 
@@ -121,6 +123,10 @@
 
 			        enctype : 'multipart/form-data', 
 			        success : function(data){
+			        	
+			        	alert("¼º°ø!!");
+			        	
+			        	$("form").attr("method", "POST").attr("action", "/notice/addNotice").submit();
 			          
 			                //$('[name=content]').val('');
 			           		//$('.myEditor').summernote('reset');

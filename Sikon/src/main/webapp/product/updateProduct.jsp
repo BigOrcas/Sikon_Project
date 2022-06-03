@@ -72,42 +72,11 @@ div.form-group{
 
 <script type="text/javascript">
 	function fncUpdateProduct() {
-		//Form 유효성 검증
-		var name = $("input[name='prodName']").val();
-		var detail = $("input[name='prodDetail']").val();
-		var manuDate = $("input[name='manuDate']").val();
-		var price = $("input[name='prodName']").val();
-
-		if (name == null || name.length < 1) {
-			alert("상품명은 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (detail == null || detail.length < 1) {
-			alert("상품상세정보는 반드시 입력하여야 합니다.");
-			return;
-		}
-		if (manuDate == null || manuDate.length < 1) {
-			alert("제조일자는 반드시 입력하셔야 합니다.");
-			return;
-		}
-		if (price == null || price.length < 1) {
-			alert("가격은 반드시 입력하셔야 합니다.");
-			return;
-		}
 
 		$("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "/product/updateProduct").submit();
-		//document.detailForm.action='/product/addProduct';
-		//document.detailForm.submit();
 	}
 
-	$(function() {
-		$('#manuDate').datepicker({
-			format : "yyyy-mm-dd"
-
-		});
-
-	});
-
+	
 	$(function() {
 		$("button.btn.btn-primary").on("click", function() {
 			alert($("button.btn.btn-primary").text());
@@ -123,9 +92,7 @@ div.form-group{
 		})
 	})
 
-	//function resetData(){
-	//	document.detailForm.reset();
-	//}
+	
 </script>
 </head>
 
@@ -140,6 +107,14 @@ div.form-group{
 
 		<form class="form-horizontal" enctype="multipart/form-data">
 		
+		<div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-right">
+		      <button type="button" class="btn btn-primary"  >수정</button>
+			  <button type="button" class="btn btn-default" href="#" >취소</button>
+		    </div>
+		  </div>
+		  
+		<hr/>
 			<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo }">
 			
 			<div class="form-group">
@@ -150,7 +125,7 @@ div.form-group{
 		  </div>
 
 			<div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
+		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품간략정보</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" value="${product.prodDetail }">
 		    </div>
@@ -164,69 +139,98 @@ div.form-group{
 			  </div>
 
 			<div class="form-group">
-				<label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="manuDate" name="manuDate" value="${product.manuDate }">
-				</div>
-			</div>
+			    <label for="prodPrice" class="col-sm-offset-1 col-sm-3 control-label">정상가</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="prodPrice" name="prodPrice" value="${product.prodPrice }">
+			    </div>
+			  </div>
 
 			<div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
+		    <label for="prodDisRate" class="col-sm-offset-1 col-sm-3 control-label">할인율</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" value="${product.price }">
+		      <input type="number" step="0.1" class="form-control" id="prodDisRate" name="prodDisRate" value="${product.prodDisRate }">
 		    </div>
 		  </div>
 		  
+		  <div class="form-group">
+		    <label for="prodDisPrice" class="col-sm-offset-1 col-sm-3 control-label">할인가</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodDisPrice" name="prodDisPrice" value="${product.prodDisPrice }">
+		    </div>
+		  </div>
 		  
 
 			<div class="form-group">
-		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+		    <label for="prodThumbnail" class="col-sm-offset-1 col-sm-3 control-label">상품썸네일</label>
 		    <div class="col-sm-4">
 		    	<c:choose>
-		    	<c:when test="${product.fileName.contains('&')}">
+		    	<c:when test="${product.prodThumbnail.contains('&')}">
 						<c:choose>
-						<c:when test="${product.fileName.contains('mp4')}">
-							<c:forEach var="name" items="${product.fileName.split('&')}">
-								<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"  value="${name}"></video>
+						<c:when test="${product.prodThumbnail.contains('mp4')}">
+							<c:forEach var="name" items="${product.prodThumbnail.split('&')}">
+								<video width="400" height="300" controls autoplay src="/resources/images/uploadFiles/${name}" type="video/mp4"  value="${name}"></video>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="name" items="${product.fileName.split('&')}">
-								<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+							<c:forEach var="name" items="${product.prodThumbnail.split('&')}">
+								<img src="/resources/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
 								<input type="hidden" name="image" value="${name }"/>
 							</c:forEach>
 						</c:otherwise>
 						</c:choose>
 				</c:when>
 				<c:otherwise>
-					<img src="/images/uploadFiles/${product.fileName}" width="300" height="300" align="absmiddle" class="image" value="${fileName}"/>
+					<img src="/resources/images/uploadFiles/${product.prodThumbnail}" width="300" height="300" align="absmiddle" class="image" value="${prodThumbnail}"/>
 				</c:otherwise>
 		    	</c:choose>
 		    	
-		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple" >
+		      <input type="file" id="prodThumbnail" name="uploadfiles[]" multiple="multiple" >
 		    </div>
 		  </div>
 		  
 		  <hr/>
 		  
 		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
+		    <label for="prodTheme" class="col-sm-offset-1 col-sm-3 control-label">상품테마</label>
+		    <div class="col-sm-4">
+		      <select class="form-control" name="prodTheme" id="prodTheme">
+				  <option value="TW" selected="selected">식기류</option>
+				  <option value="CW">조리도구</option>
+				  <option value="MK">밀키트</option>
+			  </select>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="prodStatus" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
 		    <div class="col-sm-4">
 		       <div class="btn-group" data-toggle="buttons">
-				    <input type="radio" name="onSale" id="option1" value="1" checked> 판매중
-				    <input type="radio" name="onSale" id="option2" value="0"> 판매중지
+				    <input type="radio" name="prodStatus" id="option1" value="Y" checked> 판매중
+				    <input type="radio" name="prodStatus" id="option2" value="N"> 판매중지
+				</div>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="couponApply" class="col-sm-offset-1 col-sm-3 control-label">쿠폰적용여부</label>
+		    <div class="col-sm-4">
+		       <div class="btn-group" data-toggle="buttons">
+				    <input type="radio" name="couponApply" id="option1" value="Y" checked> 적용가능
+				    <input type="radio" name="couponApply" id="option2" value="N"> 적용불가
 				</div>
 		    </div>
 		  </div>
 		  
 		  <hr/>
 		  
-			<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >수정</button>
-			  <button type="button" class="btn btn-default" href="#" >취소</button>
+		  <div class="form-group">
+		    <label for="prodContent" class="col-sm-offset-1 col-sm-3 control-label">상품상세내용</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodContent" name="prodContent" placeholder="썸머노트 예정">
 		    </div>
 		  </div>
+		  
+			
 
 		</form>
 

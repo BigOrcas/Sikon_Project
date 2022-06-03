@@ -148,7 +148,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	private String currentUserName(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-		User loginUser = (User)httpSession.get("login");
+		User loginUser = (User)httpSession.get("user");
 		
 		if(loginUser == null) {
 			String mid = session.getId();

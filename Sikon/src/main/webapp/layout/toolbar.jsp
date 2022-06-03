@@ -19,7 +19,7 @@
 		
 	function connectWs(){
 		console.log("tttttt")
-		var ws = new SockJS("/alram");
+		var ws = new SockJS("/alarm");
 		socket = ws;
 	
 		ws.onopen = function() {

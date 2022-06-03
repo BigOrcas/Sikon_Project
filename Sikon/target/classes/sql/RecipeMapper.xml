@@ -20,7 +20,6 @@
 		<result property="recipeOrder"      column="recipe_order"            jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="recipeRegDate" 				column="recipe_regdate" 					jdbcType="DATE" />
 		<result property="reviewNum"      column="review_num"           jdbcType="NUMERIC"/>
-		<collection property="ingredient" resultMap="ingredientSelectMap" javaType="java.util.ArrayList" />
 	</resultMap>
 	
 		<resultMap id="ingredientSelectMap" type="ingredient">
@@ -34,7 +33,7 @@
 		</resultMap>
 	
 	<!-- SQL : INSERT -->
-	 <insert 	id="addRecipe"		parameterType="Recipe" >
+	 <insert 	id="addRecipe"		parameterType="recipe" >
 	 	INSERT
 		INTO recipe VALUES	 (	seq_recipe_no.nextval ,#{writer.userNickname} , #{recipeName}, #{recipeDetail},#{recipeImg},#{recipeVideo},#{recipeDifficulty},#{recipeTheme},#{cookingTime},#{recipeOrder},SYSDATE,0)
 	 	
@@ -62,7 +61,7 @@
 	
 	 
 	 <!-- SQL : UPDATE -->
-	<update id="updateRecipe" parameterType="Recipe">
+	<update id="updateRecipe" parameterType="recipe">
 		update recipe
 		<set>
 		recipe_name 	= #{recipeName} ,
@@ -76,15 +75,25 @@
 		</set>
 		WHERE recipe_no = #{recipeNo}
 	</update>
-	
-	<update id="updateIngredient" parameterType="java.util.List">
-			<foreach collection="list" item="item" index="index">
+	 
+		<update id="updateIngredient" parameterType="java.util.HashMap">
 		update ingredient
-		set	ingredient_name=#{item.ingredientName},
-			ingredient_amount=#{item.ingredientAmount}
-		WHERE recipe_no = 10002
-			</foreach>
-	</update>
+		set
+		ingredient_name=
+		case ingredient_no
+        <foreach collection="list" item="item" separator=" " >
+		when  #{item.ingredientNo} then #{item.ingredientName}
+        </foreach>
+        else ingredient_name end
+        ,
+        ingredient_amount=
+        case ingredient_no
+        <foreach collection="list" item="item" separator=" " >
+        when #{item.ingredientNo} then #{item.ingredientAmount}
+        </foreach>
+        else ingredient_amount end
+        where recipe_no=#{recipeNo}
+	 </update>
 	 
 	 
 	<!-- SQL : SELECT LIST -->
@@ -252,5 +261,11 @@
 													</choose>
 													</if>
 													) countTable						
+	 </select>
+	 
+	 <select  id="bestRecipeList" 	resultMap="recipeSelectMap">
+	  	SELECT *
+			FROM recipe
+		ORDER BY review_num DESC
 	 </select>
 </mapper>

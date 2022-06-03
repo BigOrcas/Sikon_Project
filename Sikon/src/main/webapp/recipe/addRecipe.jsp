@@ -34,17 +34,17 @@
 
 
 <!-- include css/js -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<link href="/resources/css/animate.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 
 <!--  /////////////////////////summernote////////////////////////// -->
 
-<script src="/javascript/summernote-lite.js"></script>
+<script src="/resources/javascript/summernote-lite.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
-<script src="/javascript/summernote-ko-KR.js"></script>
+<script src="/resources/javascript/lang/summernote-ko-KR.js"></script>
 <!--  -->
 
 
@@ -262,7 +262,7 @@ function tableDelete(){
 
 
 				<div class="form-group">
-					<label for="fileName"
+					<label for="recipeImg"
 						class="col-lg-offset-1 col-lg-2 control-label">대표이미지</label>
 					<div class="col-lg-9">
 						<input type="file" class="form-control" id="recipeImg"
@@ -273,7 +273,7 @@ function tableDelete(){
 
 
 				<div class="form-group">
-					<label for="difficulty"
+					<label for="recipeDifficulty"
 						class="col-lg-offset-1 col-lg-2 control-label">난이도</label>
 					<div class="col-lg-9">
 						<select name="recipeDifficulty" class="form-control">

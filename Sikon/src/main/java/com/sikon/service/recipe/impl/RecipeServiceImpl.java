@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.sikon.common.Search;
-import com.sikon.service.domain.Ingredient;
 import com.sikon.service.domain.Recipe;
 import com.sikon.service.recipe.RecipeDao;
 import com.sikon.service.recipe.RecipeService;;
@@ -79,14 +78,28 @@ public class RecipeServiceImpl implements RecipeService {
 		return map;
 	}
 
-	public void updateRecipe(Recipe recipe,Map ingredient) throws Exception {
+	public void updateRecipe(Recipe recipe) throws Exception {
+		System.out.println("¶ì¿ë");
 		System.out.println("recipe=" + recipe);
-		recipeDao.updateRecipe(recipe,ingredient);
+		recipeDao.updateRecipe(recipe);
+	}
+	
+	public void updateIngredient(List ingredient,int recipeNo) throws Exception {
+		System.out.println("¶ì¿ë");
+		recipeDao.updateIngredient(ingredient,recipeNo);
 	}
 
 	public void deleteRecipe(Recipe recipe) throws Exception {
 		System.out.println("recipe=" + recipe);
 		recipeDao.deleteRecipe(recipe);
+	}
+
+	@Override
+	public Map<String, Object> bestRecipeList() throws Exception {
+		List<Recipe> list= recipeDao.bestRecipeList();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		return map;
 	}
 
 }

@@ -34,17 +34,17 @@
 
 
 <!-- include css/js -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<link href="/resources/css/animate.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 
 <!--  /////////////////////////summernote////////////////////////// -->
 
-<script src="/javascript/summernote-lite.js"></script>
+<script src="/resources/javascript/summernote-lite.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
-<script src="/javascript/summernote-ko-KR.js"></script>
+<script src="/resources/javascript/summernote-ko-KR.js"></script>
 <!--  -->
 
 
@@ -130,8 +130,9 @@ table.type09 td {
 	function fncAddRecipe() {
 
 		$("form").attr("method", "POST").attr("enctype", "multipart/form-data").attr("action", "/recipe/addRecipe").submit();
-
 	}
+	
+
 </script>
 <script>
 	$(document)
@@ -197,15 +198,19 @@ function tableCreate(){
 	var ingredientAmount = $("#ingredientAmount").val();
 				
 	html += '<tr>';
-	html += '<td name="ingredientName">'+ingredientName+'</td>';
-	html += '<td name="ingredientAmount">'+ingredientAmount+'</td>';
+	html += '<td>'+ingredientName+'</td>';
+	html += '<input type="hidden" name="ingredientName" value="'+ingredientName+'"/>';
+	html += '<td>'+ingredientAmount+'</td>';
+	html += '<input type="hidden" name="ingredientAmount" value="'+ingredientAmount+'"/>';
 	html += '</tr>';
 				
+	
 	$("#dynamicTable").append(html);
 				
 	$("#ingredientName").val('');
 	$("#ingredientAmount").val('');
 	$("table.type09 tr td[name='ingredientName']").css("color","red");
+	console.log('왜이러니'+$("#dynamicTable tr").find("td").length);
 
 	}
 	
@@ -260,8 +265,8 @@ function tableDelete(){
 					<label for="fileName"
 						class="col-lg-offset-1 col-lg-2 control-label">대표이미지</label>
 					<div class="col-lg-9">
-						<input type="file" class="form-control" id="fileName"
-							name="fileName" placeholder="레시피이미지">
+						<input type="file" class="form-control" id="recipeImg"
+							name="recipeImg" placeholder="레시피이미지">
 
 					</div>
 				</div>
@@ -271,7 +276,7 @@ function tableDelete(){
 					<label for="difficulty"
 						class="col-lg-offset-1 col-lg-2 control-label">난이도</label>
 					<div class="col-lg-9">
-						<select name="difficulty" class="form-control">
+						<select name="recipeDifficulty" class="form-control">
 							<option value="1" selected="selected">초급</option>
 							<option value="2">중급</option>
 							<option value="3">고급</option>
@@ -305,8 +310,8 @@ function tableDelete(){
 					<tbody id="dynamicTbody">
 					</tbody>
 				</table>
-				<input type="text" placeholder="재료명" id="ingredientName" name="ingredientName"> 
-				<input type="text" placeholder="재료양" id="ingredientAmount" name="ingredientAmount">
+				<input type="text" placeholder="재료명" id="ingredientName" > 
+				<input type="text" placeholder="재료양" id="ingredientAmount">
 				<button type="button" 
 							style="float: right; ">재료추가</button>
 				<button type="button" 
@@ -318,9 +323,9 @@ function tableDelete(){
 
 
 				<div class="form-group">
-					<label for="theme" class="col-lg-offset-1 col-lg-2 control-label">카테고리</label>
+					<label for="recipeTheme" class="col-lg-offset-1 col-lg-2 control-label">카테고리</label>
 					<div class="col-lg-9">
-						<select name="theme" class="form-control">
+						<select name="recipeTheme" class="form-control">
 							<option value="1" selected="selected">카테고리</option>
 							<option value="2">한식</option>
 							<option value="3">중식</option>

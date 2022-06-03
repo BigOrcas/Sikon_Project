@@ -42,10 +42,7 @@ body{
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		
-		//==> 추가된부분 : "수정" "확인"  Event 연결 및 처리
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		 $(function() {	
 			 $( "button.btn.btn-default" ).on("click" , function() {
 				 self.location = "/product/listProduct?menu=search"
 			});
@@ -68,26 +65,30 @@ body{
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info" style="color:#bc8f8f">구매정보조회</h3>
+	       <h3 class=" text-info" style="color:#bc8f8f">결제확인</h3>
 	    </div>
 	
-		<div class="row">
+		 <hr/>
+		 <h4 align="center">주문상품</h4>
+		 <hr/>
+		 
+		 <div class="row">
 		<div class="col-xs-12 col-md-12" align="center">
 		
 		<c:choose>
 		
-		<c:when test="${purchase.purchaseProd.fileName.contains('&')}">
+		<c:when test="${purchase.purchaseProd.prodThumbnail.contains('&')}">
 		
 			<td class="ct_write01">
 				<c:choose>
-				<c:when test="${purchase.purchaseProd.fileName.contains('mp4')}">
-					<c:forEach var="name" items="${purchase.purchaseProd.fileName.split('&')}">
-						<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"></video>
+				<c:when test="${purchase.purchaseProd.prodThumbnail.contains('mp4')}">
+					<c:forEach var="name" items="${purchase.purchaseProd.prodThumbnail.split('&')}">
+						<video width="400" height="300" controls autoplay src="/resources/images/uploadFiles/${name}" type="video/mp4"></video>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="name" items="${purchase.purchaseProd.fileName.split('&')}">
-						<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+					<c:forEach var="name" items="${purchase.purchaseProd.prodThumbnail.split('&')}">
+						<img src="/resources/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
 					</c:forEach>
 				</c:otherwise>
 				</c:choose>		
@@ -97,95 +98,87 @@ body{
 		</c:when>
 		
 		<c:otherwise>
-			<img src="/images/uploadFiles/${purchase.purchaseProd.fileName}" width="300" height="300" align="absmiddle"/>
+			<img src="/resources/images/uploadFiles/${purchase.purchaseProd.prodThumbnail}" width="300" height="300" align="absmiddle"/>
 		</c:otherwise>
 		</c:choose>
 
 		</div>
 		</div>
-
-		<hr/>
-	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>상품번호</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.purchaseProd.prodNo }</div>
+		  
+		 <div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>상품명</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.purchaseProd.prodName}</div>
 		</div>
 		
-		<hr/>
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>결제금액</strong></div>
+	  		<hr/>
+			<div class="col-xs-8 col-md-8">상품가격: ${purchase.purchaseProd.prodDisPrice} 원</div>
+			<div class="col-xs-8 col-md-8">+ 배송비: ${purchase.divyFee} 원</div>
+		</div>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-4"><strong>구매수량</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.buyNum }</div>
+			<div class="col-xs-8 col-md-8">${purchase.purchaseQuantity} 개</div>
 		</div>
 		
-		<hr/>
-		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매자아이디</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.buyer.userId}</div>
+	  		<div class="col-xs-4 col-md-4"><strong>적립 포인트</strong></div>
+			<div class="col-xs-8 col-md-8">+ ${purchase.purchaseProd.prodDisPrice * 0.05} P</div>
 		</div>
-		
-		<hr/>
-		
-		
+		  
+
+		 <hr/>
+		  <h4 align="center">배송정보</h4>
+		  <hr/>
+	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매방법</strong></div>
-	  		<c:if test="${purchase.paymentOption.contains('1')}">
-	  			<div class="col-xs-8 col-md-8">현금구매</div>
-	  		</c:if>
-	  		<c:if test="${purchase.paymentOption.contains('2')}">
-	  			<div class="col-xs-8 col-md-8">신용구매</div>
-	  		</c:if>
-		</div>
-		
-		<hr/>
-			
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매자이름</strong></div>
+	  		<div class="col-xs-4 col-md-4"><strong>받는분 이름</strong></div>
 			<div class="col-xs-8 col-md-8">${purchase.receiverName }</div>
 		</div>
-		
-		<hr/>
-		
-		
-		
+
 		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매자연락처</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.receiverPhone }</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매자주소</strong></div>
+	  		<div class="col-xs-4 col-md-4"><strong>배송지</strong></div>
 			<div class="col-xs-8 col-md-8">${purchase.divyAddr }</div>
 		</div>
 		
-		<hr/>
-		
-		
-		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>구매요청사항</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.divyRequest }</div>
+	  		<div class="col-xs-4 col-md-4"><strong>연락처</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.receiverName }</div>
 		</div>
 		
-		<hr/>
-		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>배송희망일</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.divyDate }</div>
+	  		<div class="col-xs-4 col-md-4"><strong>이메일</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.receiverName }</div>
 		</div>
 		
 		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>배송메시지</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.divyMessage }</div>
+		</div>
+		
+		
+		<hr/>
+		  <h4 align="center">쿠폰 / 포인트</h4>
+		  <hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>사용 쿠폰</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.usedCoupon }</div>
+		</div>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>사용 포인트</strong></div>
+			<div class="col-xs-8 col-md-8">- ${purchase.usedPoint } P</div>
+		</div>
 		
 		
 		
 		<div class="row">
 	  		<div class="col-md-12 text-right ">
-	  		
 	  			<button type="button" class="btn btn-default" id="check">확인</button>
+	  		</div>
 		</div>
 		
 		<br/>

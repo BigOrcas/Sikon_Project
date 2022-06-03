@@ -33,7 +33,7 @@
 
 <style>
 body>div.container{
-	padding-top : 50px;
+	padding-top : 150px;
 	font-family: 'Nanum Myeongjo', serif;
 }
 div.row{
@@ -42,6 +42,11 @@ div.row{
 div.page-header{
 	font-family: 'Nanum Myeongjo', serif;
 }
+
+div.image{
+	padding-top : 30px;
+}
+
 </style>
  <!-- //////////////////////////////////공유하기////////////////////////////// -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> 
@@ -65,14 +70,14 @@ div.page-header{
 		  var detail = $("input:hidden[name='detail']").val();
 		  console.log(detail);
 		  var prodNo = $("input:hidden[name='prodNo']").val();
-		  console.log(prodNo);
+		 console.log(prodNo);
 		  
 	    Kakao.Link.sendDefault({
 	      objectType: 'feed',
 	      content: {
 	        title: name,
 	        description: detail,
-	        imageUrl: 'http://192.168.0.65:8080/images/uploadFiles/'+image ,
+	        imageUrl: 'http://192.168.0.65:8080/resources/images/uploadFiles/'+image ,
 	        link: {
 	          mobileWebUrl: 'http://192.168.0.65:8080/product/getProduct?prodNo='+prodNo,
 	          webUrl: 'http://192.168.0.65:8080/product/getProduct?prodNo='+prodNo,
@@ -96,8 +101,15 @@ div.page-header{
 	
 	
 	
-	$(function() {	
+	$( document ).ready( function() {
+		 
 		
+		
+		 $('#quantity').change( function() {
+			 var quantity = $('#quantity').val();
+			 $('#quantity').val(quantity)
+			 console.log('구매수량: '+quantity);
+		 });
 		
 		 $( "#check" ).on("click" , function() {
 			 self.location = "/product/listProduct?menu=manage"
@@ -107,8 +119,14 @@ div.page-header{
 			 self.location = "/product/listProduct?menu=search"
 		});
 		 
+		 $( "button.btn-warning" ).on("click" , function() {
+			 var quantity = $('#quantity').val();
+			 self.location = "/purchase/addPurchase?prodNo=${product.prodNo}&quantity="+quantity;
+		});
+		 
 		 $( "button.btn-primary" ).on("click" , function() {
-			 self.location = "/purchase/addPurchase?prodNo=${product.prodNo}&menu=${param.menu}"
+			 var prodNo = $('#prodNo').val();
+			 self.location = "/product/updateProduct?prodNo="+prodNo
 		});
 		 
 	});
@@ -121,143 +139,99 @@ div.page-header{
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
+
+
+
 	<div class="container">
 	
-		<div class="page-header">
-			<c:if test="${empty param.menu }">
-	       <h3 class=" text-info"  style="color:#bc8f8f">상품상세조회</h3>
-	       </c:if>
-	       <c:if test="${!empty param.menu }">
-	       	<h3 class=" text-info" style="color:#bc8f8f">상품구매하기</h3>
-	       </c:if>
-	    </div>
+		<div class="row">
 	
-		<div class="row">
-		<div class="col-xs-12 col-md-12" align="center">
-		
-		<c:choose>
-		
-		<c:when test="${product.fileName.contains('&')}">
-		
-			<td class="ct_write01">
-				<c:choose>
-				<c:when test="${product.fileName.contains('mp4')}">
-					<c:forEach var="name" items="${product.fileName.split('&')}">
-						<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"  value="${name}"></video>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="name" items="${product.fileName.split('&')}">
-						<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
-						<input type="hidden" name="image" value="${name }"/>
-					</c:forEach>
-				</c:otherwise>
-				</c:choose>		
-		
-			</td>
-		
-		</c:when>
-		
-		<c:otherwise>
-			<img src="/images/uploadFiles/${product.fileName}" width="300" height="300" align="absmiddle" class="image" value="${fileName}"/>
-		</c:otherwise>
-		</c:choose>
-
-		</div>
-		</div>
-
-		<hr/>
-	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>상품번호</strong></div>
-			<div class="col-xs-8 col-md-8">${product.prodNo}</div>
-			<input type="hidden" name="prodNo" value="${product.prodNo }"/>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>상품명</strong></div>
-			<div class="col-xs-8 col-md-8">${product.prodName}</div>
-			<input type="hidden" name="prodName" value="${product.prodName}"/>
-		</div>
-		
-		<hr/>
-		
-		
-		<c:if test="${ user.role.equals('admin')}">
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>재고량</strong></div>
-			<div class="col-xs-8 col-md-8">${product.prodStock }</div>
-		</div>
-		
-		<hr/>
-		</c:if>
+				<div class="col-xs-6 col-md-6 text-center image">				
+						<c:forEach var="name" items="${product.prodThumbnail.split('&')[0]}">
+								<img src="/resources/images/uploadFiles/${name}" width="400" height="400"/>
+						</c:forEach>
+				</div>	
 			
+
+				<div class="col-xs-4 col-md-4">
+			
+				<div class="row">
+					<input type="hidden" name="prodNo" id="prodNo" value="${product.prodNo }"/>
+				</div>
+				
+				<hr/>
+				
+				<div class="row">
+				
+					<div class="text-right">
+						<a id="kakao-link-btn" href="javascript:kakaoShare()">
+					    	<img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" width="30" height="30"/>
+					    </a>
+					</div>
+					
+					<div><h4><strong>${product.prodName}</strong></h4></div><br>
+					<div>${product.prodDetail }</div>
+					<input type="hidden" name="detail" value="${product.prodDetail }"/>
+					<input type="hidden" name="prodName" value="${product.prodName}"/>
+				</div>
+				
+				<br/><br/>
+				
+				
+				
+				
+				<div class="row">
+					<div><h6><del>${product.prodPrice } 원</del></h6></div>
+					<div><h5><strong>${product.prodDisPrice } 원</strong></h5></div>
+				</div>
+				
+				<br/>
+				
+				<div class="row">
+					구매수량: &emsp;
+				      <input type="number" min="0" id="quantity" name="quantity" value="1" style="width:40px"/> 개
+				</div>
+				
+				<br/><br/>
+				
+				<div class="row">
+					------------------<br/>
+					 배송비 : 3000원<br/>
+					------------------					
+				</div>
+				
+				<hr/> 
+				
+				
+				<div class="row">
+			  		<div class="text-center">	
+			  				<button type="button" class="btn btn-default btn-lg" id="cancel">장바구니</button>&emsp;
+			  				<button type="button" class="btn btn-warning btn-lg" id="buy" >구매하기</button>
+			  				<c:if test="${menu == 'manage' }">
+			  				&emsp;<button type="button" class="btn btn-primary btn-lg" id="buy" >수정하기</button>
+			  				</c:if>
+			  		</div>
+				</div>
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>상품상세정보</strong></div>
-			<div class="col-xs-8 col-md-8">${product.prodDetail }</div>
-			<input type="hidden" name="detail" value="${product.prodDetail }"/>
-		</div>
-		
-		<hr/>
-		
-		
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>가격</strong></div>
-			<div class="col-xs-8 col-md-8">${product.price }</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-8">${product.manuDate }</div>
-		</div>
-		
-		<hr/>
-	
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>등록일자</strong></div>
-			<div class="col-xs-8 col-md-8">${product.regDate }</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>공유하기</strong></div>
-			<div class="col-xs-8 col-md-8">
-				<a id="kakao-link-btn" href="javascript:kakaoShare()">
-			    	<img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" width="30" height="30"/>
-			    </a>
-			</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-md-12 text-right ">
-	  			<c:if test="${empty param.menu }">
-	  			<button type="button" class="btn btn-default" id="check">확인</button>
-	  			</c:if>
-	  			<c:if test="${!empty param.menu }">
-	  				<button type="button" class="btn btn-default" id="cancel">취소</button>
-	  				<button type="button" class="btn btn-primary" id="buy" value1="${product.prodNo }" value2="${param.menu }">구매</button>
-	  			</c:if>
-	  		</div>
-		</div>
-		
-		<br/>
-		
- 	</div>
+				
+		 	</div>
+		 	
+		 	<div class="col-xs-2 col-md-2">
+		 	</div>
+		 	
+		 	</div>
+		 	
+		 	<hr/>
+		 	
+		 	<div class="col-xs-10 col-md-10 text-center">
+		 	
+		 	${product.prodContent }
+		 	
+		 	</div>
+		 	
+</div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>

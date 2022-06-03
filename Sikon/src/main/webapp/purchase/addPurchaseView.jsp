@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -11,20 +11,6 @@
 	
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-
-<link rel="stylesheet"
-	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-
-
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-<script
-	src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
-
-<link rel="stylesheet"
-	href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -57,30 +43,45 @@
 
 
 body>div.container {
-	border: 3px solid #D6CDB7;
-	margin-top: 50px;
+	border: 3px solid #630606;
+	margin-top: 150px;
 	font-family: 'Nanum Myeongjo', serif;
 }
+
+#aaa{
+	background: #630606 
+}
+#bbb{
+	background: #BB6464
+}
+#ccc{
+	background: #F7F7F7
+}
+#ddd{
+	background: #D0C9C0
+}
+#eee{
+	background: #5F7161
+}
+#fff{
+	background: #6D8B74
+}
+
+
+
+
 
 </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "장바구니"  Event 연결 =============
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-warning" ).on("click" , function() {
-				console.log('장바구니');
-				fncAddWishlist();
-			});
-		});
 	
 		//============= "구매"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				console.log('구매');
+			$( "#iamportPayment" ).on("click" , function() {
+				alert('결제');
 				fncAddPurchase();
 			});
 		});	
@@ -116,14 +117,6 @@ body>div.container {
 		//====================================================
 		function fncAddPurchase() {
 			
-			var prodStock=$("#prodStock").val();
-			var buyNum=$("input[name='buyNum']").val();
-			console.log(prodStock);
-			console.log(buyNum);
-			if (prodStock < buyNum) {
-				alert("구매 가능 개수가 초과되었습니다");
-				return;
-			}
 			
 			var addr = $("#sample6_postcode").val() + "/" +  $("#sample6_address").val() + "/" +  $("#sample6_detailAddress").val() + "/" + $("#sample6_extraAddress").val();
 			console.log('submit');
@@ -135,33 +128,8 @@ body>div.container {
 			
 		}
 		
-		//====================================================
-		function fncAddWishlist() {
-			
-			var prodStock=$("#prodStock").val();
-			var buyNum=$("input[name='buyNum']").val();
-			console.log(prodStock);
-			console.log(buyNum);
-			if (prodStock < buyNum) {
-				alert("장바구니 담기가능 개수가 초과되었습니다");
-				return;
-			}
-			
-			
-			$("form").attr("method" , "POST").attr("action" , "/wishList/addWishlist").submit();
-			
-		}
-		
-		//====================================================
 
 
-		$(function() {
-			$('#divyDate').datepicker({
-				format : "yyyy-mm-dd"
-
-			});
-
-		});
 		
 	
 		 
@@ -222,10 +190,10 @@ body>div.container {
 <script>
   
 
-	
+/*	
 	$(function() {
 		$("button.iamportPayment").on("click" , function() {
-			console.log("시작");		
+			console.log("아임포트");		
 			payment();	
 		});
 	});	
@@ -259,7 +227,7 @@ function payment(data) {
     });
 	
 }
-    
+    //*/
     
 
 
@@ -270,95 +238,87 @@ function payment(data) {
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Home Deco</a>
-   		</div>
-   	</div>
+        <jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-defualt text-center" style="color:#bc8f8f">상품구매</h1>
+		<h1 class="bg-defualt text-center" style="color:#bc8f8f">결제하기</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
-		  <div class="form-group">
-		    <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control"  name="prodNo" placeholder="상품번호" value="${product.prodNo}" readonly>
-		    </div>
-		  </div>
+		  <input type="hidden" name="prodNo" value="${product.prodNo }" />
+		  <input type="hidden" name="userId" value="${user.userId }" />
+		  
+		  
+		  <hr/>
+		  <h4 align="center">주문상품</h4>
+		  <hr/>
 		  
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명" value="${product.prodName}" readonly>
+		      ${product.prodName}
 		    </div>
 		  </div>
 		  
-		  <input type="hidden" id="prodStock" value="${product.prodStock }" />
-		  
-		  <div class="form-group">
-		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보" value="${product.prodDetail}" readonly>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="regDate" class="col-sm-offset-1 col-sm-3 control-label">등록일자</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="regDate" name="regDate" placeholder="등록일자" value="${product.regDate}" readonly>
-		    </div>
-		  </div>
-		  
+		
 		  <div class="form-group">
 		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="가격" value="${product.price}" readonly>
+		      ${product.prodDisPrice} 원
 		    </div>
 		  </div>
+		  
+		  <div class="form-group">
+		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">배송비</label>
+		    <div class="col-sm-4">
+		      3000 원
+		      <input type="hidden" class="form-control" id="divyFee" name="divyFee" value="3000">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="purchaseQuantity" class="col-sm-offset-1 col-sm-3 control-label">구매수량</label>
+		    <div class="col-sm-4">
+		    ${quantity} 개
+		      <input type="hidden" min="0" class="form-control" id="purchaseQuantity" name="purchaseQuantity" value="${quantity}">
+		    </div>
+		  </div>
+		  
+		  <c:if test="${product.couponApply == 'N' }">
+			  <div class="form-group">
+			    *쿠폰적용불가
+			  </div>
+		  </c:if>
+		  
+		  <hr>
+		  
+		   <div class="form-group">
+		  <label for="purchaseQuantity" class="col-sm-offset-1 col-sm-3 control-label">적립 포인트</label>
+		    <div class="col-sm-4">
+		      + ${product.prodDisPrice * 0.05 } P
+		    </div>
+		  </div>
+		 
+		  
+		  
+		  <hr/>
+		  <h4 align="center">배송정보</h4>
+		  <hr/>
 		  
 		  	  
 		  <div class="form-group">
-		    <label for="buyerId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
+		    <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">받는분 이름</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="buyerId" name="buyerId" placeholder="${user.userId}" value="${user.userId}" readonly>
-		      <input type="hidden" id="userId" name="userId" value="${user.userId}"/>
+		      <input type="text" class="form-control" id="receiverName" name="receiverName" value="${user.userName}"> 
 		    </div>
 		  </div>
 		  
-		  	  
 		  <div class="form-group">
-		    <label for="paymentOption" class="col-sm-offset-1 col-sm-3 control-label">구매방법</label>
-		    <div class="col-sm-4">
-		      <select 	name="paymentOption"		class="form-control" >
-				<option value="1" selected="selected">현금구매</option>
-				<option value="2">신용구매</option>
-			</select>
-		    </div>
-		  </div>
-		  
-		  	  
-		  <div class="form-group">
-		    <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">구매자이름</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="receiverName" name="receiverName" placeholder="구매자이름" value="${user.userName}"> 
-		    </div>
-		  </div>
-		  
-		    <div class="form-group">
-		    <label for="receiverPhone" class="col-sm-offset-1 col-sm-3 control-label">구매자연락처</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="receiverPhone" name="receiverPhone" placeholder="구매자연락처"  value="${user.phone}">
-		    </div>
-		  </div>
-		  
-		      <div class="form-group">
-		    <label for="divyAddr" class="col-sm-offset-1 col-sm-3 control-label">구매자주소</label>
+		    <label for="divyAddr" class="col-sm-offset-1 col-sm-3 control-label">배송지</label>
 		    <div class="col-sm-4">
 		        <input type="text" id="sample6_postcode" name="postcode" placeholder="우편번호" value="">
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -369,42 +329,68 @@ function payment(data) {
 		    <input type="hidden" name="divyAddr" value="${user.addr}">
 		  </div>
 		  
-		     <div class="form-group">
-		    <label for="buyNum" class="col-sm-offset-1 col-sm-3 control-label">구매수량</label>
+		    <div class="form-group">
+		    <label for="receiverPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
 		    <div class="col-sm-4">
-		      <input type="number" min="0" class="form-control" id="buyNum" name="buyNum" placeholder="남은 수량 : ${product.prodStock }">
+		      <input type="text" class="form-control" id="receiverPhone" name="receiverPhone" value="${user.phone}">
 		    </div>
 		  </div>
 		  
-		     <div class="form-group">
-		    <label for="divyRequest" class="col-sm-offset-1 col-sm-3 control-label">구매요청사항</label>
+		  <c:if test="${param.menu }">
+		  <div class="form-group">
+		    <label for="receiverEmail" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="divyRequest" name="divyRequest" placeholder="구매요청사항"  >
+		      <input type="text" class="form-control" id="receiverEmail" name="receiverEmail" placeholder="비회원 구매" >
 		    </div>
 		  </div>
+		  </c:if>
 		  
-		       <div class="form-group">
-		    <label for="divyDate" class="col-sm-offset-1 col-sm-3 control-label">배송희망일자</label>
+		  
+		   <div class="form-group">
+		    <label for="divyMessage" class="col-sm-offset-1 col-sm-3 control-label">배송메시지</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="divyDate" name="divyDate" placeholder="배송희망일자">
+		      <input type="text" class="form-control" id="divyMessage" name="divyMessage" placeholder="요청사항을 적어주세요."  >
 		    </div>
 		  </div>
+
 		  
+		  <hr/>
+		  <h4 align="center">쿠폰 / 포인트</h4>
+		  <hr/>
+		  
+		 
+		 <div class="form-group">
+		    <label for="usedCoupon" class="col-sm-offset-1 col-sm-3 control-label">쿠폰 사용</label>
+		    <div class="col-sm-4">
+		   	  <c:if test="${product.couponApply == 'Y' }">
+		      	<input type="text" class="form-control" id="usedCoupon" name="usedCoupon" placeholder="사용할 쿠폰을 선택해주세요" >
+		      </c:if>
+		      <c:if test="${product.couponApply == 'N' }">
+		      	<input type="text" class="form-control" id="usedCoupon" name="usedCoupon" placeholder="쿠폰적용이 불가한 상품입니다." readonly >
+		      </c:if>
+		    </div>
+		  </div>
 		  
 		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button"  class="btn btn-warning"  >장바구니</button>
-		      <button type="button"  class="btn btn-primary"  >구&nbsp;매</button>
-			  <a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
+		    <label for="usedPoint" class="col-sm-offset-1 col-sm-3 control-label">포인트 사용</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="usedPoint" name="usedPoint" value="0">
+		      <button type="button" class="point" id="point">모두 사용</button>
+		      <h5>보유 포인트 ${user.holdpoint } P</h5>	
 		    </div>
 		  </div>
+		  
+		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
-		<div class="text-left">
-			<button type="button" class="iamportPayment" id="iamportPayment">결제하기</button>	
+		<div class="text-center">
+			<button type="button" class="btn btn-default btn-block iamportPayment" id="iamportPayment">결제하기</button>	
+			<a class="btn btn-default btn-block" href="#" role="button">취 소</a>
 		</div>
 		
+		<br/>
  	</div>
+	
 	
 </body>
 

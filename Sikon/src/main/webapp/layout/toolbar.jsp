@@ -19,7 +19,7 @@
 		
 	function connectWs(){
 		console.log("tttttt")
-		var ws = new SockJS("/alram");
+		var ws = new SockJS("/alarm");
 		socket = ws;
 	
 		ws.onopen = function() {
@@ -28,6 +28,9 @@
 	
 		ws.onmessage = function(event) {
 			console.log("onmessage"+event.data);
+			
+			alert(event.data);
+			
 			let $socketAlert = $('div#socketAlert');
 			$socketAlert.html(event.data)
 			$socketAlert.css('display', 'block');

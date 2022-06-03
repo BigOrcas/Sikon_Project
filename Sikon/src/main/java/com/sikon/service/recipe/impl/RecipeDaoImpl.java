@@ -79,17 +79,31 @@ public class RecipeDaoImpl implements RecipeDao {
 		return sqlSession.selectOne("RecipeMapper.getTotalMyCount", map);
 	}
 
-	public void updateRecipe(Recipe recipe,Map ingredient) throws Exception {
-		System.out.println("recipe=" + recipe);
-		System.out.println("ingredient=" + ingredient);
+	public void updateRecipe(Recipe recipe) throws Exception {
+		System.out.println("¾Ærecipe=" + recipe);
 		sqlSession.update("RecipeMapper.updateRecipe", recipe);
-		System.out.println(ingredient.get("list"));
-		sqlSession.update("RecipeMapper.updateIngredient", ingredient.get("list"));
+	}
+	
+	public void updateIngredient(List ingredient,int recipeNo) throws Exception {
+		System.out.println("ingredient=" + ingredient);
+		System.out.println("recipeNo=" + recipeNo);
+//		System.out.println(ingredient.get("list"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", ingredient);
+		map.put("recipeNo", recipeNo);
+		sqlSession.update("RecipeMapper.updateIngredient", map);
 	}
 
 	public void deleteRecipe(Recipe recipe) throws Exception {
 		System.out.println("recipe=" + recipe);
 		sqlSession.delete("RecipeMapper.deleteRecipe", recipe);
 	}
+
+	@Override
+	public List<Recipe> bestRecipeList() throws Exception {
+		// TODO Auto-generated method stub
+		return	sqlSession.selectList("RecipeMapper.bestRecipeList");
+	}
+
 
 }

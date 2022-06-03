@@ -69,7 +69,7 @@ div.row{
 }   
     
 div.thumbnail {
-	height:450px;
+	height:410px;
 	border-radius: 5px;
 }
        
@@ -273,31 +273,26 @@ div.bar{
 			 
 			 var menu = $("#menu").val();
 			 console.log(menu);
-			 
-			 
-			 $(document).on('click', 'a.btn-defualt', function(){
-				 
-				 var prodNo =$(this).attr("value");
-				 console.log('상세조회');
-				 self.location = "/product/getProduct?prodNo="+prodNo+"&menu="+menu
-			});
-			 
+
 			
 			 $(document).on('click', 'a.update', function(){
 				 var prodNo =$(this).attr("value");
 				 console.log('수정하기');
 				 self.location = "/product/updateProduct?prodNo="+prodNo
 			});
-			 
-			 $(document).on('click', 'a.buy', function(){
-				 var prodNo =$(this).attr("value");
-				 console.log('구매하기');
-				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
-			});
+
 			 
 	   	
 			//====================================================================	
 			 
+			 $(document).on('click', '.thumbnail', function(){
+				 var prodNo =$(this).attr("value");
+				 console.log('썸네일 클릭'+prodNo);
+				 self.location = "/product/getProduct?prodNo="+prodNo+"&menu="+menu;
+			});
+				
+				
+				
 		});	
 		 
 		
@@ -397,7 +392,7 @@ div.bar{
 		  <c:forEach var="product" items="${list}">
 			
 			  <div class="col-sm-6 col-md-3">
-			    <div class="thumbnail">
+			    <div class="thumbnail" value="${product.prodNo}">
 			    
 			    <c:if test="${product.prodStatus.contains('Y') }">
 				    <c:choose>
@@ -443,48 +438,26 @@ div.bar{
 			      <div class="caption">
 			      
 			      <p>${product.prodDetail}<p>	      
-			      <h3>${product.prodName}</h3>
+			      <h4>${product.prodName}</h4>
 			      <p style="text-align:right"><del>${product.prodPrice} 원</del></p>
-			      <p style="text-align:right">${(product.prodDisRate*100)}% <strong>${product.prodDisPrice} 원</strong></p>
+			      <p style="text-align:right;color:#bc8f8f"">${(product.prodDisRate*100)}% &nbsp;
+			      <strong>${product.prodDisPrice} 원</strong></p>
 			      
 			      
 			        <c:choose>
 			        	<c:when test="${user.role.equals('admin') && param.menu.equals('manage')}">
-			        		<p>남은 재고량 : ${product.prodStock}</p>
+			        		<p style="text-align:left;">남은 재고량 : ${product.prodStock}</p>
 			        		<c:if test="${product.prodStatus.contains('N') }">
-			        			<p style="color:#DB4455">판매중지</p>
+			        			<p style="text-align:left; color:#DB4455">판매중지</p>
 			        		</c:if>
 			        	</c:when>
 			        	<c:otherwise>
 			        		<c:if test="${product.prodStatus.contains('N') }">
-			        			<p style="color:#DB4455">*판매중지된 상품입니다.</p>
+			        			<p style="text-align:left; color:#DB4455">*판매중지된 상품입니다.</p>
 			        		</c:if>
 			        	</c:otherwise>
 			        </c:choose>
-			        <p align="right">
-			        <a class="btn btn-defualt btn"  role="button" value="${product.prodNo}" style="color:#bc8f8f">상세조회</a>
 			        
-			        
-			        
-			        <c:if test="${param.menu.equals('manage') }">
-			        <a class="btn btn-defualt btn update"  role="button" value="${product.prodNo}">수정하기</a>			        
-			        </c:if>
-			        <c:if test="${param.menu.equals('search') }">
-			        	<c:choose>
-			        		<c:when test="${product.prodStock == '0' }">
-			        			<a class="btn btn-defualt btn disabled" role="button" >품절</a>
-			        		</c:when>
-			        		<c:otherwise>
-			        			<c:if test="${product.prodStatus.contains('Y') }">
-			        				<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
-			        			</c:if>
-			        			<c:if test="${product.prodStatus.contains('N') }">
-			        				<a class="btn btn-default btn disabled" role="button" value="${product.prodNo}">구매하기</a>
-			        			</c:if>
-			        		</c:otherwise>
-			        	</c:choose>			        
-			        </c:if>
-			        </p>
 			      </div>
 			    </div>
 			  </div>
@@ -502,7 +475,7 @@ div.bar{
 	  
 	  <div class="floatbar">
 	  	<div class="bar">
-	  	<jsp:include page="/history.jsp" />
+	  	<jsp:include page="/history_store.jsp" />
 	  	</div>
 	  </div>
 	  

@@ -43,6 +43,10 @@ public class NoticeRestController {
 	@Autowired
 	@Qualifier("noticeServiceImpl")
 	private NoticeService noticeService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userSerivce;
 		
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
@@ -93,6 +97,22 @@ public class NoticeRestController {
 			e.printStackTrace();
 		}
 		
+		return map;
+	}
+	
+	
+	@PostMapping(value="/json/pushAlarm", produces = "application/json")
+	@ResponseBody
+	public Map pushAlram(@RequestParam("pushData") String pushData) {
+		
+		Map map = new HashMap();
+		
+		System.out.println(pushData);
+				
+		map.put("userId", "admin@naver.com");
+		map.put("noticeTitle", pushData);
+		map.put("responseCode", "success");
+				
 		return map;
 	}
 	

@@ -15,10 +15,6 @@
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
   	
-	<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-	<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-	<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
-	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -77,10 +73,12 @@
 		     });
 	
 		 }); 
-		 
+		
+		
 		 function uploadSummernoteImageFile(file, editor) {
 				data = new FormData();
 				data.append("file", file);
+				
 				$.ajax({
 					data : data,
 					type : "POST",
@@ -94,44 +92,60 @@
 					}
 				});
 			}
-		 	
 		 
-		 function commentInsert(insertData){
+	
+		 $( document ).ready(function() {
+				$( "#register" ).on("click" , function() {
+					//var pushData = {
+					//		"noticeTitle" : $("input[name='noticeTitle']").val(),
+					//		"noticeContent" :$('#summernote').val() };
+										
+					var pushData = $("input[name='noticeTitle']").val();
+					console.log(pushData);
+					commentInsert(pushData);
+					
+					//$("form").attr("method", "POST").attr("action", "/notice/addNotice").submit();
+				});
+			});
+		 
+		 
+		 function commentInsert(pushData){
 				console.debug("reply.socket",socket)
+				
+				data = new FormData();
+				data.append("pushData", pushData);
 					
 			    $.ajax({
-			        url : '/reply/writeReply',
+			        url : "/notice/json/pushAlarm",
 			        type : 'post',
-			        data : insertData,
+			        data : data,
 			        processData: false, contentType: false,
 
 			        enctype : 'multipart/form-data', 
 			        success : function(data){
-			         
-			                commentList(); //댓글 작성 후 댓글 목록 reload
-			                $('[name=content]').val('');
-			           		$('.myEditor').summernote('reset');
+			        	
+			        	alert("성공!!");
+			        	
+			        	$("form").attr("method", "POST").attr("action", "/notice/addNotice").submit();
+			          
+			                //$('[name=content]').val('');
+			           		//$('.myEditor').summernote('reset');
 			                
 			           		//소켓
-			           		if(readWriter != writer){
+			           		//if(readWriter != writer){
 			           		if(socket){
-			        			let socketMsg = "reply,"+writer+","+readWriter+","+bno+","+readTitle+","+bgno;
+			           			console.log(data.noticeTitle)
+			        			let socketMsg = "reply,"+data.userId+","+data.noticeTitle;
 			        			console.log(socketMsg);
 			        			socket.send(socketMsg);
 			           		}
-			        	}
+			        	//}
 			        }
 			    
 			    })
 		 };
-		 
-		 $(function() {
-				$( "#register" ).on("click" , function() {
-					commentInsert();
-				});
-			});
-		 
 	 
+		 
 		 $(function() {
 				$( "#previous" ).on("click" , function() {
 					history.go(-1);

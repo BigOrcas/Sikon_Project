@@ -139,10 +139,10 @@
 														ORDER BY prod_status DESC, price DESC, prod_no
 													</when>
 													<when test="orderCondition == 3">
-														AND  prod_stock>0 AND prod_status = 'y' ORDER BY prod_status DESC, prod_no
+														AND  prod_stock>0 AND prod_status LIKE UPPER('y') ORDER BY prod_status DESC, prod_no
 													</when>
 													<when test="orderCondition == 4">
-														AND prod_status = 'n' ORDER BY prod_status DESC, prod_no
+														AND prod_status LIKE UPPER('n') ORDER BY prod_status DESC, prod_no
 													</when>
 													<otherwise>
 														AND prod_stock=0 ORDER BY prod_status DESC, prod_no

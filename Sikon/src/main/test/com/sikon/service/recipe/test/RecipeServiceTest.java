@@ -48,10 +48,12 @@ public class RecipeServiceTest {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setIngredientName("재료명");
 		ingredient.setIngredientAmount("1g");
+		ingredient.setIngredientNo(10006);
 
 		Ingredient ingredient2 = new Ingredient();
 		ingredient2.setIngredientName("22");
 		ingredient2.setIngredientAmount("22");
+		ingredient2.setIngredientNo(10007);
 
 		// 하나의 레시피에 필요한 재료를 list에 add
 		List<Ingredient> list = new ArrayList<Ingredient>();
@@ -76,18 +78,19 @@ public class RecipeServiceTest {
 
 	}
 	
-	 @Test
+		@Test
 		public void testUpdateRecipe() throws Exception {
 
 			// Recipe
 			Recipe recipe = new Recipe();
-			recipe.setRecipeNo(10002);
+			recipe.setRecipeNo(10003);
 			recipe.setCookingTime(100);
-			recipe.setRecipeDetail("수정");
+			recipe.setRecipeDetail("태호르");
 			recipe.setRecipeDifficulty("300");
 			recipe.setRecipeImg("bb.jpg");
-			recipe.setRecipeName("수정");
-			recipe.setRecipeOrder("수정");
+			recipe.setRecipeVideo("");
+			recipe.setRecipeName("tl");
+			recipe.setRecipeOrder("태호르");
 			recipe.setRecipeTheme("KO");
 
 			User user = new User();
@@ -96,28 +99,30 @@ public class RecipeServiceTest {
 
 			// Ingredient
 			Ingredient ingredient = new Ingredient();
-			ingredient.setIngredientName("수정");
-			ingredient.setIngredientAmount("수정");
-			ingredient.setRecipeNo(10002);
+			ingredient.setIngredientName("해방");
+			ingredient.setIngredientAmount("해방");
+			ingredient.setIngredientNo(10008);
+			ingredient.setRecipeNo(10003);
 
 
 			Ingredient ingredient2 = new Ingredient();
-			ingredient2.setIngredientName("552");
-			ingredient2.setIngredientAmount("522");
-			ingredient2.setRecipeNo(10002);
-
-			int RecipeNo=10002;
+			ingredient2.setIngredientName("일지");
+			ingredient2.setIngredientAmount("일지");
+			ingredient2.setIngredientNo(10009);
+			ingredient2.setRecipeNo(10003);
+			
 			// 하나의 레시피에 필요한 재료를 list에 add
 			List<Ingredient> list = new ArrayList<Ingredient>();
 			list.add(ingredient);
 			list.add(ingredient2);
 
-			Map map = new HashMap();
-			map.put("list", list);
-			System.out.println(map);
+//			Map map = new HashMap();
+//			map.put("list", list);
+//			System.out.println(map);
 
 			// addRecipe의 인자로 recipe 객체와 ingredient list를 담은 map을 넘긴다.
-			recipeService.updateRecipe(recipe, map);
+			recipeService.updateRecipe(recipe);
+			recipeService.updateIngredient(list,10003);
 
 		}
 		
@@ -209,6 +214,15 @@ public class RecipeServiceTest {
 		 	
 		 	System.out.println("=======================================");
 		 	
+		 }
+		 
+		//@Test
+		 public void testGetBestRecipeList() throws Exception{
+			 Map<String,Object> map=recipeService.bestRecipeList();
+			 List<Object> list = (List<Object>)map.get("list");
+			 	System.out.println(list);
+
+			 
 		 }
 
 

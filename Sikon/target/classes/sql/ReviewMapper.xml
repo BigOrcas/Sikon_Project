@@ -10,54 +10,37 @@
 	<resultMap id="reviewSelectMap" type="review">
 		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
 		<result property="writerNickname" 	column="writer_nickname" 		jdbcType="VARCHAR" />
-		<result property="reviewContent" 	column="review_content" 		 jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="reviewContent" 	column="review_content" 		 jdbcType="VARCHAR"  />
 		<result property="reviewRegdate" 	column="review_regdate" 		jdbcType="DATE" />
 		<result property="reviewCategory" 			column="review_category" 			jdbcType="VARCHAR"/>
+		<result property="reviewImg" 			column="review_img" 			jdbcType="VARCHAR"/>
 		<result property="recipe.recipeNo" 			column="recipe_no" 			jdbcType="NUMERIC"/>
 		<result property="product.prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
 		<result property="purchase.tranNo" 			column="tran_no" 			jdbcType="NUMERIC"/>
-		<result property="classApply.classNo" 			column="class_no" 			jdbcType="NUMERIC"/>
-		<result property="cookClass.applyNo" 			column="apply_no" 			jdbcType="NUMERIC"/>
+		<result property="cook.cookNo" 			column="cook_no" 			jdbcType="NUMERIC"/>
+		<result property="apply.applyNo" 			column="apply_no" 			jdbcType="NUMERIC"/>
 	</resultMap>
 	
-		<resultMap id="reviewImageSelectMap" type="reviewImage">
-		<result property="imgNo" 			column="img_no" 			jdbcType="NUMERIC"/>
-		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
-		<result property="imgName" 	column="img_name" 		jdbcType="VARCHAR" />
-	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addReview"		parameterType="review" >
-	 	INSERT ALL
-		INTO review VALUES	 (	seq_review_no.nextval  ,#{writerNickname}, #{reviewContent},SYSDATE,#{reviewCategory},#{recipe.recipeNo},#{product.prodNo},#{purchase.tranNo},#{classApply.classNo},#{cookClass.applyNo})		
-		INTO reviewImage VALUES (seq_img_no.nextval,seq_review_no.nextval, #{imgName})
-		select* from dual
+	 	INSERT
+		INTO review 
+		VALUES	 (	seq_review_no.nextval  ,#{writerNickname}, #{reviewContent},SYSDATE,#{reviewCategory},#{recipe.recipeNo},#{product.prodNo},#{purchase.tranNo},#{cook.cookNo},#{apply.applyNo},#{reviewImg})		
 	 </insert>
 	 
 	 
-	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
-		SELECT *
-		FROM review
-		WHERE review_no= #{reviewNo}
-	 </select>
 	 
 	  <!-- SQL : UPDATE -->
 	 <update	id="updateReview"	parameterType="review" >
 	   	UPDATE review
 	   	<set>
-	   		review_content 	= #{reviewContent}
+	   		review_content 	= #{reviewContent},
+	   		review_img=#{reviewImg}
 	   	</set>
 			WHERE review_no= #{reviewNo}
 	 </update>
 	 
-	   <!-- SQL : UPDATE -->
-	 <update	id="updateReviewImage"	parameterType="reviewImage" >
-	   	UPDATE reviewimage
-	   	<set>
-	   		img_name = #{imgName}
-	   	</set>
-			WHERE img_no= #{imgNo}
-	 </update>
 	 
 	 
 	 <select  id="getReviewList"  parameterType="map"	resultMap="reviewSelectMap">
@@ -72,6 +55,9 @@
 	  					</when>
 	  					<when test="category == 200 || category =='200' ">
 	  					where recipe_no=#{textNo}
+	  					</when>
+	  					<when test="category == 300 || category =='300' ">
+	  					where cook_no=#{textNo}
 	  					</when>
 	  					</choose>
 	  					</if>
@@ -93,6 +79,9 @@
 	  					</when>
 	  					<when test="category == 200 || category =='200' ">
 	  					where recipe_no=#{textNo}
+	  					</when>
+	  					<when test="category == 300 || category =='300' ">
+	  					where cook_no=#{textNo}
 	  					</when>
 	  					</choose>
 	  					</if>

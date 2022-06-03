@@ -8,6 +8,7 @@ public class Review {
 	private String reviewContent;
 	private Date reviewRegdate;
 	private String reviewCategory;
+	private String reviewImg;
 	private Recipe recipe;
 	private Product product;
 	private Purchase purchase;
@@ -52,6 +53,14 @@ public class Review {
 
 	public void setReviewCategory(String reviewCategory) {
 		this.reviewCategory = reviewCategory;
+	}
+
+	public String getReviewImg() {
+		return reviewImg;
+	}
+
+	public void setReviewImg(String reviewImg) {
+		this.reviewImg = reviewImg;
 	}
 
 	public Recipe getRecipe() {

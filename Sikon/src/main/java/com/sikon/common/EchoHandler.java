@@ -48,17 +48,16 @@ public class EchoHandler extends TextWebSocketHandler {
 				System.out.println("length 성공?"+cmd);
 				
 				WebSocketSession replyWriterSession = userSessionsMap.get(replyWriter);
-				//WebSocketSession boardWriterSession = userSessionsMap.get(noticeTitle);
+				WebSocketSession boardWriterSession = userSessionsMap.get("user@naver.com");
 				System.out.println("replyWriterSession="+userSessionsMap.get(replyWriter));
-				System.out.println("replyWriterSession"+replyWriterSession);
+				System.out.println("boardWriterSession"+boardWriterSession);
 				
 				//댓글
-				if ("reply".equals(cmd) && replyWriterSession != null) {
+				if ("reply".equals(cmd) && boardWriterSession != null) {
 					System.out.println("onmessage되나??");
 					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
-							+ "<a href='/notice/addNotice'  style=\"color: black\">"
-							+ noticeTitle+"에 댓글을 달았습니다!</a>");
-					replyWriterSession.sendMessage(tmpMsg);
+									+ noticeTitle+"에 댓글을 달았습니다!");
+					boardWriterSession.sendMessage(tmpMsg);
 				}
 				
 //				//스크랩

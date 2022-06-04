@@ -19,7 +19,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	// 1:1로 할 경우
 	private Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
-	//
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//클라이언트와 서버가 연결

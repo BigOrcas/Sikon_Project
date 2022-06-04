@@ -107,13 +107,14 @@ public class RecipeController {
 		System.out.println("/recipe/getRecipe : post / get");
 		System.out.println("recipeNo" + recipeNo);
 		// Business Logic
-//		Recipe recipe = recipeService.getRecipe(recipeNo);
+		List list =recipeService.getRecipe(recipeNo);
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		System.out.println("모냐recipeNo" + recipeNo);
+		
 		Map<String, Object> map = reviewService.getReviewList(search, 200, recipeNo);
 		System.out.println("map:" + map.get("list"));
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
@@ -121,7 +122,7 @@ public class RecipeController {
 		System.out.println(resultPage);
 
 		// Model 과 View 연결
-//		model.addAttribute("recipe", recipe);
+		model.addAttribute("recipe", list);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

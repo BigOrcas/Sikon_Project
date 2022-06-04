@@ -136,7 +136,10 @@
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 		    <c:if test = "${menu == 'manage'}">
-				  <button type="button" class="btn btn-primary" id="addNotice">등 &nbsp;록</button>
+				<button type="button" class="btn btn-primary" id="addNotice">등&nbsp;록</button>
+				<td></td>
+				<td align="left"><button type="button" class="btn btn-primary delete" value="${notice.noticeNo}" >삭&nbsp;제</button></td>
+				<td></td>
 			</td>
 			</c:if>
 		    </div>
@@ -179,9 +182,6 @@
 				</td>
 				<td></td>
 				<td align="left"> ${notice.noticeDate} </td>
-				<td></td>
-				<td align="left"><button type="button" class="btn btn-primary delete" value="${notice.noticeNo}" >삭제</button></td>
-				<td></td>
 			</c:if>
 			<c:if test = "${menu == 'search'}">
 				<td align="left"> ${notice.noticeNo}</td>
